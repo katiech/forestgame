@@ -1,0 +1,24 @@
+
+F O R E S T  G A M E
+	made by
+		Katie Chang & Emilee Chen
+			Sept. 2015
+
+TODO
+	Main
+		Currency?: gold, seeds?
+		Animals:
+			birds? (entice with seeds)
+	Garden
+		Maybe you can randomly get a _____ seed, and you can plant it in your garden.
+		Buy/clear plots of land
+		Harvest after a specific amount of time
+			ingredients for potions? (must have garden for alchemy lab?)
+	Treasure Chest
+		Collectables/artifacts
+			comes in sets?
+			ex.:	animal totem set - boosts productivity of specific animal
+					gemstone set - ???
+	Alchemy Lab
+		Make potions from supplies
+		Potions give a boost for a specific amount of time

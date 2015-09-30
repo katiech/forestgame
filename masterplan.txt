@@ -5,20 +5,50 @@ F O R E S T  G A M E
 			Sept. 2015
 
 TODO
+
+    WIP:
+	** implement changing middle panel with bottom nav buttons
+
 	Main
-		Currency?: gold, seeds?
+		Currency: gold, seeds >> Search can either find gold, seeds or rare seeds?
+		Found this on stackoverflow for weighted randomizations, but you probably have a better way to do it:
+
+		function randomWithProbability() {
+ 	   	 var notRandomNumbers = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+  			var idx = Math.floor(Math.random() * notRandomNumbers.length);
+  			return notRandomNumbers[idx];
+				}
+                      // if 1, add seed, if 2, add gold, etc?
+
+		so we can have functions add/take away from the array to change probabilities/add new chance items when searching?		
+ 			
+
 		Animals:
-			birds? (entice with seeds)
+			birds (recruit with seeds)
+			      -magpies randomly find jewels? <--use bottom left scrollable panel for "random events" log?
+			      -different birds= different gems?
+			other animals increase gold/seed rates?     
+
+
 	Garden
-		Maybe you can randomly get a _____ seed, and you can plant it in your garden.
-		Buy/clear plots of land
-		Harvest after a specific amount of time
-			ingredients for potions? (must have garden for alchemy lab?)
+		Search can randomly get _____ special seeds, and you can plant it in your garden.
+		     -certain animals get special seeds too?
+		Buy/clear plots of land--> gold to increase by sq.ft, each level = higher plant capacity 
+		Harvest after a specific amount of time--->Do we need to have a list/array for this??
+			-plants used as ingredients for potions (must have garden to unlock alchemy lab)
+            -need certain plants to recruit certain animals? 
+             
 	Treasure Chest
 		Collectables/artifacts
 			comes in sets?
 			ex.:	animal totem set - boosts productivity of specific animal
-					gemstone set - ???
+					gemstone set - ??? 
+
 	Alchemy Lab
-		Make potions from supplies
-		Potions give a boost for a specific amount of time
+
+		Make potions from supplies/garden plants
+		Potions give a boost for a specific amount of time: increased gold rate, luck boost for treasure?
+
+IDEAS:
+
+-creature log? so we can draw individual pictures and have descriptions (in addition to the middle panel updating like the shark game)

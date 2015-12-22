@@ -17,6 +17,7 @@ a{
 h1 {
 	padding-bottom:15px;
 	text-align: center;
+	text-transform: uppercase;
 }
 
 button {
@@ -25,7 +26,6 @@ button {
 	font-size:11px;
 	text-transform:uppercase;
 }
-
 
 #leftbottom{
 	border-top: 2px solid #aaa; 

@@ -3,101 +3,93 @@
 
 
 
-<html><body>
+<html>
 
 <head>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="styles.css">
-
-<script type="text/javascript" src="main.js"></script>
-
-
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script type="text/javascript" src="main.js"></script>
 </head>
 
-<div id="header"><h1>
-TITLE</h1>
+
+<body>
+
+	<div id="header">
+		<h1>Forest Game</h1>
 	</div>
 
-<div id="container">
+	<div id="container">
 
 
-<title>TITLE</title>
+	<title>TITLE</title>
 
 
+	<div id="left" class="box">
+		<div class="boxtitle">
+			Left
+		</div>
 
-<div id="left" class="box">
+		<p>
+			<b>Gold:</b> <span id="currency">0</span><br>
+			<b>Seeds:</b> <span id="things">0</span>
+		</p>
+
+
+		<div id="leftbottom" style="overflow-y:scroll">
+			left bottom test
+		</div>
+
+	</div>
+
+
+	<div id="center" class="box">
+		<div class="boxtitle">
+			Center
+		</div>
+
+		<p><br>
+
+		<div id="square"></div>
+
+
+		<button type="button" onClick="Add()">Add</button><br><br>
+		<button type="button" onClick="Buy()">Buy Seeds</button><br>
+		<b>Cost</b>:<span id="cost">5</span><p><br><br>
+		<button type="button" onClick="clearLog()">Clear Log</button><br>
+
+	</div>
+
+
 	<div class="boxtitle">
-Left
-
-
-
-</div>
-
-<p>
-<b>Currency:</b> <span id="currency">0</span><br>
-<b>Things:</b> <span id="things">0</span>
-
-
-<div id="leftbottom" style="overflow-y:scroll">
-
-</div>
-
-</div>
-
-<div id="center" class="box">
-	<div class="boxtitle">
-Center
-</div>
-
-
-
-<p><br>
-
-<div id="square"></div>
-
-
-<p>
-<button type="button" onClick="Add()">Add</button><br><br>
-<button type="button" onClick="Buy()">Buy Thing</button><br>
-<b>Cost</b>:<span id="cost">5</span><p><br><br>
-<button type="button" onClick="clearLog()">Clear Log</button><br>
-
-
-
-
-</div>
-<div class="boxtitle">
-Right
-</div>
-<div id="right" class="box" style="overflow-y:scroll; height:450px;">
-	
-<p>
-<span id="log">
->>Log Stuff
-</span>
-</div>
-
-<div id="bottom">
-
-
-
-<div class="bottombox">
-	test1
+	Right
 	</div>
 
-	<div class="bottombox">
-		test2
+	<div id="right" class="box" style="overflow-y:scroll; height:450px;">
+		<span id="log">
+		>>Log Stuff
+		</span>
 	</div>
 
-	<div class="bottombox">
-		test3
+
+
+	<div id="bottom">
+
+		<div class="bottombox">
+			test1
+			</div>
+
+		<div class="bottombox">
+			test2
+		</div>
+
+		<div class="bottombox">
+			test3
+		</div>
+
 	</div>
 
-</div>
 
-</div>
+</body>
 
-
-
-</body></html>
+</html>
 

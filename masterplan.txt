@@ -45,19 +45,16 @@ TODO
 					gemstone set - ??? 
 
 	Alchemy Lab
-<<<<<<< HEAD
 		Make potions from supplies
-		Potions give a boost for a specific amount of time
+		Potions give a boost for a specific amount of time: increased gold rate, luck boost for treasure?
 
 
 STORY IDEA
 	You are a tree spirit that comes out of a plant and your task is to bring back magic to the forest and make it flourish again?
-=======
 
-		Make potions from supplies/garden plants
-		Potions give a boost for a specific amount of time: increased gold rate, luck boost for treasure?
 
 IDEAS:
+	creature log? so we can draw individual pictures and have descriptions (in addition to the middle panel updating like the shark game)
 
--creature log? so we can draw individual pictures and have descriptions (in addition to the middle panel updating like the shark game)
->>>>>>> origin/master
+
+

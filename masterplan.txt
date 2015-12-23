@@ -6,6 +6,9 @@ F O R E S T  G A M E
 
 TODO
 
+	ADD SAVE SYSTEM !!!
+		Cookies or encrypted sequence???? both?????
+
     WIP:
 	** implement changing middle panel with bottom nav buttons
 

@@ -1,27 +1,27 @@
 
 
-
-var seed = 0;
-var initialRate = 1;
-var seedRate = initialRate;
+var seed = {
+	amount: 0,
+	rate: 1
+};
 
 function seedCollect(number) {
-	seed = seed + number;
+	seed.amount = seed.amount + number;
 	updateResources();
 };
 
 
 
 var sparrow = {
-	amount:0,
-	cost:5,
-	rate:1
+	amount: 0,
+	cost: 5,
+	rate: 0
 };
 
 function buySparrow(num) {
-	if (seed >= sparrow.cost * num) {
+	if (seed.amount >= sparrow.cost * num) {
 		sparrow.amount = sparrow.amount + num;
-		seed = seed - sparrow.cost * num;
+		seed.amount = seed.amount - sparrow.cost * num;
 		updateResources();
 		updateRates();
 		updateCosts();
@@ -39,13 +39,13 @@ function buySparrow(num) {
 
 
 function updateResources() {
-	document.getElementById("seed").innerHTML = addSuffix(seed);
+	document.getElementById("seed").innerHTML = addSuffix(seed.amount);
 	document.getElementById("sparrow").innerHTML = addSuffix(sparrow.amount);
 };
 
 function updateRates() {
-	seedRate = sparrow.amount*sparrow.rate + initialRate;
-	document.getElementById("seedRate").innerHTML = addSuffix(seedRate);
+	seed.rate = sparrow.amount*seed.rate + 1;
+	document.getElementById("seedRate").innerHTML = addSuffix(seed.rate);
 };
 
 function updateCosts() {
@@ -71,7 +71,7 @@ function addSuffix(resource) {
 
 
 window.setInterval(function(){
-	seedCollect(seedRate);
+	seedCollect(seed.rate);
 }, 1000);		// fires every 1000ms
 
 

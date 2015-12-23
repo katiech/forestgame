@@ -65,6 +65,11 @@ button {
 	width: 15vw;
 }
 
+#log {
+	overflow-y: scroll;
+	max-height: calc(74vh - 14px - 30px);
+}
+
 #bottom {
 	height: 30px;
 	width: 100%;
@@ -111,7 +116,6 @@ button {
 .text {
 	padding: 0px 10px 10px;
 }
-
 
 .bottombox{
 	margin-top: 5px;

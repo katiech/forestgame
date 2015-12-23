@@ -1,0 +1,66 @@
+
+F O R E S T  G A M E
+	made by
+		Katie Chang & Emilee Chen
+			Sept. 2015
+
+TODO
+
+    WIP:
+	** implement changing middle panel with bottom nav buttons
+
+	Main
+		Currency: gold, seeds >> Search can either find gold, seeds or rare seeds?
+		Found this on stackoverflow for weighted randomizations, but you probably have a better way to do it:
+
+		function randomWithProbability() {
+ 	   	 var notRandomNumbers = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+  			var idx = Math.floor(Math.random() * notRandomNumbers.length);
+  			return notRandomNumbers[idx];
+				}
+                      // if 1, add seed, if 2, add gold, etc?
+
+		so we can have functions add/take away from the array to change probabilities/add new chance items when searching?		
+
+		Animals:
+			1. birds		5 seeds 			1 seed/s
+			2. magpies		100? seeds			10? seed/s + gold???
+			3. ???			another currency
+
+			birds (recruit with seeds)
+			      -magpies randomly find jewels? <--use bottom left scrollable panel for "random events" log?
+			      -different birds= different gems?     
+
+		Revealing system: 
+			Animals to recruit (buttons) are all silhouette with question marks until previous animal is recruited
+				update image to real image when "unlocked"
+			Animal/currency number and rate not added to inventory until unlocked
+
+	Garden
+		Search can randomly get _____ special seeds, and you can plant it in your garden.
+		     -certain animals get special seeds too?
+		Buy/clear plots of land--> gold to increase by sq.ft, each level = higher plant capacity 
+		Harvest after a specific amount of time--->Do we need to have a list/array for this??
+			-plants used as ingredients for potions (must have garden to unlock alchemy lab)
+            -need certain plants to recruit certain animals? 
+             
+	Treasure Chest
+		Collectables/artifacts
+			comes in sets?
+			ex.:	animal totem set - boosts productivity of specific animal
+					gemstone set - ??? 
+
+	Alchemy Lab
+		Make potions from supplies
+		Potions give a boost for a specific amount of time: increased gold rate, luck boost for treasure?
+
+
+STORY IDEA
+	You are a tree spirit that comes out of a plant and your task is to bring back magic to the forest and make it flourish again?
+
+
+IDEAS:
+	creature log? so we can draw individual pictures and have descriptions (in addition to the middle panel updating like the shark game)
+
+
+

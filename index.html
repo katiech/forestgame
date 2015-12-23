@@ -3,101 +3,110 @@
 
 
 
-<html><body>
+<html>
 
 <head>
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" type="text/css" href="styles.css">
+	<link rel="stylesheet" type="text/css" href="styles.css">
+	<script type="text/javascript" src="main.js"></script>
 
-<script type="text/javascript" src="main.js"></script>
-
-
+	<title>Forest Game</title>
 </head>
 
-<div id="header"><h1>
-TITLE</h1>
+
+<body>
+
+	<div id="header">
+		<h1>Forest Game</h1>
 	</div>
 
-<div id="container">
+
+	<div id="container">
+
+		<div id="left" class="box">
+
+			<!-- CURRENCY INVENTORY -->
+			<div class="boxtitle">
+				Inventory
+			</div>
+			<div class="text">
+				<p>
+					<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s)<br>
+				</p>
+			</div>
+
+			<!-- BEFRIENDED ANIMALS -->
+			<div class="boxtitle">
+				Friends
+			</div>
+			<div class="text">
+				<p>
+					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s)
+				</p>
+			</div>
 
 
-<title>TITLE</title>
+<!-- 			<div id="leftbottom" style="overflow-y:scroll">
+				left bottom test
+			</div> -->
+
+		</div>
 
 
+		<div id="center" class="box">
+			<div class="boxtitle">
+				Center
+			</div>
 
-<div id="left" class="box">
-	<div class="boxtitle">
-Left
+			<br><br>
 
+			<div id="square"></div>
 
+			<br><br>
 
-</div>
+			<button type="button" onClick="buySparrow(1)">Befriend Sparrow</button><br>
+			<b>Cost</b>:<span id="sparrowCost">5</span>
 
-<p>
-<b>Currency:</b> <span id="currency">0</span><br>
-<b>Things:</b> <span id="things">0</span>
+			<br><br>
 
+			<button type="button" onClick="clearLog()">Clear Log</button><br>
 
-<div id="leftbottom" style="overflow-y:scroll">
-
-</div>
-
-</div>
-
-<div id="center" class="box">
-	<div class="boxtitle">
-Center
-</div>
+		</div>
 
 
+		<div id="right" class="box">
+			<div class="boxtitle">
+			Right
+			</div>
 
-<p><br>
-
-<div id="square"></div>
-
-
-<p>
-<button type="button" onClick="Add()">Add</button><br><br>
-<button type="button" onClick="Buy()">Buy Thing</button><br>
-<b>Cost</b>:<span id="cost">5</span><p><br><br>
-<button type="button" onClick="clearLog()">Clear Log</button><br>
-
-
+			<div class="text">
+				<p id="log">
+				>>Log Stuff
+				</p>
+			</div>
+		</div>
 
 
-</div>
-<div class="boxtitle">
-Right
-</div>
-<div id="right" class="box" style="overflow-y:scroll; height:450px;">
-	
-<p>
-<span id="log">
->>Log Stuff
-</span>
-</div>
+		<div id="bottom">
 
-<div id="bottom">
+			<div class="bottombox">
+				test1
+				</div>
+
+			<div class="bottombox">
+				test2
+			</div>
+
+			<div class="bottombox">
+				test3
+			</div>
+
+		</div>
 
 
-
-<div class="bottombox">
-	test1
 	</div>
 
-	<div class="bottombox">
-		test2
-	</div>
+</body>
 
-	<div class="bottombox">
-		test3
-	</div>
-
-</div>
-
-</div>
-
-
-
-</body></html>
+</html>
 

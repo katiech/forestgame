@@ -57,6 +57,10 @@ button {
 	color: white;
 }
 
+.text {
+	padding: 0px 10px 10px;
+}
+
 #container {
 	width: 698px;
 	height: 490px;
@@ -78,6 +82,7 @@ button {
 
 #left {
 	border-right: 1px solid black;
+	padding: 0;
 }
 
 #center{

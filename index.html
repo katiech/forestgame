@@ -20,75 +20,86 @@
 		<h1>Forest Game</h1>
 	</div>
 
+
 	<div id="container">
 
+		<div id="left" class="box">
 
-
-
-	<div id="left" class="box">
-		<div class="boxtitle">
-			Inventory
-		</div>
-
-		<p>
-			<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s)<br>
-			<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s)
-		</p>
-
-
-		<div id="leftbottom" style="overflow-y:scroll">
-			left bottom test
-		</div>
-
-	</div>
-
-
-	<div id="center" class="box">
-		<div class="boxtitle">
-			Center
-		</div>
-
-		<p><br>
-
-		<div id="square"></div>
-
-
-		<button type="button" onClick="Add()">Add</button><br><br>
-		<button type="button" onClick="buySparrow()">Entice Sparrow</button><br>
-		<b>Cost</b>:<span id="sparrowCost">5</span><p><br><br>
-		<button type="button" onClick="clearLog()">Clear Log</button><br>
-
-	</div>
-
-
-	<div class="boxtitle">
-	Right
-	</div>
-
-	<div id="right" class="box" style="overflow-y:scroll; height:450px;">
-		<span id="log">
-		>>Log Stuff
-		</span>
-	</div>
-
-
-
-	<div id="bottom">
-
-		<div class="bottombox">
-			test1
+			<!-- CURRENCY INVENTORY -->
+			<div class="boxtitle">
+				Inventory
+			</div>
+			<div class="text">
+				<p>
+					<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s)<br>
+				</p>
 			</div>
 
-		<div class="bottombox">
-			test2
+			<!-- BEFRIENDED ANIMALS -->
+			<div class="boxtitle">
+				Friends
+			</div>
+			<div class="text">
+				<p>
+					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s)
+				</p>
+			</div>
+
+
+<!-- 			<div id="leftbottom" style="overflow-y:scroll">
+				left bottom test
+			</div> -->
+
 		</div>
 
-		<div class="bottombox">
-			test3
+
+		<div id="center" class="box">
+			<div class="boxtitle">
+				Center
+			</div>
+
+			<p><br>
+
+			<div id="square"></div>
+
+
+			<button type="button" onClick="Add()">Add</button><br><br>
+			<button type="button" onClick="buySparrow()">Befriend Sparrow</button><br>
+			<b>Cost</b>:<span id="sparrowCost">5</span><p><br><br>
+			<button type="button" onClick="clearLog()">Clear Log</button><br>
+
 		</div>
+
+
+		<div class="boxtitle">
+		Right
+		</div>
+
+		<div id="right" class="box" style="overflow-y:scroll; height:450px;">
+			<span id="log">
+			>>Log Stuff
+			</span>
+		</div>
+
+
+		<div id="bottom">
+
+			<div class="bottombox">
+				test1
+				</div>
+
+			<div class="bottombox">
+				test2
+			</div>
+
+			<div class="bottombox">
+				test3
+			</div>
+
+		</div>
+
 
 	</div>
-
 
 </body>
 

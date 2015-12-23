@@ -9,6 +9,8 @@
 	<link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	<script type="text/javascript" src="main.js"></script>
+
+	<title>Forest Game</title>
 </head>
 
 
@@ -21,17 +23,16 @@
 	<div id="container">
 
 
-	<title>TITLE</title>
 
 
 	<div id="left" class="box">
 		<div class="boxtitle">
-			Left
+			Inventory
 		</div>
 
 		<p>
-			<b>Gold:</b> <span id="currency">0</span><br>
-			<b>Seeds:</b> <span id="things">0</span>
+			<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>)<br>
+			<b>Sparrows:</b> <span id="sparrow">0</span>
 		</p>
 
 
@@ -53,8 +54,8 @@
 
 
 		<button type="button" onClick="Add()">Add</button><br><br>
-		<button type="button" onClick="Buy()">Buy Seeds</button><br>
-		<b>Cost</b>:<span id="cost">5</span><p><br><br>
+		<button type="button" onClick="buySparrow()">Entice Sparrow</button><br>
+		<b>Cost</b>:<span id="sparrowCost">5</span><p><br><br>
 		<button type="button" onClick="clearLog()">Clear Log</button><br>
 
 	</div>

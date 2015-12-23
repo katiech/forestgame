@@ -1,6 +1,5 @@
 
 
-
 var seed = 0;
 var initialRate = 1;
 var seedRate = initialRate;
@@ -11,24 +10,31 @@ function seedCollect(number) {
 };
 
 
-
 var sparrow = 0;
 var sparrowCost = 5;
 var sparrowRate = 0;
 
-function buySparrow() {
-	if (seed >= sparrowCost) {
-		sparrow = sparrow + 1;
-		seed = seed - sparrowCost;
+function buySparrow(num) {
+	if (seed >= sparrowCost * num) {
+		sparrow = sparrow + num;
+		seed = seed - sparrowCost * num;
 		updateResources();
 		updateRates();
 		updateCosts();
-		updateLog("You have recruited a sparrow.");
+		if (num > 1) {
+			updateLog("You have befriended " + num + " sparrows! Wow!");
+		} else {
+			updateLog("You have befriended a sparrow.");
+		}
 	} else {
-		updateLog("You don't have enough seeds to entice a sparrow to you!");
+		updateLog("You don't have enough seeds to befriend any sparrows!");
 	};
 };
 
+
+var magpie = 0;
+var magpieCost = 5;
+var magpieRate = 0;
 
 
 

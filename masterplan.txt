@@ -21,14 +21,16 @@ TODO
                       // if 1, add seed, if 2, add gold, etc?
 
 		so we can have functions add/take away from the array to change probabilities/add new chance items when searching?		
- 			
 
 		Animals:
+			1. birds		5 seeds 			1 seed/s
+			2. magpies		100? seeds			10? seed/s + gold???
+			3. ???			another currency
+
+
 			birds (recruit with seeds)
 			      -magpies randomly find jewels? <--use bottom left scrollable panel for "random events" log?
-			      -different birds= different gems?
-			other animals increase gold/seed rates?     
-
+			      -different birds= different gems?     
 
 	Garden
 		Search can randomly get _____ special seeds, and you can plant it in your garden.
@@ -47,10 +49,6 @@ TODO
 	Alchemy Lab
 		Make potions from supplies
 		Potions give a boost for a specific amount of time: increased gold rate, luck boost for treasure?
-
-	Creatures
-		1. birds
-		2.
 
 
 STORY IDEA

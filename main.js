@@ -2,7 +2,8 @@
 
 
 var seed = 0;
-var seedRate = 1;
+var initialRate = 1;
+var seedRate = initialRate;
 
 function seedCollect(number) {
 	seed = seed + number;
@@ -37,7 +38,7 @@ function updateResources() {
 };
 
 function updateRates() {
-	seedRate = sparrow;
+	seedRate = sparrow + initialRate;
 	document.getElementById("seedRate").innerHTML = addSuffix(seedRate);
 };
 

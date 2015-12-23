@@ -1,5 +1,21 @@
 
 
+// function GameSave() {
+
+// }
+
+
+// window.onload = function() {
+// 	window.game = new GameSave();
+// };
+
+
+
+
+
+
+
+
 var seed = {
 	amount: 0,
 	rate: 1
@@ -44,7 +60,7 @@ function updateResources() {
 };
 
 function updateRates() {
-	seed.rate = sparrow.amount*seed.rate + 1;
+	seed.rate = sparrow.amount + 1;
 	document.getElementById("seedRate").innerHTML = addSuffix(seed.rate);
 };
 

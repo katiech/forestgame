@@ -25,6 +25,7 @@ button {
 	border: 1px solid grey;
 	font-size:11px;
 	text-transform:uppercase;
+
 }
 
 #container {
@@ -44,6 +45,10 @@ button {
 	padding: 0;	
 }
 
+.animalbutton{
+	display:inline-block;
+}
+
 #left {
 	width: calc(15vw - 1px);
 	border-right: 1px solid black;
@@ -52,6 +57,7 @@ button {
 #center{
 	width: calc(50vw - 1px);
 	text-align: center;
+
 	border-right: 1px solid black;
 }
 

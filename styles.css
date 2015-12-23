@@ -1,6 +1,6 @@
 
 body, html {
-	background-color:#eee;
+	background-color: #eee;
 	font-family: 'Open Sans', sans-serif;
 	color:black;
 }
@@ -10,14 +10,14 @@ iframe{
 }
 
 a{
-	color:white;
+	color: white;
 	text-decoration: none;
 }
 
 h1 {
-	padding-bottom:15px;
 	text-align: center;
 	text-transform: uppercase;
+	font-size: 4vmin;
 }
 
 button {
@@ -25,6 +25,51 @@ button {
 	border: 1px solid grey;
 	font-size:11px;
 	text-transform:uppercase;
+}
+
+#container {
+	width: 80vw;
+	height: 80vh;
+	margin: 0px auto;
+	background: rgba(255,255,255, 1);
+	color: black;
+	border: 2px solid black;
+}
+
+.box {
+	height: calc(80vh - 30px);
+	font-size: 13px;
+	opacity: 0.8;
+	float: left;
+	padding: 0;	
+}
+
+#left {
+	width: calc(15vw - 1px);
+	border-right: 1px solid black;
+}
+
+#center{
+	width: calc(50vw - 1px);
+	text-align: center;
+	border-right: 1px solid black;
+}
+
+#right {
+	width: 15vw;
+}
+
+#bottom {
+	height: 30px;
+	width: 100%;
+	float: left;
+	margin-left: -2px;
+	margin-top: -1px;
+	text-align: center;
+	text-transform: uppercase;
+	background-color: #aaa;
+	color: white;
+	border: 2px solid black;
 }
 
 #leftbottom{
@@ -48,7 +93,7 @@ button {
 
 .boxtitle {
 	text-align: center;
-	font-size: 14px;
+	font-size: 1.5vw;
 	font-weight: bold;
 	padding: 2px;
 	font-family: 'Open Sans', sans-serif;
@@ -61,53 +106,6 @@ button {
 	padding: 0px 10px 10px;
 }
 
-#container {
-	width: 698px;
-	height: 490px;
-	margin: 0px auto;
-	background: rgba(255,255,255, 1);
-	color: black;
-	border: 2px solid black;
-}
-
-
-.box {
-	font-size: 11px;
-	opacity: 0.8; 
-	width: 150px;
-	height: 490px;
-	float: left;
-	padding-left: 8px;	 
-}
-
-#left {
-	border-right: 1px solid black;
-	padding: 0;
-}
-
-#center{
-	text-align: center;
-	border-right: 1px solid black;
-	width: 372px;
-}
-
-#right {
-	padding-top: 10px;
-	height: 40px;
-}
-
-#bottom {
-	float:left;
-	margin-left: -2px;
-	margin-top: -1px;
-	text-align: center;
-	height: 30px;
-	width: 100%;
-	text-transform: uppercase;
-	background-color: #aaa;
-	color: white;
-	border: 2px solid black;
-}
 
 .bottombox{
 	margin-top: 5px;

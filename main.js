@@ -90,44 +90,47 @@ function buyMagpie(num) {
 
 
 function updateResources() {
-	document.getElementById("seed").innerHTML = addSuffix(seed.amount);
-	document.getElementById("gold").innerHTML = addSuffix(gold.amount);
-	document.getElementById("sparrow").innerHTML = addSuffix(sparrow.amount);
-	document.getElementById("magpie").innerHTML = addSuffix(magpie.amount);
+	document.getElementById("seed").innerHTML = fixValue(seed.amount);
+	document.getElementById("gold").innerHTML = fixValue(gold.amount);
+	document.getElementById("sparrow").innerHTML = fixValue(sparrow.amount);
+	document.getElementById("magpie").innerHTML = fixValue(magpie.amount);
 };
 
 function updateRates() {
 	seed.rate = 	sparrow.amount * sparrow.seedRate +
 					magpie.amount * magpie.seedRate + 1;
 	gold.rate = 	magpie.amount * magpie.goldRate;
-	document.getElementById("seedRate").innerHTML = addSuffix(seed.rate);
-	document.getElementById("goldRate").innerHTML = addSuffix(gold.rate);
+	document.getElementById("seedRate").innerHTML = fixValue(seed.rate);
+	document.getElementById("goldRate").innerHTML = fixValue(gold.rate);
 };
 
 function updateCosts() {
 	sparrow.cost = Math.floor(5 * Math.pow(1.1, sparrow.amount));
 	magpie.cost = Math.floor(100 * Math.pow(1.1, magpie.amount));
-	document.getElementById("sparrowCost").innerHTML = addSuffix(sparrow.cost);
-	document.getElementById("magpieCost").innerHTML = addSuffix(magpie.cost);
+	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost);
+	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost);
 };
 
 
 
 
-function addSuffix(resource) {
-	// Forces floats to always display to 2 decimal places. Makes sure zero says 0 and not 0.00.
-	if (resource < 1 && resource != 0) {
-		return resource.toFixed(2);
-	// Truncates large values and tacks on a suffix.
-	} else {
-		var suffixes = ["K","M","B","T","Qa","Qt","Sx","Sp","Oc","Dc"];
-		for (var i = suffixes.length - 1; i >= 0; i--) {
-			if (resource >= Math.pow(1000, i + 1)) {
-				return (resource / Math.pow(1000, i + 1)).toFixed(2) + suffixes[i];
-			};
+function fixValue(resource) {
+	// Forces floats to always display to 2 decimal places if < 1. Makes sure zero says 0 and not 0.00.
+	if (resource != 0) {
+		if (resource >= 1) {
+			resource = resource.toFixed(0);
+		} else {
+			resource = resource.toFixed(2);
 		};
-		return resource;
 	};
+	// Truncates large values and tacks on a suffix.
+	var suffixes = ["K","M","B","T","Qa","Qt","Sx","Sp","Oc","Dc"];
+	for (var i = suffixes.length - 1; i >= 0; i--) {
+		if (resource >= Math.pow(1000, i + 1)) {
+			return (resource / Math.pow(1000, i + 1)).toFixed(2) + suffixes[i];
+		};
+	};
+	return resource;
 };
 
 

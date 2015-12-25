@@ -31,7 +31,10 @@
 			</div>
 			<div class="text">
 				<p>
-					<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s)<br>
+					<img src="img/seed.gif" class="pixel"> 
+						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s) <br>
+					<img src="img/seed.gif" class="pixel">		<!-- Change this to gold pixel image -->
+						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s)
 				</p>
 			</div>
 
@@ -41,7 +44,8 @@
 			</div>
 			<div class="text">
 				<p>
-					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s)
+					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
+					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s)
 				</p>
 			</div>
 
@@ -53,9 +57,15 @@
 		</div>
 
 
-		<div id="center" class="box">
+
+
+
+		<!-- Home Panel
+				T H E  G L A D E -->
+
+		<div id="center1" class="box">
 			<div class="boxtitle">
-				Center
+				The Glade
 			</div>
 
 			<br><br>
@@ -71,13 +81,48 @@
 			</div>
 
 			<div class="animalbutton">
-				<button type="button" onClick="buySparrow(1)">Befriend Sparrow 2</button><br>
-				<b>Cost</b>:<span id="sparrowCost">5</span>
+				<button type="button" onClick="buyMagpie(1)">Befriend Magpie</button><br>
+				<b>Cost</b>:<span id="magpieCost">100</span>
 			</div><br><br><br>
 
 			<button type="button" onClick="clearLog()">Clear Log</button><br>
 
 		</div>
+
+
+
+		<!-- Second Panel
+				T H E  G A R D E N -->
+
+		<div id="center2" class="box">
+			<div class="boxtitle">
+				Center 2
+			</div>
+
+			<br><br>
+
+			Center 2 Stuff
+
+		</div>
+
+
+		<!-- S E T T I N G S -->
+
+		<div id="center3" class="box">
+			<div class="boxtitle">
+				Settings
+			</div>
+
+			<br><br>
+
+			Center 3 Stuff
+
+			<br><br>
+
+			Manual save, set auto-save frequency, delete save file, etc.
+
+		</div>
+
 
 
 		<div id="right" class="box">
@@ -87,7 +132,7 @@
 
 			<div class="text">
 				<p id="log">
-				Log Stuff
+				Welcome to the Forest Game.
 				</p>
 			</div>
 		</div>
@@ -96,15 +141,15 @@
 		<div id="bottom">
 
 			<div class="bottombox">
-				test1
-				</div>
-
-			<div class="bottombox">
-				test2
+				<button type="button" class="nav" onClick="show1()">The Glade</button>
 			</div>
 
 			<div class="bottombox">
-				test3
+				<button type="button" class="nav" onClick="show2()">Show 2</button>
+			</div>
+
+			<div class="bottombox">
+				<button type="button" class="nav" onClick="show3()">Settings</button>
 			</div>
 
 		</div>

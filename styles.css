@@ -161,3 +161,10 @@ button:hover {
 	height: 14px;
 }
 
+.bold {
+	font-weight: bold;
+}
+.unbold {
+	font-weight: normal;
+}
+

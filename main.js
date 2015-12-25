@@ -1,18 +1,41 @@
 
 
-// function GameSave() {
+function GameSave() {
+	var save = {
+		seed: seed,
+		gold: gold,
+		sparrow: sparrow,
+		magpie: magpie
+	};
 
-// }
+	localStorage.setItem("save",JSON.stringify(save));
+	updateLog("Game Saved!");
+};
+
+function GameLoad() {
+	var savegame = JSON.parse(localStorage.getItem("save"));
+		if (typeof savegame.seed !== "undefined") seed = savegame.seed;
+		if (typeof savegame.gold !== "undefined") gold = savegame.gold;
+		if (typeof savegame.sparrow !== "undefined") sparrow = savegame.sparrow;
+		if (typeof savegame.magpie !== "undefined") magpie = savegame.magpie;
+
+	updateLog("Game Loaded!");
+	updateAll();
+};
 
 
-// window.onload = function() {
-// 	window.game = new GameSave();
-// };
+// Auto loads if save file present.
+window.onload = function() {
+	var savegame = JSON.parse(localStorage.getItem("save"));
+	if (typeof savegame !== "undefined") {
+		GameLoad();
+	};
+};
 
 
 
 
-//CENTER NAV
+// C E N T E R  N A V
 
 function show1() {
    document.getElementById('center1').style.display = "block";
@@ -74,9 +97,13 @@ function buySparrow(num) {
 			updateLog("You have befriended " + num + " sparrows! Wow!");
 		} else {
 			updateLog("You have befriended a sparrow.");
-		}
+		};
 	} else {
-		updateLog("You don't have enough seeds to befriend any sparrows!");
+		if (num > 1) {
+			updateLog("You don't have enough seeds to befriend " + num + " sparrows. :(");
+		} else {
+			updateLog("You don't have enough seeds to befriend any sparrows.");
+		};
 	};
 };
 
@@ -109,6 +136,24 @@ function buyMagpie(num) {
 
 
 
+function setBuy(num) {
+	// Bold selected and unbold everything else.
+	var buyNums = [1, 10, 25, 100];
+	for (b = 0; b < buyNums.length; b++) { 
+		console.log(b);
+		document.getElementById("buy" + buyNums[b]).setAttribute("class", "unbold");
+	}
+	document.getElementById("buy" + num).setAttribute("class", "bold");
+
+	// Fix displayed cost values.
+	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost * num);
+	document.getElementById("magpieCost").innerHTML = fixValue(sparrow.cost * num);
+
+	// Change "onclick" for the buttons.
+	document.getElementById("buySparrow").setAttribute("onclick", "buySparrow(" + num + ")");
+	document.getElementById("buyMagpie").setAttribute("onclick", "buyMagpie(" + num + ")");
+};
+
 
 
 function updateResources() {
@@ -131,6 +176,12 @@ function updateCosts() {
 	magpie.cost = Math.floor(100 * Math.pow(1.1, magpie.amount));
 	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost);
 	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost);
+};
+
+function updateAll(){
+	updateResources();
+	updateRates();
+	updateCosts();
 };
 
 

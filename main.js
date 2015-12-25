@@ -147,7 +147,7 @@ function setBuy(num) {
 
 	// Fix displayed cost values.
 	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost * num);
-	document.getElementById("magpieCost").innerHTML = fixValue(sparrow.cost * num);
+	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost * num);
 
 	// Change "onclick" for the buttons.
 	document.getElementById("buySparrow").setAttribute("onclick", "buySparrow(" + num + ")");

@@ -1,8 +1,27 @@
 
 
-// function GameSave() {
+function GameSave() {
+	var save = {
+		seed: seed,
+		gold: gold,
+		sparrow: sparrow,
+		magpie: magpie
+	};
 
-// }
+	localStorage.setItem("save",JSON.stringify(save));
+	updateLog("Game Saved!");
+};
+
+function GameLoad() {
+	var savegame = JSON.parse(localStorage.getItem("save"));
+		if (typeof savegame.seed !== "undefined") seed = savegame.seed;
+		if (typeof savegame.gold !== "undefined") gold = savegame.gold;
+		if (typeof savegame.sparrow !== "undefined") sparrow = savegame.sparrow;
+		if (typeof savegame.magpie !== "undefined") magpie = savegame.magpie;
+
+	updateLog("Game Loaded!");
+}
+
 
 
 // window.onload = function() {

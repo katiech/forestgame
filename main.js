@@ -21,25 +21,21 @@ function GameLoad() {
 
 	updateLog("Game Loaded!");
 	updateAll();
-	
-};
-
-function updateAll(){
-	updateResources();
-	updateRates();
-	updateCosts();
-
 };
 
 
-// window.onload = function() {
-// 	window.game = new GameSave();
-// };
+// Auto loads if save file present.
+window.onload = function() {
+	var savegame = JSON.parse(localStorage.getItem("save"));
+	if (typeof savegame !== "undefined") {
+		GameLoad();
+	};
+};
 
 
 
 
-//CENTER NAV
+// C E N T E R  N A V
 
 function show1() {
    document.getElementById('center1').style.display = "block";
@@ -158,6 +154,12 @@ function updateCosts() {
 	magpie.cost = Math.floor(100 * Math.pow(1.1, magpie.amount));
 	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost);
 	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost);
+};
+
+function updateAll(){
+	updateResources();
+	updateRates();
+	updateCosts();
 };
 
 

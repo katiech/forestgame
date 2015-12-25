@@ -97,9 +97,13 @@ function buySparrow(num) {
 			updateLog("You have befriended " + num + " sparrows! Wow!");
 		} else {
 			updateLog("You have befriended a sparrow.");
-		}
+		};
 	} else {
-		updateLog("You don't have enough seeds to befriend any sparrows!");
+		if (num > 1) {
+			updateLog("You don't have enough seeds to befriend " + num + " sparrows. :(");
+		} else {
+			updateLog("You don't have enough seeds to befriend any sparrows.");
+		};
 	};
 };
 
@@ -131,6 +135,24 @@ function buyMagpie(num) {
 
 
 
+
+function setBuy(num) {
+	// Bold selected and unbold everything else.
+	var buyNums = [1, 10, 25, 100];
+	for (b = 0; b < buyNums.length; b++) { 
+		console.log(b);
+		document.getElementById("buy" + buyNums[b]).setAttribute("class", "unbold");
+	}
+	document.getElementById("buy" + num).setAttribute("class", "bold");
+
+	// Fix displayed cost values.
+	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost * num);
+	document.getElementById("magpieCost").innerHTML = fixValue(sparrow.cost * num);
+
+	// Change "onclick" for the buttons.
+	document.getElementById("buySparrow").setAttribute("onclick", "buySparrow(" + num + ")");
+	document.getElementById("buyMagpie").setAttribute("onclick", "buyMagpie(" + num + ")");
+};
 
 
 

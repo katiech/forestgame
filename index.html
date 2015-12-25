@@ -70,18 +70,25 @@
 
 			<br><br>
 
+			Buy Amount: <span id="buy1" class="bold" onclick="setBuy(1)">1x</span> |
+						<span id="buy10" onclick="setBuy(10)">10x</span> |
+						<span id="buy25" onclick="setBuy(25)">25x</span> |
+						<span id="buy100" onclick="setBuy(100)">100x</span>
+
+			<br><br>
+
 			<div id="square"></div>
 
 			<br><br>
-			<button type="button" onClick="Add()">Add</button><br><br>
+<!-- 			<button type="button" onClick="Add()">Add</button><br><br> -->
 
 			<div class="animalbutton">
-				<button type="button" onClick="buySparrow(1)">Befriend Sparrow</button><br>
+				<button id="buySparrow" type="button" onClick="buySparrow(1)">Befriend Sparrow</button><br>
 				<b>Cost</b>:<span id="sparrowCost">5</span>
 			</div>
 
 			<div class="animalbutton">
-				<button type="button" onClick="buyMagpie(1)">Befriend Magpie</button><br>
+				<button id="buyMagpie" type="button" onClick="buyMagpie(1)">Befriend Magpie</button><br>
 				<b>Cost</b>:<span id="magpieCost">100</span>
 			</div><br><br><br>
 

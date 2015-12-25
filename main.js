@@ -20,8 +20,16 @@ function GameLoad() {
 		if (typeof savegame.magpie !== "undefined") magpie = savegame.magpie;
 
 	updateLog("Game Loaded!");
-}
+	updateAll();
+	
+};
 
+function updateAll(){
+	updateResources();
+	updateRates();
+	updateCosts();
+
+};
 
 
 // window.onload = function() {

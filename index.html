@@ -31,8 +31,10 @@
 			</div>
 			<div class="text">
 				<p>
-					<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s) <br>
-					<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s)
+					<img src="img/seed.gif" class="pixel"> 
+						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s) <br>
+					<img src="img/seed.gif" class="pixel">		<!-- Change this to gold pixel image -->
+						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s)
 				</p>
 			</div>
 
@@ -55,9 +57,15 @@
 		</div>
 
 
-		<div id="center" class="box">
+
+
+
+		<!-- Home Panel
+				T H E  G L A D E -->
+
+		<div id="center1" class="box">
 			<div class="boxtitle">
-				Center
+				The Glade
 			</div>
 
 			<br><br>
@@ -83,8 +91,8 @@
 
 
 
-		<!--Second Panel-->
-
+		<!-- Second Panel
+				T H E  G A R D E N -->
 
 		<div id="center2" class="box">
 			<div class="boxtitle">
@@ -98,17 +106,20 @@
 		</div>
 
 
-		<!--Third Panel-->
-
+		<!-- S E T T I N G S -->
 
 		<div id="center3" class="box">
 			<div class="boxtitle">
-				Center 3
+				Settings
 			</div>
 
 			<br><br>
 
 			Center 3 Stuff
+
+			<br><br>
+
+			Manual save, set auto-save frequency, delete save file, etc.
 
 		</div>
 
@@ -121,7 +132,7 @@
 
 			<div class="text">
 				<p id="log">
-				Log Stuff
+				Welcome to the Forest Game.
 				</p>
 			</div>
 		</div>
@@ -130,21 +141,15 @@
 		<div id="bottom">
 
 			<div class="bottombox">
-
-					<button type="button" onClick="showMain()">Main</button>
-
-				</div>
-
-			<div class="bottombox">
-				
-				<button type="button" onClick="show2()">Show 2</button>
-
+				<button type="button" class="nav" onClick="show1()">The Glade</button>
 			</div>
 
 			<div class="bottombox">
+				<button type="button" class="nav" onClick="show2()">Show 2</button>
+			</div>
 
-					<button type="button" onClick="show3()">Show 3</button>
-
+			<div class="bottombox">
+				<button type="button" class="nav" onClick="show3()">Settings</button>
 			</div>
 
 		</div>

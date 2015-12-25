@@ -9,26 +9,27 @@
 // 	window.game = new GameSave();
 // };
 
+
+
+
 //CENTER NAV
-function showMain() {
-   document.getElementById('center').style.display = "block";
+
+function show1() {
+   document.getElementById('center1').style.display = "block";
    document.getElementById('center2').style.display = "none";
    document.getElementById('center3').style.display = "none";
-
 };
 
 function show2() {
    document.getElementById('center2').style.display = "block";
-   document.getElementById('center').style.display = "none";
+   document.getElementById('center1').style.display = "none";
    document.getElementById('center3').style.display = "none";
-
 };
 
 function show3() {
    document.getElementById('center3').style.display = "block";
-   document.getElementById('center').style.display = "none";
+   document.getElementById('center1').style.display = "none";
    document.getElementById('center2').style.display = "none";
-
 };
 
 

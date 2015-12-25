@@ -57,10 +57,29 @@ button {
 #center{
 	width: calc(50vw - 1px);
 	text-align: center;
-
 	border-right: 1px solid black;
+	z-index:3;
 }
 
+
+#center2{
+
+	width: calc(50vw - 1px);
+	text-align: center;
+	border-right: 1px solid black;
+	display:none;
+	z-index:2;
+}
+
+
+#center3{
+
+	width: calc(50vw - 1px);
+	text-align: center;
+	border-right: 1px solid black;
+	display:none;
+	z-index:1;
+}
 #right {
 	width: 15vw;
 }

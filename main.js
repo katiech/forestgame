@@ -89,6 +89,7 @@ function goldCollect(number) {
 
 var sparrow = {
 	name: 'sparrow',
+	plural: 'sparrows',
 	amount: 0,
 	cost: 5,
 	rate: 0, 		// Rate sparrows are being increased.
@@ -97,6 +98,7 @@ var sparrow = {
 
 var magpie = {
 	name: 'magpie',
+	plural: 'magpies',
 	amount: 0,
 	cost: 100,
 	rate: 0,
@@ -112,15 +114,14 @@ function buyAnimal(animal, num) {
 		updateRates();
 		updateCosts();
 		if (num > 1) {
-			// Do something about the plural of an animal. A pluralize function???
-			updateLog("You have befriended " + num + " " + animal.name + "s! Wow!");
+			updateLog("You have befriended " + num + " " + animal.plural + "! Wow!");
 		} else {
 			// Do something about a or an?????
 			updateLog("You have befriended a " + animal.name + ".");
 		};
 	} else {
 		if (num > 1) {
-			updateLog("You don't have enough seeds to befriend " + num + " " + animal.name + "s.");
+			updateLog("You don't have enough seeds to befriend " + num + " " + animal.plural + ".");
 		} else {
 			// Do something about a or an?????
 			updateLog("You don't have enough seeds to befriend a " + animal.name + ".");

@@ -83,6 +83,14 @@ function goldCollect(number) {
 	gold.amount = gold.amount + number;
 };
 
+var acorn = {
+	amount: 0,
+	rate: 0
+};
+function acornCollect(number) {
+	acorn.amount = acorn.amount + number;
+};
+
 
 
 // A N I M A L  F R I E N D S
@@ -91,7 +99,7 @@ var sparrow = {
 	name: 'sparrow',
 	plural: 'sparrows',
 	amount: 0,
-	cost: 5,
+	cost: 5,		// seeds
 	rate: 0, 		// Rate sparrows are being increased.
 	seedRate: 1 	// Rate of seed gained per sparrow.
 };
@@ -100,10 +108,20 @@ var magpie = {
 	name: 'magpie',
 	plural: 'magpies',
 	amount: 0,
-	cost: 100,
+	cost: 100, 		// seeds
 	rate: 0,
 	seedRate: 10,
 	goldRate: 0.1
+};
+
+var squirrel = {
+	name: 'squirrel',
+	plural: 'squirrels',
+	amount: 0,
+	cost: 10000, 	// seeds
+	rate: 0,
+	seedRate: 1000,
+	acornRate: 0.1
 };
 
 function buyAnimal(animal, num) {
@@ -143,10 +161,12 @@ function setBuy(num) {
 	// Fix displayed cost values.
 	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost * num);
 	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost * num);
+	document.getElementById("squirrelCost").innerHTML = fixValue(squirrel.cost * num);
 
 	// Change "onclick" for the buttons.
 	document.getElementById("buySparrow").setAttribute("onclick", "buyAnimal(sparrow, " + num + ")");
 	document.getElementById("buyMagpie").setAttribute("onclick", "buyAnimal(magpie, " + num + ")");
+	document.getElementById("buySquirrel").setAttribute("onclick", "buyAnimal(squirrel, " + num + ")");
 };
 
 
@@ -154,23 +174,31 @@ function setBuy(num) {
 function updateResources() {
 	document.getElementById("seed").innerHTML = fixValue(seed.amount);
 	document.getElementById("gold").innerHTML = fixValue(gold.amount);
+	document.getElementById("acorn").innerHTML = fixValue(acorn.amount);
 	document.getElementById("sparrow").innerHTML = fixValue(sparrow.amount);
 	document.getElementById("magpie").innerHTML = fixValue(magpie.amount);
+	document.getElementById("acorn").innerHTML = fixValue(acorn.amount);
 };
 
 function updateRates() {
 	seed.rate = 	sparrow.amount * sparrow.seedRate +
-					magpie.amount * magpie.seedRate + 1;
+					magpie.amount * magpie.seedRate +
+					squirrel.amount * squirrel.seedRate +
+					1;
 	gold.rate = 	magpie.amount * magpie.goldRate;
+	acorn.rate = 	squirrel.amount * squirrel.acornRate;
 	document.getElementById("seedRate").innerHTML = fixValue(seed.rate);
 	document.getElementById("goldRate").innerHTML = fixValue(gold.rate);
+	document.getElementById("acornRate").innerHTML = fixValue(acorn.rate);
 };
 
 function updateCosts() {
 	sparrow.cost = Math.floor(5 * Math.pow(1.1, sparrow.amount));
 	magpie.cost = Math.floor(100 * Math.pow(1.1, magpie.amount));
+	squirrel.cost = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
 	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost);
 	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost);
+	document.getElementById("squirrelCost").innerHTML = fixValue(squirrel.cost);
 };
 
 function updateAll(){
@@ -208,6 +236,7 @@ function fixValue(resource) {
 window.setInterval(function() {
 	seedCollect(seed.rate);
 	goldCollect(gold.rate);
+	acornCollect(acorn.rate);
 	updateResources();
 }, 1000);		// fires every 1000ms
 

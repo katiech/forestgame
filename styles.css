@@ -53,20 +53,19 @@ button:hover {
 }
 
 #left {
-	width: calc(15vw - 1px);
+	width: calc(17.5vw - 1px);
 	border-right: 1px solid black;
 }
 
 #center1{
-	width: calc(50vw - 1px);
+	width: calc(45vw - 1px);
 	text-align: center;
 	border-right: 1px solid black;
 	z-index:3;
 }
 
 #center2{
-
-	width: calc(50vw - 1px);
+	width: calc(45vw - 1px);
 	text-align: center;
 	border-right: 1px solid black;
 	display:none;
@@ -74,7 +73,7 @@ button:hover {
 }
 
 #center3{
-	width: calc(50vw - 1px);
+	width: calc(45vw - 1px);
 	text-align: center;
 	border-right: 1px solid black;
 	display:none;
@@ -82,7 +81,7 @@ button:hover {
 }
 
 #right {
-	width: 15vw;
+	width: 17.5vw;
 }
 
 #log {

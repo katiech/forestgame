@@ -81,7 +81,7 @@ button:hover {
 }
 
 #log {
-	overflow-y: scroll;
+	overflow-y: auto;
 	max-height: calc(74vh - 14px - 30px);
 }
 

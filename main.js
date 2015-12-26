@@ -21,7 +21,7 @@ function GameLoad() {
 		updateLog("Game Loaded!");
 		updateAll();
 	} else {
-		updateLog("There is no existing game file!");
+		updateLog("There is no existing game file. Please remember to save.");
 	};
 };
 
@@ -68,27 +68,24 @@ function show3() {
 // C U R R E N C I E S
 
 var seed = {
+	name: 'seed',
 	amount: 0,
 	rate: 1
 };
-function seedCollect(number) {
-	seed.amount = seed.amount + number;
-};
-
 var gold = {
+	name: 'gold',
 	amount: 0,
 	rate: 0
 }
-function goldCollect(number) {
-	gold.amount = gold.amount + number;
-};
-
 var acorn = {
+	name: 'acorn',
 	amount: 0,
 	rate: 0
 };
-function acornCollect(number) {
-	acorn.amount = acorn.amount + number;
+var currencies = [seed, gold, acorn];
+
+function currencyCollect(currency) {
+	currency.amount += currency.rate;
 };
 
 
@@ -103,7 +100,6 @@ var sparrow = {
 	rate: 0, 		// Rate sparrows are being increased.
 	seedRate: 1 	// Rate of seed gained per sparrow.
 };
-
 var magpie = {
 	name: 'magpie',
 	plural: 'magpies',
@@ -113,7 +109,6 @@ var magpie = {
 	seedRate: 10,
 	goldRate: 0.1
 };
-
 var squirrel = {
 	name: 'squirrel',
 	plural: 'squirrels',
@@ -123,11 +118,12 @@ var squirrel = {
 	seedRate: 1000,
 	acornRate: 0.1
 };
+var animals = [sparrow, magpie, squirrel];
 
 function buyAnimal(animal, num) {
 	if (seed.amount >= animal.cost * num) {
 		animal.amount = animal.amount + num;
-		seed.amount = seed.amount - animal.cost * num;
+		seed.amount -= animal.cost * num;
 		updateResources();
 		updateRates();
 		updateCosts();
@@ -150,6 +146,8 @@ function buyAnimal(animal, num) {
 
 
 
+var buyAmount = 1;
+
 function setBuy(num) {
 	// Bold selected and unbold everything else.
 	var buyNums = [1, 10, 25, 100];
@@ -157,6 +155,7 @@ function setBuy(num) {
 		document.getElementById("buy" + buyNums[b]).setAttribute("class", "unbold");
 	}
 	document.getElementById("buy" + num).setAttribute("class", "bold");
+	buyAmount = num;
 
 	// Fix displayed cost values.
 	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost * num);
@@ -171,13 +170,21 @@ function setBuy(num) {
 
 
 
+
+
+function collectCurrencies() {
+	for (r = 0; r < currencies.length; r++) {
+		currencyCollect(currencies[r]);
+	}
+};
+
 function updateResources() {
-	document.getElementById("seed").innerHTML = fixValue(seed.amount);
-	document.getElementById("gold").innerHTML = fixValue(gold.amount);
-	document.getElementById("acorn").innerHTML = fixValue(acorn.amount);
-	document.getElementById("sparrow").innerHTML = fixValue(sparrow.amount);
-	document.getElementById("magpie").innerHTML = fixValue(magpie.amount);
-	document.getElementById("acorn").innerHTML = fixValue(acorn.amount);
+	for (r = 0; r < currencies.length; r++) {
+		document.getElementById(currencies[r].name).innerHTML = fixValue(currencies[r].amount);
+	}
+	for (a = 0; a < animals.length; a++) {
+		document.getElementById(animals[a].name).innerHTML = fixValue(animals[a].amount);
+	}
 };
 
 function updateRates() {
@@ -187,18 +194,18 @@ function updateRates() {
 					1;
 	gold.rate = 	magpie.amount * magpie.goldRate;
 	acorn.rate = 	squirrel.amount * squirrel.acornRate;
-	document.getElementById("seedRate").innerHTML = fixValue(seed.rate);
-	document.getElementById("goldRate").innerHTML = fixValue(gold.rate);
-	document.getElementById("acornRate").innerHTML = fixValue(acorn.rate);
+	for (r = 0; r < currencies.length; r++) {
+		document.getElementById(currencies[r].name + "Rate").innerHTML = fixValue(currencies[r].rate);
+	}
 };
 
 function updateCosts() {
 	sparrow.cost = Math.floor(5 * Math.pow(1.1, sparrow.amount));
 	magpie.cost = Math.floor(100 * Math.pow(1.1, magpie.amount));
 	squirrel.cost = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
-	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost);
-	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost);
-	document.getElementById("squirrelCost").innerHTML = fixValue(squirrel.cost);
+	for (a = 0; a < animals.length; a++) {
+		document.getElementById(animals[a].name + "Cost").innerHTML = fixValue(animals[a].cost * buyAmount);
+	}
 };
 
 function updateAll(){
@@ -234,9 +241,7 @@ function fixValue(resource) {
 
 
 window.setInterval(function() {
-	seedCollect(seed.rate);
-	goldCollect(gold.rate);
-	acornCollect(acorn.rate);
+	collectCurrencies();
 	updateResources();
 }, 1000);		// fires every 1000ms
 
@@ -249,7 +254,7 @@ function updateLog(string){
 }
 
 function clearLog() {
-	document.getElementById("log").innerHTML = ">>";
+	document.getElementById("log").innerHTML = "Log is cleared.";
 }
 
 

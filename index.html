@@ -71,40 +71,40 @@
 				The Glade
 			</div>
 
-			<br><br>
+			<div class="text">
+				<p>
+					Buy Amount: <span id="buy1" class="bold" onclick="setBuy(1)">1x</span> |
+								<span id="buy10" onclick="setBuy(10)">10x</span> |
+								<span id="buy25" onclick="setBuy(25)">25x</span> |
+								<span id="buy100" onclick="setBuy(100)">100x</span>
+				</p>
 
-			Buy Amount: <span id="buy1" class="bold" onclick="setBuy(1)">1x</span> |
-						<span id="buy10" onclick="setBuy(10)">10x</span> |
-						<span id="buy25" onclick="setBuy(25)">25x</span> |
-						<span id="buy100" onclick="setBuy(100)">100x</span>
+				<div id="square"></div>
 
-			<br><br>
+				<br>
 
-			<div id="square"></div>
+				<div class="animalbutton">
+					<button id="buySparrow" type="button" onClick="buyAnimal(sparrow, 1)">Befriend Sparrow</button><br>
+					<b>Cost</b>: <span id="sparrowCost">5</span>
+				</div>
 
-			<br>
+				<div class="animalbutton">
+					<button id="buyMagpie" type="button" onClick="buyAnimal(magpie, 1)">Befriend Magpie</button><br>
+					<b>Cost</b>: <span id="magpieCost">100</span>
+				</div>
 
-			<div class="animalbutton">
-				<button id="buySparrow" type="button" onClick="buyAnimal(sparrow, 1)">Befriend Sparrow</button><br>
-				<b>Cost</b>: <span id="sparrowCost">5</span>
+				<div class="animalbutton">
+					<button id="buySquirrel" type="button" onClick="buyAnimal(squirrel, 1)">Befriend Squirrel</button><br>
+					<b>Cost</b>: <span id="squirrelCost">10K</span>
+				</div>
+
+				<br><br>
+
+				<button type="button" onClick="clearLog()">Clear Log</button> <br><br>
+
+				<button type="button" onClick="GameSave()">Save</button><br>
+				<button type="button" onClick="GameLoad()">Load</button><br>
 			</div>
-
-			<div class="animalbutton">
-				<button id="buyMagpie" type="button" onClick="buyAnimal(magpie, 1)">Befriend Magpie</button><br>
-				<b>Cost</b>: <span id="magpieCost">100</span>
-			</div>
-
-			<div class="animalbutton">
-				<button id="buySquirrel" type="button" onClick="buyAnimal(squirrel, 1)">Befriend Squirrel</button><br>
-				<b>Cost</b>: <span id="squirrelCost">10K</span>
-			</div>
-
-			<br><br>
-
-			<button type="button" onClick="clearLog()">Clear Log</button> <br><br>
-
-			<button type="button" onClick="GameSave()">Save</button><br>
-			<button type="button" onClick="GameLoad()">Load</button><br>
 
 		</div>
 
@@ -115,12 +115,43 @@
 
 		<div id="center2" class="box">
 			<div class="boxtitle">
-				Center 2
+				The Garden
 			</div>
 
-			<br><br>
+			<div class="text">
 
-			Center 2 Stuff
+				<table class="garden">
+					<tr>
+						<td class="plot" id="plot0">
+							plot 1
+						</td>
+						<td class="plot">
+							plot 2
+						</td>
+						<td class="plot">
+							plot 3
+						</td>
+						<td class="plot">
+							plot 4
+						</td>
+					</tr>
+					<tr>
+						<td class="plot">
+							plot 5
+						</td>
+						<td class="plot">
+							plot 6
+						</td>
+						<td class="plot">
+							plot 7
+						</td>
+						<td class="plot">
+							plot 8
+						</td>
+					</tr>
+				</table>
+
+			</div>
 
 		</div>
 
@@ -168,7 +199,7 @@
 			</div>
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show2()">Show 2</button>
+				<button type="button" class="nav" onClick="show2()">The Garden</button>
 			</div>
 
 			<div class="bottombox">

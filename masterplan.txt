@@ -4,31 +4,26 @@ F O R E S T  G A M E
 		Katie Chang & Emilee Chen
 			Sept. 2015
 
+
+
+STORY
+	You are a tree spirit that comes out of a plant and your task is to bring back magic to the forest and make it flourish again?
+
+
 TODO
-
-	ADD SAVE SYSTEM !!!
-		Cookies or encrypted sequence???? both?????
-
-    WIP:
-	** implement changing middle panel with bottom nav buttons
-
 	Main
 		Currency: gold, seeds >> Search can either find gold, seeds or rare seeds?
-		Found this on stackoverflow for weighted randomizations, but you probably have a better way to do it:
-
-		function randomWithProbability() {
- 	   	 var notRandomNumbers = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
-  			var idx = Math.floor(Math.random() * notRandomNumbers.length);
-  			return notRandomNumbers[idx];
-				}
-                      // if 1, add seed, if 2, add gold, etc?
-
-		so we can have functions add/take away from the array to change probabilities/add new chance items when searching?		
+			consolidate seedCollect, goldCollect, etc. into currencyCollect(currency, num)
 
 		Animals:
 			1. birds		5 seeds 			1 seed/s
 			2. magpies		100? seeds			10? seed/s + gold???
-			3. ???			another currency
+			3. squrrels		10000 seeds			1000 seeds/s + acorns
+			4. rabbits
+			?. raccoons
+			?. foxes
+			?. deer
+			?. wolves		?????? R WE GONNA SACRIFICE FRIENDS????
 
 			birds (recruit with seeds)
 			      -magpies randomly find jewels? <--use bottom left scrollable panel for "random events" log?
@@ -38,6 +33,15 @@ TODO
 			Animals to recruit (buttons) are all silhouette with question marks until previous animal is recruited
 				update image to real image when "unlocked"
 			Animal/currency number and rate not added to inventory until unlocked
+
+	Exploration/search?????
+		every hour?? you can go on a "expedition"????
+		brings back gold and other items
+			some exploration only items tat are needed for the garden/alchemy lab????
+			brings back collectables/artifacts????
+
+	Nursery
+		build nests to have + sparrows per second etc.
 
 	Garden
 		Search can randomly get _____ special seeds, and you can plant it in your garden.
@@ -57,13 +61,45 @@ TODO
 		Make potions from supplies
 		Potions give a boost for a specific amount of time: increased gold rate, luck boost for treasure?
 
+	Creature Log
+		draw individual pictures and have descriptions (in addition to the middle panel updating like the shark game)
 
-STORY IDEA
-	You are a tree spirit that comes out of a plant and your task is to bring back magic to the forest and make it flourish again?
+WIP
+	ADD SAVE SYSTEM !!!
+		Cookies or encrypted sequence???? both?????
+		need to add a savefile parser that can make sure that the objects in savefiles have the correct attributes
+			> don't load a object directly, parse it in
+
+DONE
+	implement changing middle panel with bottom nav buttons
 
 
-IDEAS:
-	creature log? so we can draw individual pictures and have descriptions (in addition to the middle panel updating like the shark game)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		Found this on stackoverflow for weighted randomizations, but you probably have a better way to do it:
+
+		function randomWithProbability() {
+ 	   	 var notRandomNumbers = [1, 1, 1, 1, 2, 2, 2, 3, 3, 4];
+  			var idx = Math.floor(Math.random() * notRandomNumbers.length);
+  			return notRandomNumbers[idx];
+				}
+                      // if 1, add seed, if 2, add gold, etc?
+
+		so we can have functions add/take away from the array to change probabilities/add new chance items when searching?		
+
 
 
 

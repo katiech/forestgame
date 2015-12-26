@@ -34,7 +34,9 @@
 					<img src="img/seed.gif" class="pixel"> 
 						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s) <br>
 					<img src="img/seed.gif" class="pixel">		<!-- Change this to gold pixel image -->
-						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s)
+						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s) <br>
+					<img src="img/seed.gif" class="pixel">
+						<b>Acorns:</b> <span id="acorn">0</span> (+<span id="acornRate">0</span>/s)
 				</p>
 			</div>
 
@@ -45,7 +47,8 @@
 			<div class="text">
 				<p>
 					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
-					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s)
+					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s) <br>
+					<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s)
 				</p>
 			</div>
 
@@ -79,20 +82,26 @@
 
 			<div id="square"></div>
 
-			<br><br>
-<!-- 			<button type="button" onClick="Add()">Add</button><br><br> -->
+			<br>
 
 			<div class="animalbutton">
-				<button id="buySparrow" type="button" onClick="buySparrow(1)">Befriend Sparrow</button><br>
-				<b>Cost</b>:<span id="sparrowCost">5</span>
+				<button id="buySparrow" type="button" onClick="buyAnimal(sparrow, 1)">Befriend Sparrow</button><br>
+				<b>Cost</b>: <span id="sparrowCost">5</span>
 			</div>
 
 			<div class="animalbutton">
-				<button id="buyMagpie" type="button" onClick="buyMagpie(1)">Befriend Magpie</button><br>
-				<b>Cost</b>:<span id="magpieCost">100</span>
-			</div><br><br><br>
+				<button id="buyMagpie" type="button" onClick="buyAnimal(magpie, 1)">Befriend Magpie</button><br>
+				<b>Cost</b>: <span id="magpieCost">100</span>
+			</div>
 
-			<button type="button" onClick="clearLog()">Clear Log</button><p>
+			<div class="animalbutton">
+				<button id="buySquirrel" type="button" onClick="buyAnimal(squirrel, 1)">Befriend Squirrel</button><br>
+				<b>Cost</b>: <span id="squirrelCost">10K</span>
+			</div>
+
+			<br><br>
+
+			<button type="button" onClick="clearLog()">Clear Log</button> <br><br>
 
 			<button type="button" onClick="GameSave()">Save</button><br>
 			<button type="button" onClick="GameLoad()">Load</button><br>
@@ -129,7 +138,11 @@
 
 			<br><br>
 
-			Manual save, set auto-save frequency, delete save file, etc.
+			Manual save/load, set auto-save frequency, delete save file, etc.
+
+			<br><br>
+
+			<button type="button" onClick="GameDelete()">Delete</button><br>
 
 		</div>
 

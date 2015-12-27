@@ -20,7 +20,7 @@ TODO
 			2. magpies		100? seeds			10? seed/s + gold???
 			3. squrrels		10000 seeds			1000 seeds/s + acorns
 			4. rabbits
-			?. raccoons
+			?. raccoons		acorns
 			?. foxes
 			?. deer
 			?. wolves		?????? R WE GONNA SACRIFICE FRIENDS????

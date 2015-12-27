@@ -21,7 +21,7 @@ function GameLoad() {
 		updateLog("Game Loaded!");
 		updateAll();
 	} else {
-		updateLog("There is no existing game file!");
+		updateLog("There is no existing game file. Please remember to save.");
 	};
 };
 
@@ -68,27 +68,39 @@ function show3() {
 // C U R R E N C I E S
 
 var seed = {
+	name: 'seed',
+	plural: 'seeds',
 	amount: 0,
 	rate: 1
 };
-function seedCollect(number) {
-	seed.amount = seed.amount + number;
-};
-
 var gold = {
+	name: 'gold',
+	plural: 'gold',
 	amount: 0,
 	rate: 0
 }
-function goldCollect(number) {
-	gold.amount = gold.amount + number;
-};
-
 var acorn = {
+	name: 'acorn',
+	plural: 'acorns',
 	amount: 0,
 	rate: 0
 };
-function acornCollect(number) {
-	acorn.amount = acorn.amount + number;
+var grass = {
+	name: 'grass',
+	plural: 'grass',
+	amount: 0,
+	rate: 0
+};
+var carrot = {
+	name: 'carrot',
+	plural: 'carrots',
+	amount: 0,
+	rate: 0
+};
+var currencies = [seed, gold, acorn, grass, carrot];
+
+function currencyCollect(currency) {
+	currency.amount += currency.rate;
 };
 
 
@@ -99,35 +111,54 @@ var sparrow = {
 	name: 'sparrow',
 	plural: 'sparrows',
 	amount: 0,
-	cost: 5,		// seeds
+	cost: [0, 5],			// seeds 0
 	rate: 0, 		// Rate sparrows are being increased.
 	seedRate: 1 	// Rate of seed gained per sparrow.
 };
-
 var magpie = {
 	name: 'magpie',
 	plural: 'magpies',
 	amount: 0,
-	cost: 100, 		// seeds
+	cost: [0, 100], 		// seeds 0
 	rate: 0,
 	seedRate: 10,
 	goldRate: 0.1
 };
-
 var squirrel = {
 	name: 'squirrel',
 	plural: 'squirrels',
 	amount: 0,
-	cost: 10000, 	// seeds
+	cost: [0, 10000], 		// seeds 0
 	rate: 0,
 	seedRate: 1000,
 	acornRate: 0.1
 };
+var rabbit = {
+	name: 'rabbit',
+	plural: 'rabbits',
+	amount: 0,
+	cost: [3, 10], 			// grass 3
+	rate: 0,
+	seedRate: 100,
+	carrotRate: 0.1
+};
+var raccoon = {
+	name: 'raccoon',
+	plural: 'raccoons',
+	amount: 0,
+	cost: [2, 100], 		// acorns 2
+	rate: 0,
+	seedRate: 1000,
+	acornRate: 10
+};
+var animals = [sparrow, magpie, squirrel, rabbit, raccoon];
 
 function buyAnimal(animal, num) {
-	if (seed.amount >= animal.cost * num) {
-		animal.amount = animal.amount + num;
-		seed.amount = seed.amount - animal.cost * num;
+	var res = currencies[animal.cost[0]]
+	var val = animal.cost[1]
+	if (res.amount >= val * num) {
+		animal.amount += num;
+		res.amount -= val * num;
 		updateResources();
 		updateRates();
 		updateCosts();
@@ -139,16 +170,18 @@ function buyAnimal(animal, num) {
 		};
 	} else {
 		if (num > 1) {
-			updateLog("You don't have enough seeds to befriend " + num + " " + animal.plural + ".");
+			updateLog("You don't have enough " + res.plural + " to befriend " + num + " " + animal.plural + ".");
 		} else {
 			// Do something about a or an?????
-			updateLog("You don't have enough seeds to befriend a " + animal.name + ".");
+			updateLog("You don't have enough " + res.plural + " to befriend a " + animal.name + ".");
 		};
 	};
 };
 
 
 
+
+var buyAmount = 1;
 
 function setBuy(num) {
 	// Bold selected and unbold everything else.
@@ -157,27 +190,34 @@ function setBuy(num) {
 		document.getElementById("buy" + buyNums[b]).setAttribute("class", "unbold");
 	}
 	document.getElementById("buy" + num).setAttribute("class", "bold");
+	buyAmount = num;
 
-	// Fix displayed cost values.
-	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost * num);
-	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost * num);
-	document.getElementById("squirrelCost").innerHTML = fixValue(squirrel.cost * num);
+	for (a = 0; a < animals.length; a++) {
+		// Fix displayed cost values.
+		document.getElementById(animals[a].name + "Cost").innerHTML = fixValue(animals[a].cost[1] * num);
+		// Change "onclick" for the buttons.
+		document.getElementById("buy" + capitalize(animals[a].name)).setAttribute("onclick", "buyAnimal(" + animals[a].name + ", " + num + ")");
+	}
 
-	// Change "onclick" for the buttons.
-	document.getElementById("buySparrow").setAttribute("onclick", "buyAnimal(sparrow, " + num + ")");
-	document.getElementById("buyMagpie").setAttribute("onclick", "buyAnimal(magpie, " + num + ")");
-	document.getElementById("buySquirrel").setAttribute("onclick", "buyAnimal(squirrel, " + num + ")");
 };
 
 
 
+
+
+function collectCurrencies() {
+	for (r = 0; r < currencies.length; r++) {
+		currencyCollect(currencies[r]);
+	}
+};
+
 function updateResources() {
-	document.getElementById("seed").innerHTML = fixValue(seed.amount);
-	document.getElementById("gold").innerHTML = fixValue(gold.amount);
-	document.getElementById("acorn").innerHTML = fixValue(acorn.amount);
-	document.getElementById("sparrow").innerHTML = fixValue(sparrow.amount);
-	document.getElementById("magpie").innerHTML = fixValue(magpie.amount);
-	document.getElementById("acorn").innerHTML = fixValue(acorn.amount);
+	for (r = 0; r < currencies.length; r++) {
+		document.getElementById(currencies[r].name).innerHTML = fixValue(currencies[r].amount);
+	}
+	for (a = 0; a < animals.length; a++) {
+		document.getElementById(animals[a].name).innerHTML = fixValue(animals[a].amount);
+	}
 };
 
 function updateRates() {
@@ -187,18 +227,20 @@ function updateRates() {
 					1;
 	gold.rate = 	magpie.amount * magpie.goldRate;
 	acorn.rate = 	squirrel.amount * squirrel.acornRate;
-	document.getElementById("seedRate").innerHTML = fixValue(seed.rate);
-	document.getElementById("goldRate").innerHTML = fixValue(gold.rate);
-	document.getElementById("acornRate").innerHTML = fixValue(acorn.rate);
+	for (r = 0; r < currencies.length; r++) {
+		document.getElementById(currencies[r].name + "Rate").innerHTML = fixValue(currencies[r].rate);
+	}
 };
 
 function updateCosts() {
-	sparrow.cost = Math.floor(5 * Math.pow(1.1, sparrow.amount));
-	magpie.cost = Math.floor(100 * Math.pow(1.1, magpie.amount));
-	squirrel.cost = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
-	document.getElementById("sparrowCost").innerHTML = fixValue(sparrow.cost);
-	document.getElementById("magpieCost").innerHTML = fixValue(magpie.cost);
-	document.getElementById("squirrelCost").innerHTML = fixValue(squirrel.cost);
+	sparrow.cost[1] = Math.floor(5 * Math.pow(1.1, sparrow.amount));
+	magpie.cost[1] = Math.floor(100 * Math.pow(1.1, magpie.amount));
+	squirrel.cost[1] = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
+	for (a = 0; a < animals.length; a++) {
+		console.log(animals[a].cost[1], buyAmount);
+		console.log(animals[a].name + "Cost");
+		document.getElementById(animals[a].name + "Cost").innerHTML = fixValue(animals[a].cost[1] * buyAmount);
+	}
 };
 
 function updateAll(){
@@ -229,14 +271,15 @@ function fixValue(resource) {
 	return resource;
 };
 
+function capitalize(s) {
+    return s && s[0].toUpperCase() + s.slice(1);
+}
 
 
 
 
 window.setInterval(function() {
-	seedCollect(seed.rate);
-	goldCollect(gold.rate);
-	acornCollect(acorn.rate);
+	collectCurrencies();
 	updateResources();
 }, 1000);		// fires every 1000ms
 
@@ -249,7 +292,7 @@ function updateLog(string){
 }
 
 function clearLog() {
-	document.getElementById("log").innerHTML = ">>";
+	document.getElementById("log").innerHTML = "Log is cleared.";
 }
 
 

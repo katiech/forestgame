@@ -5,10 +5,6 @@ body, html {
 	color:black;
 }
 
-iframe{
-
-}
-
 a{
 	color: white;
 	text-decoration: none;
@@ -85,7 +81,7 @@ button:hover {
 }
 
 #log {
-	overflow-y: scroll;
+	overflow-y: auto;
 	max-height: calc(74vh - 14px - 30px);
 }
 
@@ -166,4 +162,21 @@ button:hover {
 .unbold {
 	font-weight: normal;
 }
+
+
+
+
+table.garden {
+	width: calc(100% - 2vw);
+	margin: 1vw;
+	text-align: center;
+	border: 2px #855E42 solid;
+}
+
+table td.plot {
+	padding: 0;
+	background-color: #CDAF95;
+}
+
+
 

@@ -165,22 +165,22 @@ function buyAnimal(animal, num) {
 		if (num > 1) {
 			updateLog("You have befriended " + num + " " + animal.plural + "! Wow!");
 		} else {
-			updateLog("You have befriended " + article(animal));
+			updateLog("You have befriended " + article(animal) + ".");
 		};
 	} else {
 		if (num > 1) {
 			updateLog("You don't have enough " + res.plural + " to befriend " + num + " " + animal.plural + ".");
 		} else {
-			updateLog("You don't have enough " + res.plural + " to befriend " + article(animal));
+			updateLog("You don't have enough " + res.plural + " to befriend " + article(animal) + ".");
 		};
 	};
 };
 
 function article(animal){
- if ("aeiou".indexOf(animal.name[0]) >= 0){
-     return "an " + animal.name + ".";
-    } else {
-		return "a " + animal.name + "."
+	if ("aeiou".indexOf(animal.name[0]) >= 0){
+		return "an " + animal.name;
+	} else {
+		return "a " + animal.name;
     };
 };
 

@@ -27,6 +27,16 @@ button:hover {
 	background-color: grey;
 }
 
+button:disabled{
+	background-color:#eee;
+	text-decoration: line-through;
+}
+
+button:disabled:hover{
+	background-color:#eee;
+	text-decoration: line-through;
+}
+
 #container {
 	width: 80vw;
 	height: 80vh;
@@ -45,6 +55,10 @@ button:hover {
 }
 
 .animalbutton{
+	display:inline-block;
+}
+
+.explorebutton{
 	display:inline-block;
 }
 

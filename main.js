@@ -300,3 +300,23 @@ function clearLog() {
 
 
 
+// E X P L O R A T I O N
+
+function exploreM(button){
+
+    button.setAttribute('disabled', true);
+ 	document.getElementById("mTime").innerHTML = "Time Left:"; // need countdown
+	updateLog("Expedition started.");
+
+    setTimeout(function(){
+        button.removeAttribute('disabled');
+        document.getElementById("mTime").innerHTML = "";  
+
+        //stuff that happens when you return
+
+        updateLog("Expedition returned");    
+
+    }, 8000) //expedition length
+}
+
+

@@ -36,7 +36,11 @@
 					<img src="img/seed.gif" class="pixel">		<!-- Change this to gold pixel image -->
 						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s) <br>
 					<img src="img/seed.gif" class="pixel">
-						<b>Acorns:</b> <span id="acorn">0</span> (+<span id="acornRate">0</span>/s)
+						<b>Acorns:</b> <span id="acorn">0</span> (+<span id="acornRate">0</span>/s) <br>
+					<img src="img/seed.gif" class="pixel">
+						<b>Grass:</b> <span id="grass">0</span> (+<span id="grassRate">0</span>/s) <br>
+					<img src="img/seed.gif" class="pixel">
+						<b>Carrots:</b> <span id="carrot">0</span> (+<span id="carrotRate">0</span>/s)
 				</p>
 			</div>
 
@@ -48,7 +52,9 @@
 				<p>
 					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
 					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s) <br>
-					<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s)
+					<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s) <br>
+					<b>Raccoons:</b> <span id="raccoon">0</span> (+<span id="raccoonRate">0</span>/s) <br>
+					<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s)
 				</p>
 			</div>
 
@@ -85,17 +91,27 @@
 
 				<div class="animalbutton">
 					<button id="buySparrow" type="button" onClick="buyAnimal(sparrow, 1)">Befriend Sparrow</button><br>
-					<b>Cost</b>: <span id="sparrowCost">5</span>
+					<b>Cost</b>: <span id="sparrowCost">5</span> seeds
 				</div>
 
 				<div class="animalbutton">
 					<button id="buyMagpie" type="button" onClick="buyAnimal(magpie, 1)">Befriend Magpie</button><br>
-					<b>Cost</b>: <span id="magpieCost">100</span>
+					<b>Cost</b>: <span id="magpieCost">100</span> seeds
 				</div>
 
 				<div class="animalbutton">
 					<button id="buySquirrel" type="button" onClick="buyAnimal(squirrel, 1)">Befriend Squirrel</button><br>
-					<b>Cost</b>: <span id="squirrelCost">10K</span>
+					<b>Cost</b>: <span id="squirrelCost">10K</span> seeds
+				</div>
+
+				<div class="animalbutton">
+					<button id="buyRabbit" type="button" onClick="buyAnimal(rabbit, 1)">Befriend Rabbit</button><br>
+					<b>Cost</b>: <span id="rabbitCost">10</span> grass
+				</div>
+
+				<div class="animalbutton">
+					<button id="buyRaccoon" type="button" onClick="buyAnimal(raccoon, 1)">Befriend Raccoon</button><br>
+					<b>Cost</b>: <span id="raccoonCost">100</span> acorns
 				</div>
 
 				<br><br>

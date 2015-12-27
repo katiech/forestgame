@@ -142,16 +142,16 @@ var rabbit = {
 	seedRate: 100,
 	carrotRate: 0.1
 };
-var raccoon = {
-	name: 'raccoon',
-	plural: 'raccoons',
+var otter = {
+	name: 'otter',
+	plural: 'otters',
 	amount: 0,
-	cost: [2, 100], 		// acorns 2
+	cost: [3, 100], 		// acorns 2
 	rate: 0,
 	seedRate: 1000,
 	acornRate: 10
 };
-var animals = [sparrow, magpie, squirrel, rabbit, raccoon];
+var animals = [sparrow, magpie, squirrel, rabbit, otter];
 
 function buyAnimal(animal, num) {
 	var res = currencies[animal.cost[0]]
@@ -165,21 +165,24 @@ function buyAnimal(animal, num) {
 		if (num > 1) {
 			updateLog("You have befriended " + num + " " + animal.plural + "! Wow!");
 		} else {
-			// Do something about a or an?????
-			updateLog("You have befriended a " + animal.name + ".");
+			updateLog("You have befriended " + article(animal));
 		};
 	} else {
 		if (num > 1) {
 			updateLog("You don't have enough " + res.plural + " to befriend " + num + " " + animal.plural + ".");
 		} else {
-			// Do something about a or an?????
-			updateLog("You don't have enough " + res.plural + " to befriend a " + animal.name + ".");
+			updateLog("You don't have enough " + res.plural + " to befriend " + article(animal));
 		};
 	};
 };
 
-
-
+function article(animal){
+ if ("aeiou".indexOf(animal.name[0]) >= 0){
+     return "an " + animal.name + ".";
+    } else {
+		return "a " + animal.name + "."
+    };
+};
 
 var buyAmount = 1;
 

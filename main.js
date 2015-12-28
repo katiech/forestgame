@@ -89,13 +89,16 @@ var grass = {
 	name: 'grass',
 	plural: 'grass',
 	amount: 0,
-	rate: 0
+	rate: 0,
+	// garden properties
+	timer: 10 		// takes 10 seconds to finish growing
 };
 var carrot = {
 	name: 'carrot',
 	plural: 'carrots',
 	amount: 0,
-	rate: 0
+	rate: 0,
+	timer: 20
 };
 var currencies = [seed, gold, acorn, grass, carrot];
 
@@ -297,6 +300,37 @@ function updateLog(string){
 function clearLog() {
 	document.getElementById("log").innerHTML = "Log is cleared.";
 }
+
+
+
+
+// T H E  G A R D E N
+
+function plot(state, id) {
+	this.name = "plot" + id;
+	this.state = state;			// locked, empty, plowed, growing, ready
+	this.timer = null;
+	this.plant = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
+}
+
+var garden = [];
+var numPlots = 1;
+function initalizeGarden() {
+	for (var i = 0; i < plots; i++) {
+		garden.push(new plot(1, i));
+		// document.getElementById("plot" + i).innerHTML = "plant seed";
+	}	
+}
+
+var plants = [grass, carrot];
+
+function plantSeed(plot) {
+	garden[plot].plant = Math.floor(Math.random() * plants.length);
+
+}
+
+
+
 
 
 

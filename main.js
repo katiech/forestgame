@@ -325,8 +325,9 @@ function initalizeGarden() {
 var plants = [grass, carrot];
 
 function plantSeed(plot) {
-	garden[plot].plant = Math.floor(Math.random() * plants.length);
-
+	var p = Math.floor(Math.random() * plants.length);
+	garden[plot].plant = p;
+	garden[plot].timer = plants[p].timer; 		// or start an event??????
 }
 
 

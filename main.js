@@ -346,15 +346,15 @@ function gardenTable() {
 			var idNum = i * rowPlots + j;
 			var td = tr.insertCell();
 			td.setAttribute('class', 'plot');
-			// Create Timer
+			// Create timer
 			var timer = td.appendChild(document.createElement("DIV"));
+			timer.setAttribute('id', 'plotTimer' + idNum);
 			timer.setAttribute('class', 'plotTimer');
-			timer.innerHTML = "00:00";
-			// Create 
+			// Create plot images
 			var img = td.appendChild(document.createElement("IMG"));
 			img.setAttribute('id', 'plot' + idNum);
-			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
 			img.setAttribute('class', 'plant');
+			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
 		}
 	}
 }
@@ -381,22 +381,10 @@ function plantPlot(plot) {
 	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
 	garden[plot].crop = p;
 	garden[plot].state = 2;
-	garden[plot].growthTime = plants[p].growthTime * 1000; 		// or start an event??????	
+	garden[plot].growthTime = plants[p].growthTime; 			// or start an event??????
+	document.getElementById("plotTimer" + plot).innerHTML = secondsToTime(plants[p].growthTime);
 	reimagePlot(plot);
 	updateLog("Planted a " + plants[p].name + ".");
-	// setTimeout(function() {
-	// 	document.getElementById("mTime").innerHTML = "";  
-
- //        //stuff that happens when you return
-
- //        var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
- //        var randomAmount = Math.floor(Math.random() * 100) + 1  
- //        randomCurrency.amount += randomAmount;
-
- //        updateLog("Expedition returned");  
- //        updateLog("Found " + String(randomAmount) + " " + randomCurrency.plural + "."); 
-
- //    }, 8000) //expedition length
 }
 
 function plotAction(plot) {
@@ -407,7 +395,24 @@ function plotAction(plot) {
 	}
 }
 
+function secondsToTime(seconds) {
+	var hours   = Math.floor(seconds / 3600);
+	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+	var seconds = seconds - (hours * 3600) - (minutes * 60);
+	var time = "";
 
+	if (hours != 0) {
+		time = hours + ":";
+	} if (minutes != 0 || time !== "") {
+		minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
+		time += minutes + ":";
+	} if (time === "") {
+		time = seconds + "s";
+    } else {
+		time += (seconds < 10) ? "0"+seconds : String(seconds);
+	}
+	return time;
+}
 
 
 

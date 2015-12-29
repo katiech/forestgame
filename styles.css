@@ -189,8 +189,8 @@ button:disabled:hover{
 
 
 table#garden {
-	width: 40vw;
-	height: 40vw;
+	width: min(40vw, 72vh);
+	height: min(40vw, 72vh);
 	margin: 1vw;
 	text-align: center;
 	/*border: 2px #855E42 solid;*/
@@ -199,8 +199,8 @@ table#garden {
 
 table td.plot {
 	padding: 0;
-	width: 10vw;
-	height: 10vw;
+	width: min(10vw, 18vh);
+	height: min(10vw, 18vh);
 	background-color: #CDAF95;
 	background-image: url(img/plot.gif);
 	background-size: 100%;

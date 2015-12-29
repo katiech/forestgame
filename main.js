@@ -91,14 +91,14 @@ var grass = {
 	amount: 0,
 	rate: 0,
 	// garden properties
-	timer: 10 		// takes 10 seconds to finish growing
+	growthTime: 10 		// takes 10 seconds to finish growing
 };
 var carrot = {
 	name: 'carrot',
 	plural: 'carrots',
 	amount: 0,
 	rate: 0,
-	timer: 20
+	growthTime: 20
 };
 var currencies = [seed, gold, acorn, grass, carrot];
 
@@ -308,9 +308,9 @@ function clearLog() {
 
 function plot(state, id) {
 	this.name = "plot" + id;
-	this.state = state;			// locked, empty, plowed, growing, ready
-	this.timer = null;
-	this.plant = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
+	this.state = state;			// locked, empty, growing, ready
+	this.growthTime = null;
+	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
 }
 
 var garden = [];
@@ -325,9 +325,12 @@ function initalizeGarden() {
 var plants = [grass, carrot];
 
 function plantSeed(plot) {
-	var p = Math.floor(Math.random() * plants.length);
-	garden[plot].plant = p;
-	garden[plot].timer = plants[p].timer; 		// or start an event??????
+	if (plot.state == 2) {
+		var p = Math.floor(Math.random() * plants.length);
+		garden[plot].crop = p;
+		garden[plot].growthTime = plants[p].timer * 1000; 		// or start an event??????	
+		updateLog("Planted a " + plants[p].name + ".");
+	}
 }
 
 

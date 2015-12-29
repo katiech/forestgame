@@ -346,37 +346,18 @@ function gardenTable() {
 			var idNum = i * rowPlots + j;
 			var td = tr.insertCell();
 			td.setAttribute('class', 'plot');
+			// Create Timer
+			var timer = td.appendChild(document.createElement("DIV"));
+			timer.setAttribute('class', 'plotTimer');
+			timer.innerHTML = "00:00";
+			// Create 
 			var img = td.appendChild(document.createElement("IMG"));
-			// img.setAttribute('src', 'img/plot0.png');
 			img.setAttribute('id', 'plot' + idNum);
 			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
 			img.setAttribute('class', 'plant');
 		}
 	}
 }
-
-
-
-
-// function gardenTable() {
-// 	var rowPlots = numPlots/colPlots;
-// 	var tbl = document.getElementById('garden');
-// 	console.log(tbl);
-// 	for (var i = 0; i < colPlots; i++) {
-// 		var tr = tbl.insertRow();
-// 		for (var j = 0; i < rowPlots; j++) {
-// 			console.log(i, j);
-// 			var idNum = i * rowPlots + j;
-// 			var td = tr.insertCell();
-// 			td.setAttribute('class', 'plot');
-// 			var img = td.appendChild(document.createElement("IMG"));
-// 			img.setAttribute('src', 'img/plot0.png');
-// 			img.setAttribute('id', 'plot' + idNum);
-// 			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
-// 			img.setAttribute('class', 'plant');
-// 		}
-// 	}
-// };
 
 function reimagePlot(plot) {
 	if (garden[plot].state == 2) {
@@ -393,6 +374,7 @@ var plants = [grass, carrot];
 function unlockPlot(plot) {
 	garden[plot].state = 1;
 	reimagePlot(plot);
+	updateLog("Unlocked a plot.");
 }
 
 function plantPlot(plot) {
@@ -402,6 +384,19 @@ function plantPlot(plot) {
 	garden[plot].growthTime = plants[p].growthTime * 1000; 		// or start an event??????	
 	reimagePlot(plot);
 	updateLog("Planted a " + plants[p].name + ".");
+	// setTimeout(function() {
+	// 	document.getElementById("mTime").innerHTML = "";  
+
+ //        //stuff that happens when you return
+
+ //        var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
+ //        var randomAmount = Math.floor(Math.random() * 100) + 1  
+ //        randomCurrency.amount += randomAmount;
+
+ //        updateLog("Expedition returned");  
+ //        updateLog("Found " + String(randomAmount) + " " + randomCurrency.plural + "."); 
+
+ //    }, 8000) //expedition length
 }
 
 function plotAction(plot) {
@@ -424,7 +419,7 @@ function exploreM(button){
  	document.getElementById("mTime").innerHTML = "Time Left:"; // TODO: add countdown timer
 	updateLog("Expedition started.");
 
-    setTimeout(function(){
+    setTimeout(function() {
         button.removeAttribute('disabled');
         document.getElementById("mTime").innerHTML = "";  
 

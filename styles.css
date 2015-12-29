@@ -205,10 +205,20 @@ table td.plot {
 	background-image: url(img/plot.gif);
 	background-size: 100%;
 	image-rendering: pixelated;
+	position: relative;
 }
 
 img.plant {
 	width: 9vw;
 	image-rendering: pixelated;
+}
+
+.plotTimer {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	font-size: 1.25vw;
+	color: white;
+	padding: 5px;
 }
 

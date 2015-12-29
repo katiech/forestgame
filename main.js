@@ -54,6 +54,7 @@ function show2() {
    document.getElementById('center2').style.display = "block";
    document.getElementById('center1').style.display = "none";
    document.getElementById('center3').style.display = "none";
+   gardenTable();
 };
 
 function show3() {
@@ -315,6 +316,7 @@ function plot(state, id) {
 
 var garden = [];
 var numPlots = 16;
+var colPlots = 4;
 function initalizeGarden() {
 	for (var i = 0; i < numPlots; i++) {
 		if (i == 0) {
@@ -325,6 +327,48 @@ function initalizeGarden() {
 		reimagePlot(i);
 	}
 }
+
+function gardenTable() {
+	var rowPlots = numPlots/colPlots;
+	console.log(rowPlots);
+	var tbl = document.getElementById('garden');
+	for (var i = 0; i < colPlots; i++) {
+		var tr = tbl.insertRow();
+		for (var j = 0; j < rowPlots; j++) {
+			var idNum = i * rowPlots + j;
+			var td = tr.insertCell();
+			td.setAttribute('class', 'plot');
+			var img = td.appendChild(document.createElement("IMG"));
+			img.setAttribute('src', 'img/plot0.png');
+			img.setAttribute('id', 'plot' + idNum);
+			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
+			img.setAttribute('class', 'plant');
+		}
+	}
+}
+
+
+
+
+// function gardenTable() {
+// 	var rowPlots = numPlots/colPlots;
+// 	var tbl = document.getElementById('garden');
+// 	console.log(tbl);
+// 	for (var i = 0; i < colPlots; i++) {
+// 		var tr = tbl.insertRow();
+// 		for (var j = 0; i < rowPlots; j++) {
+// 			console.log(i, j);
+// 			var idNum = i * rowPlots + j;
+// 			var td = tr.insertCell();
+// 			td.setAttribute('class', 'plot');
+// 			var img = td.appendChild(document.createElement("IMG"));
+// 			img.setAttribute('src', 'img/plot0.png');
+// 			img.setAttribute('id', 'plot' + idNum);
+// 			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
+// 			img.setAttribute('class', 'plant');
+// 		}
+// 	}
+// };
 
 function reimagePlot(plot) {
 	if (garden[plot].state == 2) {

@@ -188,7 +188,7 @@ button:disabled:hover{
 
 
 
-table.garden {
+table#garden {
 	width: 40vw;
 	height: 40vw;
 	margin: 1vw;

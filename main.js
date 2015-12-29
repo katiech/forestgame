@@ -314,25 +314,51 @@ function plot(state, id) {
 }
 
 var garden = [];
-var numPlots = 1;
+var numPlots = 16;
 function initalizeGarden() {
-	for (var i = 0; i < plots; i++) {
-		garden.push(new plot(1, i));
-		// document.getElementById("plot" + i).innerHTML = "plant seed";
-	}	
+	for (var i = 0; i < numPlots; i++) {
+		if (i == 0) {
+			garden.push(new plot(1, i));
+		} else {
+			garden.push(new plot(0, i));
+		}
+		reimagePlot(i);
+	}
+}
+
+function reimagePlot(plot) {
+	if (garden[plot].state == 2) {
+		document.getElementById("plot" + plot).setAttribute("src", "img/" + plants[garden[plot].crop].name + "-growing.png");
+	} else if (garden[plot].state == 3) {
+		document.getElementById("plot" + plot).setAttribute("src", "img/" + plants[garden[plot].crop].name + "-ready.png");
+	} else {
+		document.getElementById("plot" + plot).setAttribute("src", "img/plot" + garden[plot].state + ".png");
+	}
 }
 
 var plants = [grass, carrot];
 
-function plantSeed(plot) {
-	if (plot.state == 2) {
-		var p = Math.floor(Math.random() * plants.length);
-		garden[plot].crop = p;
-		garden[plot].growthTime = plants[p].timer * 1000; 		// or start an event??????	
-		updateLog("Planted a " + plants[p].name + ".");
-	}
+function unlockPlot(plot) {
+	garden[plot].state = 1;
+	reimagePlot(plot);
 }
 
+function plantPlot(plot) {
+	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
+	garden[plot].crop = p;
+	garden[plot].state = 2;
+	garden[plot].growthTime = plants[p].growthTime * 1000; 		// or start an event??????	
+	reimagePlot(plot);
+	updateLog("Planted a " + plants[p].name + ".");
+}
+
+function plotAction(plot) {
+	if (garden[plot].state == 0) {
+		unlockPlot(plot);
+	} else if (garden[plot].state == 1) {
+		plantPlot(plot);
+	}
+}
 
 
 

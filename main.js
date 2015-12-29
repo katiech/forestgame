@@ -340,12 +340,35 @@ function plantSeed(plot) {
 function exploreM(button){
 
     button.setAttribute('disabled', true);
- 	document.getElementById("mTime").innerHTML = "Time Left:"; // TODO: add countdown timer
 	updateLog("Expedition started.");
 
+	// Timer
+
+	var mins = 1;  
+    var secs = mins * 60;
+    var currentSeconds = 0;
+    var currentMinutes = 0;
+   
+    setTimeout(decrease, 1000); 
+
+    function decrease() {
+        currentMinutes = Math.floor(secs / 60);
+        currentSeconds = secs % 60;
+        if (currentSeconds <= 9) 
+        	currentSeconds = "0" + currentSeconds;
+        	secs--;
+        	document.getElementById("mTime").innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds; 
+        if (secs !== -1) {
+        	setTimeout(decrease, 1000);
+    	} else {
+    		document.getElementById("mTime").innerHTML = "";
+    	};
+    };
+
+    // 
+
     setTimeout(function(){
-        button.removeAttribute('disabled');
-        document.getElementById("mTime").innerHTML = "";  
+        button.removeAttribute('disabled');  
 
         //stuff that happens when you return
 
@@ -354,10 +377,10 @@ function exploreM(button){
         randomCurrency.amount += randomAmount;
 
         updateLog("Expedition returned");  
-        updateLog("Found " + String(randomAmount) + " " + randomCurrency.plural + "."); 
+        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
 
-    }, 8000) //expedition length
-}
+    }, 61000) //expedition length +1000ms bc first timer update is delayed?
+};
 
 
 

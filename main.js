@@ -51,9 +51,16 @@ function show1() {
 };
 
 function show2() {
-   document.getElementById('center2').style.display = "block";
-   document.getElementById('center1').style.display = "none";
-   document.getElementById('center3').style.display = "none";
+	document.getElementById('center2').style.display = "block";
+	document.getElementById('center1').style.display = "none";
+	document.getElementById('center3').style.display = "none";
+	if (!tableCreated) {
+		gardenTable();
+		tableCreated = !tableCreated;
+	} if (!gardenInitialized) {
+		initalizeGarden();
+		gardenInitialized = !gardenInitialized;
+	}
 };
 
 function show3() {
@@ -314,7 +321,10 @@ function plot(state, id) {
 }
 
 var garden = [];
-var numPlots = 16;
+var numPlots = 16, colPlots = 4;
+var tableCreated = false;
+var gardenInitialized = false;
+
 function initalizeGarden() {
 	for (var i = 0; i < numPlots; i++) {
 		if (i == 0) {
@@ -323,6 +333,29 @@ function initalizeGarden() {
 			garden.push(new plot(0, i));
 		}
 		reimagePlot(i);
+	}
+}
+
+function gardenTable() {
+	var rowPlots = numPlots/colPlots;
+	console.log(rowPlots);
+	var tbl = document.getElementById('garden');
+	for (var i = 0; i < colPlots; i++) {
+		var tr = tbl.insertRow();
+		for (var j = 0; j < rowPlots; j++) {
+			var idNum = i * rowPlots + j;
+			var td = tr.insertCell();
+			td.setAttribute('class', 'plot');
+			// Create timer
+			var timer = td.appendChild(document.createElement("DIV"));
+			timer.setAttribute('id', 'plotTimer' + idNum);
+			timer.setAttribute('class', 'plotTimer');
+			// Create plot images
+			var img = td.appendChild(document.createElement("IMG"));
+			img.setAttribute('id', 'plot' + idNum);
+			img.setAttribute('class', 'plant');
+			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
+		}
 	}
 }
 
@@ -341,13 +374,15 @@ var plants = [grass, carrot];
 function unlockPlot(plot) {
 	garden[plot].state = 1;
 	reimagePlot(plot);
+	updateLog("Unlocked a plot.");
 }
 
 function plantPlot(plot) {
 	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
 	garden[plot].crop = p;
 	garden[plot].state = 2;
-	garden[plot].growthTime = plants[p].growthTime * 1000; 		// or start an event??????	
+	garden[plot].growthTime = plants[p].growthTime; 			// or start an event??????
+	document.getElementById("plotTimer" + plot).innerHTML = secondsToTime(plants[p].growthTime);
 	reimagePlot(plot);
 	updateLog("Planted a " + plants[p].name + ".");
 }
@@ -360,7 +395,24 @@ function plotAction(plot) {
 	}
 }
 
+function secondsToTime(seconds) {
+	var hours   = Math.floor(seconds / 3600);
+	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+	var seconds = seconds - (hours * 3600) - (minutes * 60);
+	var time = "";
 
+	if (hours != 0) {
+		time = hours + ":";
+	} if (minutes != 0 || time !== "") {
+		minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
+		time += minutes + ":";
+	} if (time === "") {
+		time = seconds + "s";
+    } else {
+		time += (seconds < 10) ? "0"+seconds : String(seconds);
+	}
+	return time;
+}
 
 
 
@@ -371,6 +423,7 @@ function exploreM(button){
     button.setAttribute('disabled', true);
 	updateLog("Expedition started.");
 
+<<<<<<< HEAD
 	// Timer
 
 	var mins = 1;  
@@ -397,7 +450,7 @@ function exploreM(button){
     // 
 
     setTimeout(function(){
-        button.removeAttribute('disabled');  
+        button.removeAttribute('disabled');
 
         //stuff that happens when you return
 

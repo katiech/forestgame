@@ -340,7 +340,7 @@ function plantSeed(plot) {
 function exploreM(button){
 
     button.setAttribute('disabled', true);
- 	document.getElementById("mTime").innerHTML = "Time Left:"; // need countdown
+ 	document.getElementById("mTime").innerHTML = "Time Left:"; // TODO: add countdown timer
 	updateLog("Expedition started.");
 
     setTimeout(function(){
@@ -349,9 +349,16 @@ function exploreM(button){
 
         //stuff that happens when you return
 
-        updateLog("Expedition returned");    
+        var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
+        var randomAmount = Math.floor(Math.random() * 100) + 1  
+        randomCurrency.amount += randomAmount;
+
+        updateLog("Expedition returned");  
+        updateLog("Found " + String(randomAmount) + " " + randomCurrency.plural + "."); 
 
     }, 8000) //expedition length
 }
+
+
 
 

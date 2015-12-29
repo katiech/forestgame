@@ -150,6 +150,9 @@ button:disabled:hover{
 #inv {
 	height: auto;
 }
+#animals {
+	height: auto;
+}
 
 .bottombox{
 	margin-top: .5vh;
@@ -190,15 +193,22 @@ table.garden {
 	height: 40vw;
 	margin: 1vw;
 	text-align: center;
-	border: 2px #855E42 solid;
+	/*border: 2px #855E42 solid;*/
+	border: 0;
 }
 
 table td.plot {
 	padding: 0;
-	width: auto;
-	height: auto;
+	width: 10vw;
+	height: 10vw;
 	background-color: #CDAF95;
+	background-image: url(img/plot.gif);
+	background-size: 100%;
+	image-rendering: pixelated;
 }
 
-
+img.plant {
+	width: 9vw;
+	image-rendering: pixelated;
+}
 

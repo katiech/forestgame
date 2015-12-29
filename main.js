@@ -51,10 +51,16 @@ function show1() {
 };
 
 function show2() {
-   document.getElementById('center2').style.display = "block";
-   document.getElementById('center1').style.display = "none";
-   document.getElementById('center3').style.display = "none";
-   gardenTable();
+	document.getElementById('center2').style.display = "block";
+	document.getElementById('center1').style.display = "none";
+	document.getElementById('center3').style.display = "none";
+	if (!tableCreated) {
+		gardenTable();
+		tableCreated = !tableCreated;
+	} if (!gardenInitialized) {
+		initalizeGarden();
+		gardenInitialized = !gardenInitialized;
+	}
 };
 
 function show3() {
@@ -315,8 +321,10 @@ function plot(state, id) {
 }
 
 var garden = [];
-var numPlots = 16;
-var colPlots = 4;
+var numPlots = 16, colPlots = 4;
+var tableCreated = false;
+var gardenInitialized = false;
+
 function initalizeGarden() {
 	for (var i = 0; i < numPlots; i++) {
 		if (i == 0) {
@@ -339,7 +347,7 @@ function gardenTable() {
 			var td = tr.insertCell();
 			td.setAttribute('class', 'plot');
 			var img = td.appendChild(document.createElement("IMG"));
-			img.setAttribute('src', 'img/plot0.png');
+			// img.setAttribute('src', 'img/plot0.png');
 			img.setAttribute('id', 'plot' + idNum);
 			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
 			img.setAttribute('class', 'plant');

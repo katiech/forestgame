@@ -423,7 +423,6 @@ function exploreM(button){
     button.setAttribute('disabled', true);
 	updateLog("Expedition started.");
 
-<<<<<<< HEAD
 	// Timer
 
 	var mins = 1;  

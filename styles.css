@@ -143,7 +143,12 @@ button:disabled:hover{
 }
 
 .text {
+	overflow-y: auto;
 	padding: 0px 10px 10px;
+	height: calc(75vh - 35px);
+}
+#inv {
+	height: auto;
 }
 
 .bottombox{

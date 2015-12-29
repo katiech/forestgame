@@ -29,11 +29,11 @@
 			<div class="boxtitle">
 				Inventory
 			</div>
-			<div class="text">
+			<div class="text" id="inv">
 				<p>
 					<img src="img/seed.gif" class="pixel"> 
 						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s) <br>
-					<img src="img/seed.gif" class="pixel">		<!-- Change this to gold pixel image -->
+					<img src="img/gold.gif" class="pixel">		<!-- Change this to gold pixel image -->
 						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s) <br>
 					<img src="img/seed.gif" class="pixel">
 						<b>Acorns:</b> <span id="acorn">0</span> (+<span id="acornRate">0</span>/s) <br>
@@ -48,12 +48,12 @@
 			<div class="boxtitle">
 				Friends
 			</div>
-			<div class="text">
+			<div class="text" id="animals">
 				<p>
 					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
 					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s) <br>
 					<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s) <br>
-					<b>Raccoons:</b> <span id="raccoon">0</span> (+<span id="raccoonRate">0</span>/s) <br>
+					<b>Raccoons:</b> <span id="otter">0</span> (+<span id="raccoonRate">0</span>/s) <br>
 					<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s)
 				</p>
 			</div>
@@ -89,6 +89,11 @@
 
 				<br>
 
+				<div class="explorebutton">
+					<button id="exploreM" type="button" onClick="exploreM(this)">Explore Mountains</button><br>
+					<span id="mTime"></span>
+				</div><p>
+					
 				<div class="animalbutton">
 					<button id="buySparrow" type="button" onClick="buyAnimal(sparrow, 1)">Befriend Sparrow</button><br>
 					<b>Cost</b>: <span id="sparrowCost">5</span> seeds
@@ -110,8 +115,8 @@
 				</div>
 
 				<div class="animalbutton">
-					<button id="buyRaccoon" type="button" onClick="buyAnimal(raccoon, 1)">Befriend Raccoon</button><br>
-					<b>Cost</b>: <span id="raccoonCost">100</span> acorns
+					<button id="buyOtter" type="button" onClick="buyAnimal(otter, 1)">Befriend Otter</button><br>
+					<b>Cost</b>: <span id="otterCost">100</span> grass
 				</div>
 
 				<br><br>
@@ -134,38 +139,70 @@
 				The Garden
 			</div>
 
-			<div class="text">
+			<div class="text" align="center">
+				<p>
 
-				<table class="garden">
-					<tr>
-						<td class="plot" id="plot0">
-							plot 1
-						</td>
-						<td class="plot">
-							plot 2
-						</td>
-						<td class="plot">
-							plot 3
-						</td>
-						<td class="plot">
-							plot 4
-						</td>
-					</tr>
-					<tr>
-						<td class="plot">
-							plot 5
-						</td>
-						<td class="plot">
-							plot 6
-						</td>
-						<td class="plot">
-							plot 7
-						</td>
-						<td class="plot">
-							plot 8
-						</td>
-					</tr>
-				</table>
+					<button type="button" onClick="initalizeGarden()">Initialize Garden</button><br>
+
+					<table class="garden">
+						<tr>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot0" onclick="plotAction(0)" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot1" onclick="plotAction(1)" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot2" onclick="plotAction(2)" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot3" onclick="plotAction(3)" class="plant"></img>
+							</td>
+						</tr>
+						<tr>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot4" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot5" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot6" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot7" class="plant"></img>
+							</td>
+						</tr>
+						<tr>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot8" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot9" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot10" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot11" class="plant"></img>
+							</td>
+						</tr>
+						<tr>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot12" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot13" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot14" class="plant"></img>
+							</td>
+							<td class="plot">
+								<img src="img/plot0.png" id="plot15" class="plant"></img>
+							</td>
+						</tr>
+					</table>
+				</p>
 
 			</div>
 
@@ -221,6 +258,8 @@
 			<div class="bottombox">
 				<button type="button" class="nav" onClick="show3()">Settings</button>
 			</div>
+
+
 
 		</div>
 

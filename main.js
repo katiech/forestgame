@@ -89,13 +89,16 @@ var grass = {
 	name: 'grass',
 	plural: 'grass',
 	amount: 0,
-	rate: 0
+	rate: 0,
+	// garden properties
+	growthTime: 10 		// takes 10 seconds to finish growing
 };
 var carrot = {
 	name: 'carrot',
 	plural: 'carrots',
 	amount: 0,
-	rate: 0
+	rate: 0,
+	growthTime: 20
 };
 var currencies = [seed, gold, acorn, grass, carrot];
 
@@ -142,16 +145,16 @@ var rabbit = {
 	seedRate: 100,
 	carrotRate: 0.1
 };
-var raccoon = {
-	name: 'raccoon',
-	plural: 'raccoons',
+var otter = {
+	name: 'otter',
+	plural: 'otters',
 	amount: 0,
-	cost: [2, 100], 		// acorns 2
+	cost: [3, 100], 		// acorns 2
 	rate: 0,
 	seedRate: 1000,
 	acornRate: 10
 };
-var animals = [sparrow, magpie, squirrel, rabbit, raccoon];
+var animals = [sparrow, magpie, squirrel, rabbit, otter];
 
 function buyAnimal(animal, num) {
 	var res = currencies[animal.cost[0]]
@@ -165,21 +168,24 @@ function buyAnimal(animal, num) {
 		if (num > 1) {
 			updateLog("You have befriended " + num + " " + animal.plural + "! Wow!");
 		} else {
-			// Do something about a or an?????
-			updateLog("You have befriended a " + animal.name + ".");
+			updateLog("You have befriended " + article(animal) + ".");
 		};
 	} else {
 		if (num > 1) {
 			updateLog("You don't have enough " + res.plural + " to befriend " + num + " " + animal.plural + ".");
 		} else {
-			// Do something about a or an?????
-			updateLog("You don't have enough " + res.plural + " to befriend a " + animal.name + ".");
+			updateLog("You don't have enough " + res.plural + " to befriend " + article(animal) + ".");
 		};
 	};
 };
 
-
-
+function article(animal){
+	if ("aeiou".indexOf(animal.name[0]) >= 0){
+		return "an " + animal.name;
+	} else {
+		return "a " + animal.name;
+    };
+};
 
 var buyAmount = 1;
 
@@ -294,6 +300,117 @@ function updateLog(string){
 function clearLog() {
 	document.getElementById("log").innerHTML = "Log is cleared.";
 }
+
+
+
+
+// T H E  G A R D E N
+
+function plot(state, id) {
+	this.name = "plot" + id;
+	this.state = state;			// locked, empty, growing, ready
+	this.growthTime = null;
+	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
+}
+
+var garden = [];
+var numPlots = 16;
+function initalizeGarden() {
+	for (var i = 0; i < numPlots; i++) {
+		if (i == 0) {
+			garden.push(new plot(1, i));
+		} else {
+			garden.push(new plot(0, i));
+		}
+		reimagePlot(i);
+	}
+}
+
+function reimagePlot(plot) {
+	if (garden[plot].state == 2) {
+		document.getElementById("plot" + plot).setAttribute("src", "img/" + plants[garden[plot].crop].name + "-growing.png");
+	} else if (garden[plot].state == 3) {
+		document.getElementById("plot" + plot).setAttribute("src", "img/" + plants[garden[plot].crop].name + "-ready.png");
+	} else {
+		document.getElementById("plot" + plot).setAttribute("src", "img/plot" + garden[plot].state + ".png");
+	}
+}
+
+var plants = [grass, carrot];
+
+function unlockPlot(plot) {
+	garden[plot].state = 1;
+	reimagePlot(plot);
+}
+
+function plantPlot(plot) {
+	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
+	garden[plot].crop = p;
+	garden[plot].state = 2;
+	garden[plot].growthTime = plants[p].growthTime * 1000; 		// or start an event??????	
+	reimagePlot(plot);
+	updateLog("Planted a " + plants[p].name + ".");
+}
+
+function plotAction(plot) {
+	if (garden[plot].state == 0) {
+		unlockPlot(plot);
+	} else if (garden[plot].state == 1) {
+		plantPlot(plot);
+	}
+}
+
+
+
+
+
+// E X P L O R A T I O N
+
+function exploreM(button){
+
+    button.setAttribute('disabled', true);
+	updateLog("Expedition started.");
+
+	// Timer
+
+	var mins = 1;  
+    var secs = mins * 60;
+    var currentSeconds = 0;
+    var currentMinutes = 0;
+   
+    setTimeout(decrease, 1000); 
+
+    function decrease() {
+        currentMinutes = Math.floor(secs / 60);
+        currentSeconds = secs % 60;
+        if (currentSeconds <= 9) 
+        	currentSeconds = "0" + currentSeconds;
+        	secs--;
+        	document.getElementById("mTime").innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds; 
+        if (secs !== -1) {
+        	setTimeout(decrease, 1000);
+    	} else {
+    		document.getElementById("mTime").innerHTML = "";
+    	};
+    };
+
+    // 
+
+    setTimeout(function(){
+        button.removeAttribute('disabled');  
+
+        //stuff that happens when you return
+
+        var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
+        var randomAmount = Math.floor(Math.random() * 100) + 1  
+        randomCurrency.amount += randomAmount;
+
+        updateLog("Expedition returned");  
+        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
+
+    }, 61000) //expedition length +1000ms bc first timer update is delayed?
+};
+
 
 
 

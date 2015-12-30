@@ -378,12 +378,9 @@ function plantPlot(plot) {
 	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
 	garden[plot].crop = p;
 	garden[plot].state = 2;
-	// garden[plot].growthTime = plants[p].growthTime; 			// or start an event??????
-	// document.getElementById("plotTimer" + plot).innerHTML = secondsToTime(plants[p].growthTime);
-	timer2(plants[p].growthTime, "plotTimer" + plot, "READY");
+	cropTimer(plants[p].growthTime, plot);
 	reimagePlot(plot);
 	updateLog("Planted a " + plants[p].name + ".");
-	// garden[plot].decreaseTime();
 }
 
 function plotAction(plot) {
@@ -395,7 +392,7 @@ function plotAction(plot) {
 }
 
 function secondsToTime(seconds) {
-	var hours   = Math.floor(seconds / 3600);
+	var hours	= Math.floor(seconds / 3600);
 	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
 	var seconds = seconds - (hours * 3600) - (minutes * 60);
 	var time = "";
@@ -412,6 +409,15 @@ function secondsToTime(seconds) {
 	}
 	return time;
 }
+
+function cropTimer(seconds, plot) {
+	timer2(seconds, "plotTimer" + plot, "READY");
+	setTimeout(function () {
+		garden[plot].state = 3;
+		updateLog("A " + plants[garden[plot].crop].name + " has finished growing!");
+	}, seconds * 1000);
+}	
+	
 
 function timer2(seconds, elemId, completedString) {
     document.getElementById(elemId).innerHTML = secondsToTime(seconds);

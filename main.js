@@ -250,8 +250,6 @@ function updateCosts() {
 	magpie.cost[1] = Math.floor(100 * Math.pow(1.1, magpie.amount));
 	squirrel.cost[1] = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
 	for (a = 0; a < animals.length; a++) {
-		console.log(animals[a].cost[1], buyAmount);
-		console.log(animals[a].name + "Cost");
 		document.getElementById(animals[a].name + "Cost").innerHTML = fixValue(animals[a].cost[1] * buyAmount);
 	}
 };
@@ -314,10 +312,22 @@ function clearLog() {
 // T H E  G A R D E N
 
 function plot(state, id) {
+	this.id = id;
 	this.name = "plot" + id;
 	this.state = state;			// locked, empty, growing, ready
 	this.growthTime = null;
 	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
+	this.decreaseTime = function() {
+		var plantTimer = setInterval(decreaseTimer, 1000);
+		function decreaseTimer() {
+			document.getElementById("plotTimer" + id).innerHTML = secondsToTime(this.growthTime);
+			if (this.growthTime >= 0) {
+				this.growthTime--;
+			} else {
+				clearInterval(plantTimer);
+			}
+		}
+	}
 }
 
 var garden = [];
@@ -338,7 +348,6 @@ function initalizeGarden() {
 
 function gardenTable() {
 	var rowPlots = numPlots/colPlots;
-	console.log(rowPlots);
 	var tbl = document.getElementById('garden');
 	for (var i = 0; i < colPlots; i++) {
 		var tr = tbl.insertRow();
@@ -381,10 +390,12 @@ function plantPlot(plot) {
 	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
 	garden[plot].crop = p;
 	garden[plot].state = 2;
-	garden[plot].growthTime = plants[p].growthTime; 			// or start an event??????
-	document.getElementById("plotTimer" + plot).innerHTML = secondsToTime(plants[p].growthTime);
+	// garden[plot].growthTime = plants[p].growthTime; 			// or start an event??????
+	// document.getElementById("plotTimer" + plot).innerHTML = secondsToTime(plants[p].growthTime);
+	timer2(plants[p].growthTime, "plotTimer" + plot);
 	reimagePlot(plot);
 	updateLog("Planted a " + plants[p].name + ".");
+	// garden[plot].decreaseTime();
 }
 
 function plotAction(plot) {
@@ -413,6 +424,23 @@ function secondsToTime(seconds) {
 	}
 	return time;
 }
+
+function timer2(seconds, elemId) {
+    setTimeout(decrease, 1000);
+    function decrease() {
+        document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    	seconds--;
+        if (seconds !== -1) {
+        	setTimeout(decrease, 1000);
+    	} else {
+    		document.getElementById(elemId).innerHTML = "";
+    	}
+    }
+}
+
+
+
+
 
 
 

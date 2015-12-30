@@ -44,7 +44,25 @@ window.onload = function() {
 
 // C E N T E R  N A V
 
-function show1() {
+function show(id){
+	for (i = 1; i<4; i++){
+  	  	document.getElementById("center" + i).style.display = "none";
+	}   
+	 	document.getElementById("center" + id).style.display = "block";
+
+   if (id==2) {
+		if (!tableCreated) {
+			gardenTable();
+			tableCreated = !tableCreated;
+		} if (!gardenInitialized) {
+			initalizeGarden();
+			gardenInitialized = !gardenInitialized;
+		}
+   };
+
+ };
+
+/*function show1() {
    document.getElementById('center1').style.display = "block";
    document.getElementById('center2').style.display = "none";
    document.getElementById('center3').style.display = "none";
@@ -68,7 +86,7 @@ function show3() {
    document.getElementById('center1').style.display = "none";
    document.getElementById('center2').style.display = "none";
 };
-
+*/
 
 
 

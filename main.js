@@ -426,16 +426,8 @@ function secondsToTime(seconds) {
 
 
 
-// E X P L O R A T I O N
-
-function exploreM(button){
-
-    button.setAttribute('disabled', true);
-	updateLog("Expedition started.");
-
-	// Timer
-
-	var mins = 1;  
+function timer(min) {
+	var mins = min;  
     var secs = mins * 60;
     var currentSeconds = 0;
     var currentMinutes = 0;
@@ -455,8 +447,17 @@ function exploreM(button){
     		document.getElementById("mTime").innerHTML = "";
     	};
     };
+};
 
-    // 
+
+
+// E X P L O R A T I O N
+
+function exploreM(button) {
+
+    button.setAttribute('disabled', true);
+	updateLog("Expedition started.");
+	timer(1);
 
     setTimeout(function(){
         button.removeAttribute('disabled');

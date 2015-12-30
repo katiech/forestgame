@@ -315,19 +315,7 @@ function plot(state, id) {
 	this.id = id;
 	this.name = "plot" + id;
 	this.state = state;			// locked, empty, growing, ready
-	this.growthTime = null;
 	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
-	this.decreaseTime = function() {
-		var plantTimer = setInterval(decreaseTimer, 1000);
-		function decreaseTimer() {
-			document.getElementById("plotTimer" + id).innerHTML = secondsToTime(this.growthTime);
-			if (this.growthTime >= 0) {
-				this.growthTime--;
-			} else {
-				clearInterval(plantTimer);
-			}
-		}
-	}
 }
 
 var garden = [];
@@ -392,7 +380,7 @@ function plantPlot(plot) {
 	garden[plot].state = 2;
 	// garden[plot].growthTime = plants[p].growthTime; 			// or start an event??????
 	// document.getElementById("plotTimer" + plot).innerHTML = secondsToTime(plants[p].growthTime);
-	timer2(plants[p].growthTime, "plotTimer" + plot);
+	timer2(plants[p].growthTime, "plotTimer" + plot, "READY");
 	reimagePlot(plot);
 	updateLog("Planted a " + plants[p].name + ".");
 	// garden[plot].decreaseTime();
@@ -425,15 +413,17 @@ function secondsToTime(seconds) {
 	return time;
 }
 
-function timer2(seconds, elemId) {
-    setTimeout(decrease, 1000);
+function timer2(seconds, elemId, completedString) {
+    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    var countdownTimer = setTimeout(decrease, 1000);
     function decrease() {
-        document.getElementById(elemId).innerHTML = secondsToTime(seconds);
     	seconds--;
+    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
         if (seconds !== -1) {
         	setTimeout(decrease, 1000);
     	} else {
-    		document.getElementById(elemId).innerHTML = "";
+    		clearTimeout(countdownTimer);
+    		document.getElementById(elemId).innerHTML = completedString;
     	}
     }
 }

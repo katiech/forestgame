@@ -170,13 +170,14 @@ var rabbit = {
 	cost: [3, 10], 			// grass 3
 	rate: 0,
 	seedRate: 100,
-	carrotRate: 0.1
+	carrotRate: 0.1,
+	grassRate: 1
 };
 var otter = {
 	name: 'otter',
 	plural: 'otters',
 	amount: 0,
-	cost: [3, 100], 		// acorns 2
+	cost: [3, 100], 		// grass 3
 	rate: 0,
 	seedRate: 1000,
 	acornRate: 10
@@ -254,12 +255,22 @@ function updateResources() {
 };
 
 function updateRates() {
+	// for (c = 0; c < currencies.length; c++) {
+	// 	var newRate = 0;
+	// 	for (a = 0; a < animals.length; a++) {
+	// 		if (animals[a].)
+	// 	}
+	// 	currencies[c].rate = newRate;
+	// }
 	seed.rate = 	sparrow.amount * sparrow.seedRate +
 					magpie.amount * magpie.seedRate +
 					squirrel.amount * squirrel.seedRate +
+					rabbit.amount * rabbit.seedRate +	
 					1;
 	gold.rate = 	magpie.amount * magpie.goldRate;
 	acorn.rate = 	squirrel.amount * squirrel.acornRate;
+	// grass.rate = 	
+	carrot.rate =	rabbit.amount * rabbit.carrotRate;
 	for (r = 0; r < currencies.length; r++) {
 		document.getElementById(currencies[r].name + "Rate").innerHTML = fixValue(currencies[r].rate);
 	}
@@ -445,6 +456,7 @@ function cropTimer(seconds, plot) {
 	timer2(seconds, "plotTimer" + plot, "READY");
 	setTimeout(function () {
 		garden[plot].state = 3;
+		reimagePlot(plot);
 		updateLog("A " + plants[garden[plot].crop].name + " has finished growing!");
 	}, seconds * 1000);
 }	

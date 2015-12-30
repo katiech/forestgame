@@ -440,7 +440,7 @@ function timer2(seconds, elemId, completedString) {
 
 
 
-function timer(min) {
+function timer(min, Id) {
 	var mins = min;  
     var secs = mins * 60;
     var currentSeconds = 0;
@@ -454,14 +454,18 @@ function timer(min) {
         if (currentSeconds <= 9) 
         	currentSeconds = "0" + currentSeconds;
         	secs--;
-        	document.getElementById("mTime").innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds; 
+        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds;
+                if (currentMinutes < 1)
+        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentSeconds + " s";  
         if (secs !== -1) {
         	setTimeout(decrease, 1000);
     	} else {
-    		document.getElementById("mTime").innerHTML = "";
+    		document.getElementById(Id).innerHTML = "";
     	};
     };
 };
+
+
 
 
 
@@ -471,7 +475,7 @@ function exploreM(button) {
 
     button.setAttribute('disabled', true);
 	updateLog("Expedition started.");
-	timer(1);
+	timer(1, "mTime");
 
     setTimeout(function(){
         button.removeAttribute('disabled');

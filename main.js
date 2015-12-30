@@ -98,14 +98,16 @@ var grass = {
 	amount: 0,
 	rate: 0,
 	// garden properties
-	growthTime: 10 		// takes 10 seconds to finish growing
+	growthTime: 10, 		// takes 10 seconds to finish growing
+	harvest: [3, 2, 5] 		// currencyind, min, max
 };
 var carrot = {
 	name: 'carrot',
 	plural: 'carrots',
 	amount: 0,
 	rate: 0,
-	growthTime: 20
+	growthTime: 20,
+	harvest: [4, 2, 5]
 };
 var currencies = [seed, gold, acorn, grass, carrot];
 
@@ -370,17 +372,25 @@ var plants = [grass, carrot];
 
 function unlockPlot(plot) {
 	garden[plot].state = 1;
-	reimagePlot(plot);
 	updateLog("Unlocked a plot.");
 }
 
 function plantPlot(plot) {
-	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
+	var p = getRandomInt(0, plants.length - 1);		// chooses random from list
 	garden[plot].crop = p;
 	garden[plot].state = 2;
 	cropTimer(plants[p].growthTime, plot);
-	reimagePlot(plot);
 	updateLog("Planted a " + plants[p].name + ".");
+}
+
+function harvestPlot(plot) {
+	var crop = plants[garden[plot].crop];
+	var num = getRandomInt(crop.harvest[1], crop.harvest[2]);
+	currencies[crop.harvest[0]].amount += num;
+	garden[plot].crop = null;
+	garden[plot].state = 1;
+	document.getElementById("plotTimer" + plot).innerHTML = "";
+	updateLog("You harvested " + num + " " + crop.plural + ".");
 }
 
 function plotAction(plot) {
@@ -388,7 +398,10 @@ function plotAction(plot) {
 		unlockPlot(plot);
 	} else if (garden[plot].state == 1) {
 		plantPlot(plot);
+	} else if (garden[plot].state == 3) {
+		harvestPlot(plot);
 	}
+	reimagePlot(plot);
 }
 
 function secondsToTime(seconds) {
@@ -434,7 +447,9 @@ function timer2(seconds, elemId, completedString) {
     }
 }
 
-
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min +1)) + min;
+}
 
 
 

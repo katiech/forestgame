@@ -416,15 +416,6 @@ function secondsToTime(seconds) {
 
 
 
-// E X P L O R A T I O N
-
-function exploreM(button) {
-
-    button.setAttribute('disabled', true);
-	updateLog("Expedition started.");
-	timer(1);
-
-	// Timer
 function timer(min) {
 	var mins = min;  
     var secs = mins * 60;
@@ -448,7 +439,15 @@ function timer(min) {
     };
 };
 
-    // 
+
+
+// E X P L O R A T I O N
+
+function exploreM(button) {
+
+    button.setAttribute('disabled', true);
+	updateLog("Expedition started.");
+	timer(1);
 
     setTimeout(function(){
         button.removeAttribute('disabled');

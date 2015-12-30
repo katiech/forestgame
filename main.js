@@ -44,16 +44,41 @@ window.onload = function() {
 
 // C E N T E R  N A V
 
-function show1() {
+function show(id){
+	for (i = 1; i<4; i++){
+  	  	document.getElementById("center" + i).style.display = "none";
+	}   
+	 	document.getElementById("center" + id).style.display = "block";
+
+   if (id==2) {
+		if (!tableCreated) {
+			gardenTable();
+			tableCreated = !tableCreated;
+		} if (!gardenInitialized) {
+			initalizeGarden();
+			gardenInitialized = !gardenInitialized;
+		}
+   };
+
+ };
+
+/*function show1() {
    document.getElementById('center1').style.display = "block";
    document.getElementById('center2').style.display = "none";
    document.getElementById('center3').style.display = "none";
 };
 
 function show2() {
-   document.getElementById('center2').style.display = "block";
-   document.getElementById('center1').style.display = "none";
-   document.getElementById('center3').style.display = "none";
+	document.getElementById('center2').style.display = "block";
+	document.getElementById('center1').style.display = "none";
+	document.getElementById('center3').style.display = "none";
+	if (!tableCreated) {
+		gardenTable();
+		tableCreated = !tableCreated;
+	} if (!gardenInitialized) {
+		initalizeGarden();
+		gardenInitialized = !gardenInitialized;
+	}
 };
 
 function show3() {
@@ -61,7 +86,7 @@ function show3() {
    document.getElementById('center1').style.display = "none";
    document.getElementById('center2').style.display = "none";
 };
-
+*/
 
 
 
@@ -91,14 +116,16 @@ var grass = {
 	amount: 0,
 	rate: 0,
 	// garden properties
-	growthTime: 10 		// takes 10 seconds to finish growing
+	growthTime: 10, 		// takes 10 seconds to finish growing
+	harvest: [3, 2, 5] 		// currencyind, min, max
 };
 var carrot = {
 	name: 'carrot',
 	plural: 'carrots',
 	amount: 0,
 	rate: 0,
-	growthTime: 20
+	growthTime: 20,
+	harvest: [4, 2, 5]
 };
 var currencies = [seed, gold, acorn, grass, carrot];
 
@@ -143,13 +170,14 @@ var rabbit = {
 	cost: [3, 10], 			// grass 3
 	rate: 0,
 	seedRate: 100,
-	carrotRate: 0.1
+	carrotRate: 0.1,
+	grassRate: 1
 };
 var otter = {
 	name: 'otter',
 	plural: 'otters',
 	amount: 0,
-	cost: [3, 100], 		// acorns 2
+	cost: [3, 100], 		// grass 3
 	rate: 0,
 	seedRate: 1000,
 	acornRate: 10
@@ -227,12 +255,22 @@ function updateResources() {
 };
 
 function updateRates() {
+	// for (c = 0; c < currencies.length; c++) {
+	// 	var newRate = 0;
+	// 	for (a = 0; a < animals.length; a++) {
+	// 		if (animals[a].)
+	// 	}
+	// 	currencies[c].rate = newRate;
+	// }
 	seed.rate = 	sparrow.amount * sparrow.seedRate +
 					magpie.amount * magpie.seedRate +
 					squirrel.amount * squirrel.seedRate +
+					rabbit.amount * rabbit.seedRate +	
 					1;
 	gold.rate = 	magpie.amount * magpie.goldRate;
 	acorn.rate = 	squirrel.amount * squirrel.acornRate;
+	// grass.rate = 	
+	carrot.rate =	rabbit.amount * rabbit.carrotRate;
 	for (r = 0; r < currencies.length; r++) {
 		document.getElementById(currencies[r].name + "Rate").innerHTML = fixValue(currencies[r].rate);
 	}
@@ -243,8 +281,6 @@ function updateCosts() {
 	magpie.cost[1] = Math.floor(100 * Math.pow(1.1, magpie.amount));
 	squirrel.cost[1] = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
 	for (a = 0; a < animals.length; a++) {
-		console.log(animals[a].cost[1], buyAmount);
-		console.log(animals[a].name + "Cost");
 		document.getElementById(animals[a].name + "Cost").innerHTML = fixValue(animals[a].cost[1] * buyAmount);
 	}
 };
@@ -307,14 +343,17 @@ function clearLog() {
 // T H E  G A R D E N
 
 function plot(state, id) {
+	this.id = id;
 	this.name = "plot" + id;
 	this.state = state;			// locked, empty, growing, ready
-	this.growthTime = null;
 	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
 }
 
 var garden = [];
-var numPlots = 16;
+var numPlots = 16, colPlots = 4;
+var tableCreated = false;
+var gardenInitialized = false;
+
 function initalizeGarden() {
 	for (var i = 0; i < numPlots; i++) {
 		if (i == 0) {
@@ -323,6 +362,28 @@ function initalizeGarden() {
 			garden.push(new plot(0, i));
 		}
 		reimagePlot(i);
+	}
+}
+
+function gardenTable() {
+	var rowPlots = numPlots/colPlots;
+	var tbl = document.getElementById('garden');
+	for (var i = 0; i < colPlots; i++) {
+		var tr = tbl.insertRow();
+		for (var j = 0; j < rowPlots; j++) {
+			var idNum = i * rowPlots + j;
+			var td = tr.insertCell();
+			td.setAttribute('class', 'plot');
+			// Create timer
+			var timer = td.appendChild(document.createElement("DIV"));
+			timer.setAttribute('id', 'plotTimer' + idNum);
+			timer.setAttribute('class', 'plotTimer');
+			// Create plot images
+			var img = td.appendChild(document.createElement("IMG"));
+			img.setAttribute('id', 'plot' + idNum);
+			img.setAttribute('class', 'plant');
+			img.setAttribute('onclick', 'plotAction(' + idNum + ')');
+		}
 	}
 }
 
@@ -340,16 +401,25 @@ var plants = [grass, carrot];
 
 function unlockPlot(plot) {
 	garden[plot].state = 1;
-	reimagePlot(plot);
+	updateLog("Unlocked a plot.");
 }
 
 function plantPlot(plot) {
-	var p = Math.floor(Math.random() * plants.length); 			// chooses random from list
+	var p = getRandomInt(0, plants.length - 1);		// chooses random from list
 	garden[plot].crop = p;
 	garden[plot].state = 2;
-	garden[plot].growthTime = plants[p].growthTime * 1000; 		// or start an event??????	
-	reimagePlot(plot);
+	cropTimer(plants[p].growthTime, plot);
 	updateLog("Planted a " + plants[p].name + ".");
+}
+
+function harvestPlot(plot) {
+	var crop = plants[garden[plot].crop];
+	var num = getRandomInt(crop.harvest[1], crop.harvest[2]);
+	currencies[crop.harvest[0]].amount += num;
+	garden[plot].crop = null;
+	garden[plot].state = 1;
+	document.getElementById("plotTimer" + plot).innerHTML = "";
+	updateLog("You harvested " + num + " " + crop.plural + ".");
 }
 
 function plotAction(plot) {
@@ -357,23 +427,66 @@ function plotAction(plot) {
 		unlockPlot(plot);
 	} else if (garden[plot].state == 1) {
 		plantPlot(plot);
+	} else if (garden[plot].state == 3) {
+		harvestPlot(plot);
 	}
+	reimagePlot(plot);
+}
+
+function secondsToTime(seconds) {
+	var hours	= Math.floor(seconds / 3600);
+	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+	var seconds = seconds - (hours * 3600) - (minutes * 60);
+	var time = "";
+
+	if (hours != 0) {
+		time = hours + ":";
+	} if (minutes != 0 || time !== "") {
+		minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
+		time += minutes + ":";
+	} if (time === "") {
+		time = seconds + "s";
+    } else {
+		time += (seconds < 10) ? "0"+seconds : String(seconds);
+	}
+	return time;
+}
+
+function cropTimer(seconds, plot) {
+	timer2(seconds, "plotTimer" + plot, "READY");
+	setTimeout(function () {
+		garden[plot].state = 3;
+		reimagePlot(plot);
+		updateLog("A " + plants[garden[plot].crop].name + " has finished growing!");
+	}, seconds * 1000);
+}	
+	
+
+function timer2(seconds, elemId, completedString) {
+    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    var countdownTimer = setTimeout(decrease, 1000);
+    function decrease() {
+    	seconds--;
+    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+        if (seconds !== -1) {
+        	setTimeout(decrease, 1000);
+    	} else {
+    		clearTimeout(countdownTimer);
+    		document.getElementById(elemId).innerHTML = completedString;
+    	}
+    }
+}
+
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min +1)) + min;
 }
 
 
 
 
 
-// E X P L O R A T I O N
-
-function exploreM(button){
-
-    button.setAttribute('disabled', true);
-	updateLog("Expedition started.");
-
-	// Timer
-
-	var mins = 1;  
+function timer(min, Id) {
+	var mins = min;  
     var secs = mins * 60;
     var currentSeconds = 0;
     var currentMinutes = 0;
@@ -386,18 +499,31 @@ function exploreM(button){
         if (currentSeconds <= 9) 
         	currentSeconds = "0" + currentSeconds;
         	secs--;
-        	document.getElementById("mTime").innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds; 
+        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds;
+                if (currentMinutes < 1)
+        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentSeconds + " s";  
         if (secs !== -1) {
         	setTimeout(decrease, 1000);
     	} else {
-    		document.getElementById("mTime").innerHTML = "";
+    		document.getElementById(Id).innerHTML = "";
     	};
     };
+};
 
-    // 
+
+
+
+
+// E X P L O R A T I O N
+
+function exploreM(button) {
+
+    button.setAttribute('disabled', true);
+	updateLog("Expedition started.");
+	timer(1, "mTime");
 
     setTimeout(function(){
-        button.removeAttribute('disabled');  
+        button.removeAttribute('disabled');
 
         //stuff that happens when you return
 

@@ -53,8 +53,8 @@
 					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
 					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s) <br>
 					<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s) <br>
-					<b>Raccoons:</b> <span id="otter">0</span> (+<span id="raccoonRate">0</span>/s) <br>
-					<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s)
+					<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s) <br>
+					<b>Otters:</b> <span id="otter">0</span> (+<span id="otterRate">0</span>/s)
 				</p>
 			</div>
 
@@ -141,66 +141,7 @@
 
 			<div class="text" align="center">
 				<p>
-
-					<button type="button" onClick="initalizeGarden()">Initialize Garden</button><br>
-
-					<table class="garden">
-						<tr>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot0" onclick="plotAction(0)" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot1" onclick="plotAction(1)" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot2" onclick="plotAction(2)" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot3" onclick="plotAction(3)" class="plant"></img>
-							</td>
-						</tr>
-						<tr>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot4" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot5" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot6" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot7" class="plant"></img>
-							</td>
-						</tr>
-						<tr>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot8" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot9" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot10" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot11" class="plant"></img>
-							</td>
-						</tr>
-						<tr>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot12" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot13" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot14" class="plant"></img>
-							</td>
-							<td class="plot">
-								<img src="img/plot0.png" id="plot15" class="plant"></img>
-							</td>
-						</tr>
+					<table id="garden">
 					</table>
 				</p>
 
@@ -248,15 +189,15 @@
 		<div id="bottom">
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show1()">The Glade</button>
+				<button type="button" class="nav" onClick="show(1)">The Glade</button>
 			</div>
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show2()">The Garden</button>
+				<button type="button" class="nav" onClick="show(2)">The Garden</button>
 			</div>
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show3()">Settings</button>
+				<button type="button" class="nav" onClick="show(3)">Settings</button>
 			</div>
 
 

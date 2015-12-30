@@ -143,7 +143,8 @@ var sparrow = {
 	amount: 0,
 	cost: [0, 5],			// seeds 0
 	rate: 0, 		// Rate sparrows are being increased.
-	seedRate: 1 	// Rate of seed gained per sparrow.
+	earnRate: [1, 0, 0, 0, 0]		// list of rates for currencies: seed, gold, acorn, grass, carrot, etc.
+	// seedRate: 1 	// Rate of seed gained per sparrow.
 };
 var magpie = {
 	name: 'magpie',
@@ -151,8 +152,9 @@ var magpie = {
 	amount: 0,
 	cost: [0, 100], 		// seeds 0
 	rate: 0,
-	seedRate: 10,
-	goldRate: 0.1
+	earnRate: [10, 0.1, 0, 0, 0]
+	// seedRate: 10,
+	// goldRate: 0.1
 };
 var squirrel = {
 	name: 'squirrel',
@@ -160,8 +162,9 @@ var squirrel = {
 	amount: 0,
 	cost: [0, 10000], 		// seeds 0
 	rate: 0,
-	seedRate: 1000,
-	acornRate: 0.1
+	earnRate: [1000, 0, 0.1, 0, 0]
+	// seedRate: 1000,
+	// acornRate: 0.1
 };
 var rabbit = {
 	name: 'rabbit',
@@ -169,9 +172,10 @@ var rabbit = {
 	amount: 0,
 	cost: [3, 10], 			// grass 3
 	rate: 0,
-	seedRate: 100,
-	carrotRate: 0.1,
-	grassRate: 1
+	earnRate: [100, 0, 0, 1, 0.1]
+	// seedRate: 100,
+	// carrotRate: 0.1,
+	// grassRate: 1
 };
 var otter = {
 	name: 'otter',
@@ -179,8 +183,9 @@ var otter = {
 	amount: 0,
 	cost: [3, 100], 		// grass 3
 	rate: 0,
-	seedRate: 1000,
-	acornRate: 10
+	earnRate: [1000, 0, 1, 0, 0]
+	// seedRate: 1000,
+	// acornRate: 10
 };
 var animals = [sparrow, magpie, squirrel, rabbit, otter];
 
@@ -255,22 +260,16 @@ function updateResources() {
 };
 
 function updateRates() {
-	// for (c = 0; c < currencies.length; c++) {
-	// 	var newRate = 0;
-	// 	for (a = 0; a < animals.length; a++) {
-	// 		if (animals[a].)
-	// 	}
-	// 	currencies[c].rate = newRate;
-	// }
-	seed.rate = 	sparrow.amount * sparrow.seedRate +
-					magpie.amount * magpie.seedRate +
-					squirrel.amount * squirrel.seedRate +
-					rabbit.amount * rabbit.seedRate +	
-					1;
-	gold.rate = 	magpie.amount * magpie.goldRate;
-	acorn.rate = 	squirrel.amount * squirrel.acornRate;
-	// grass.rate = 	
-	carrot.rate =	rabbit.amount * rabbit.carrotRate;
+	for (c = 0; c < currencies.length; c++) {
+		var newRate = 0;
+		if (c == 0) {		// Extra 1 seeds/s
+			newRate++;
+		}
+		for (a = 0; a < animals.length; a++) {
+			newRate += animals[a].amount * animals[a].earnRate[c];
+		}
+		currencies[c].rate = newRate;
+	}
 	for (r = 0; r < currencies.length; r++) {
 		document.getElementById(currencies[r].name + "Rate").innerHTML = fixValue(currencies[r].rate);
 	}

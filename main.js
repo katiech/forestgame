@@ -200,9 +200,7 @@ function buyAnimal(animal, num) {
 	if (res.amount >= val * num) {
 		animal.amount += num;
 		res.amount -= val * num;
-		updateResources();
-		updateRates();
-		updateCosts();
+		updateAll();
 		if (num > 1) {
 			updateLog("You have befriended " + num + " " + animal.plural + "! Wow!");
 		} else {
@@ -515,7 +513,6 @@ function timer(min, Id) {
 
 
 
-
 // E X P L O R A T I O N
 
 function exploreM(button) {
@@ -530,7 +527,7 @@ function exploreM(button) {
         //stuff that happens when you return
 
         var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
-        var randomAmount = Math.floor(Math.random() * 100) + 1  
+        var randomAmount = getRandomInt(1, 50);
         randomCurrency.amount += randomAmount;
 
         updateLog("Expedition returned");  

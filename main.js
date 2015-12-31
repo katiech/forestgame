@@ -425,12 +425,41 @@ function harvestPlot(plot) {
 		garden[plot].crop = null;
 		garden[plot].state = 1;
 		document.getElementById("plotTimer" + plot).innerHTML = "";
+		return num;
 	}
 }
 
 function harvestAll() {
+	var harvested = zeroArray(plants.length);
 	for (var p = 0; p < numPlots; p++) {
-		harvestPlot(p);
+		var cropId = garden[p].crop;
+		harvested[cropId] += harvestPlot(p);
+		reimagePlot(p);
+	}
+	if (harvested.length == 0) {
+		console.log("There are no crops ready for harvest.");
+	} else {
+		var harvestArray = [];
+		for (var c = 0; c < harvested.length; c++) {
+			if (harvested[c] != 0) {
+				harvestArray.push(harvested[c] + " " + plants[c].plural);
+			}
+		}
+		var harvestString = "";
+		if (harvestArray.length == 1) {
+			harvestString = harvestArray[0];
+		} else if (harvestArray.length == 2) {
+			harvestString = harvestArray[0] + " and " + harvestArray[1];
+		} else {
+			for (var a = 0; a < harvestArray.length; a++) {
+				if (a == harvestArray.length - 1) {
+					harvestString += "and " + harvestArray[a];
+				} else {
+					harvestString += harvestArray[a] + ", ";
+				}
+			}
+		}
+		updateLog("You harvest a total of " + harvestString + ".");
 	}
 }
 
@@ -440,7 +469,8 @@ function plotAction(plot) {
 	} else if (garden[plot].state == 1) {
 		plantPlot(plot);
 	} else if (garden[plot].state == 3) {
-		harvestPlot(plot);
+		var crop = plants[garden[plot].crop];
+		var num = harvestPlot(plot);
 		updateLog("You harvested " + num + " " + crop.plural + ".");
 	}
 	reimagePlot(plot);
@@ -481,7 +511,7 @@ function timer2(seconds, elemId, completedString) {
     function decrease() {
     	seconds--;
     	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
-        if (seconds !== -1) {
+        if (seconds !== 0) {
         	setTimeout(decrease, 1000);
     	} else {
     		clearTimeout(countdownTimer);
@@ -489,11 +519,6 @@ function timer2(seconds, elemId, completedString) {
     	}
     }
 }
-
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min +1)) + min;
-}
-
 
 
 
@@ -551,8 +576,9 @@ function exploreM(button) {
 
 
 
-// UNLOCKING
 
+
+// U N L O C K I N G
 
 var unlockedAnimals = [true, false, false, false, false];
 
@@ -572,3 +598,21 @@ function unlock(i){
 	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
 	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
 }
+
+
+
+
+
+// H E L P E R  F U N C T I O N S
+
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+function zeroArray(len) {
+	return Array(len+1).join('0').split('').map(parseFloat);
+}
+
+
+
+

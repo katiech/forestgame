@@ -323,6 +323,7 @@ function capitalize(s) {
 window.setInterval(function() {
 	collectCurrencies();
 	updateResources();
+	checkUnlock();
 }, 1000);		// fires every 1000ms
 
 
@@ -550,4 +551,24 @@ function exploreM(button) {
 
 
 
+// UNLOCKING
 
+
+var unlockedAnimals = [true, false, false, false, false];
+
+function checkUnlock() {
+	for (i = 0; i<animals.length; i++) {
+		if (currencies[animals[i].cost[0]].amount  >= animals[i].cost[1]){
+			if (unlockedAnimals[i] == false) {
+				unlock(i);
+				unlockedAnimals[i] = true;
+			}
+		}
+	}			
+};
+
+function unlock(i){
+	updateLog("Unlocked " + animals[i].plural + "!");
+	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
+	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
+}

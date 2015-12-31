@@ -407,13 +407,33 @@ function unlockPlot(plot) {
 	}
 }
 
-function plantPlot(plot) {
-	if (garden[plot].state == 1) {
-		var p = getRandomInt(0, plants.length - 1);		// chooses random from list
-		garden[plot].crop = p;
-		garden[plot].state = 2;
-		cropTimer(plants[p].growthTime, plot);
-		updateLog("Planted a " + plants[p].name + ".");
+// function plantPlot(plot) {
+// 	if (garden[plot].state == 1) {
+// 		var p = getRandomInt(0, plants.length - 1);		// chooses random from list
+// 		garden[plot].crop = p;
+// 		garden[plot].state = 2;
+// 		cropTimer(plants[p].growthTime, plot);
+// 		updateLog("Planted a " + plants[p].name + ".");
+// 	}
+// }
+
+var planting = 0;
+function selectCrop(crop) {
+	planting = crop;
+	for (b = 0; b < plants.length; b++) { 
+		document.getElementById("plant" + b).setAttribute("class", "unbold");
+	}
+	document.getElementById("plant" + crop).setAttribute("class", "bold");
+	console.log(crop + " plant");
+}
+
+// Plants cropId at plotId.
+function plantPlot(plotId, cropId) {
+	if (garden[plotId].state == 1) {
+		garden[plotId].crop = cropId;
+		garden[plotId].state = 2;
+		cropTimer(plants[cropId].growthTime, plotId);
+		updateLog("Planted a " + plants[cropId].name + ".");
 	}
 }
 
@@ -467,7 +487,7 @@ function plotAction(plot) {
 	if (garden[plot].state == 0) {
 		unlockPlot(plot);
 	} else if (garden[plot].state == 1) {
-		plantPlot(plot);
+		plantPlot(plot, planting);
 	} else if (garden[plot].state == 3) {
 		var crop = plants[garden[plot].crop];
 		var num = harvestPlot(plot);

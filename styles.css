@@ -47,6 +47,7 @@ button:disabled:hover{
 }
 
 .box {
+	position: relative;
 	height: calc(80vh - 30px);
 	font-size: 16px;
 	opacity: 0.8;
@@ -95,7 +96,7 @@ button:disabled:hover{
 }
 
 #log {
-	overflow-y: auto;
+	height: auto;
 	max-height: calc(74vh - 14px - 30px);
 }
 

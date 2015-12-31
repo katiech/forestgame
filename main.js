@@ -50,7 +50,7 @@ function show(id){
 	}   
 	 	document.getElementById("center" + id).style.display = "block";
 
-   if (id==2) {
+   if (id == 2) {
 		if (!tableCreated) {
 			gardenTable();
 			tableCreated = !tableCreated;
@@ -142,6 +142,7 @@ var sparrow = {
 	plural: 'sparrows',
 	amount: 0,
 	cost: [0, 5],			// seeds 0
+	baseCost: 5,
 	rate: 0, 		// Rate sparrows are being increased.
 	earnRate: [1, 0, 0, 0, 0]		// list of rates for currencies: seed, gold, acorn, grass, carrot, etc.
 	// seedRate: 1 	// Rate of seed gained per sparrow.
@@ -151,6 +152,7 @@ var magpie = {
 	plural: 'magpies',
 	amount: 0,
 	cost: [0, 100], 		// seeds 0
+	baseCost: 100,
 	rate: 0,
 	earnRate: [10, 0.1, 0, 0, 0]
 	// seedRate: 10,
@@ -161,6 +163,7 @@ var squirrel = {
 	plural: 'squirrels',
 	amount: 0,
 	cost: [0, 10000], 		// seeds 0
+	baseCost: 10000,
 	rate: 0,
 	earnRate: [1000, 0, 0.1, 0, 0]
 	// seedRate: 1000,
@@ -171,6 +174,7 @@ var rabbit = {
 	plural: 'rabbits',
 	amount: 0,
 	cost: [3, 10], 			// grass 3
+	baseCost: 10,
 	rate: 0,
 	earnRate: [100, 0, 0, 1, 0.1]
 	// seedRate: 100,
@@ -182,6 +186,7 @@ var otter = {
 	plural: 'otters',
 	amount: 0,
 	cost: [3, 100], 		// grass 3
+	baseCost: 100,
 	rate: 0,
 	earnRate: [1000, 0, 1, 0, 0]
 	// seedRate: 1000,
@@ -276,10 +281,8 @@ function updateRates() {
 };
 
 function updateCosts() {
-	sparrow.cost[1] = Math.floor(5 * Math.pow(1.1, sparrow.amount));
-	magpie.cost[1] = Math.floor(100 * Math.pow(1.1, magpie.amount));
-	squirrel.cost[1] = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
 	for (a = 0; a < animals.length; a++) {
+		animals[a].cost[1] = Math.floor(animals[a].baseCost * Math.pow(1.15, animals[a].amount));
 		document.getElementById(animals[a].name + "Cost").innerHTML = fixValue(animals[a].cost[1] * buyAmount);
 	}
 };

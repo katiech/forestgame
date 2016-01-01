@@ -68,10 +68,6 @@ function GameSave() {
 function GameLoad() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
 	if (savegame !== null) {
-		// if (typeof savegame.seed !== "undefined") seed = savegame.seed;
-		// if (typeof savegame.gold !== "undefined") gold = savegame.gold;
-		// if (typeof savegame.sparrow !== "undefined") sparrow = savegame.sparrow;
-		// if (typeof savegame.magpie !== "undefined") magpie = savegame.magpie;
 		parseSave(savegame);
 		updateLog("Game Loaded!");
 		updateAll();
@@ -148,6 +144,7 @@ function currencyCollect(currency) {
 
 
 
+
 // A N I M A L  F R I E N D S
 
 var sparrow = {
@@ -158,7 +155,6 @@ var sparrow = {
 	baseCost: 5,
 	rate: 0, 		// Rate sparrows are being increased.
 	earnRate: [1, 0, 0, 0, 0]		// list of rates for currencies: seed, gold, acorn, grass, carrot, etc.
-	// seedRate: 1 	// Rate of seed gained per sparrow.
 };
 var magpie = {
 	name: 'magpie',
@@ -168,8 +164,6 @@ var magpie = {
 	baseCost: 100,
 	rate: 0,
 	earnRate: [10, 0.1, 0, 0, 0]
-	// seedRate: 10,
-	// goldRate: 0.1
 };
 var squirrel = {
 	name: 'squirrel',
@@ -179,8 +173,6 @@ var squirrel = {
 	baseCost: 10000,
 	rate: 0,
 	earnRate: [1000, 0, 0.1, 0, 0]
-	// seedRate: 1000,
-	// acornRate: 0.1
 };
 var rabbit = {
 	name: 'rabbit',
@@ -190,9 +182,6 @@ var rabbit = {
 	baseCost: 10,
 	rate: 0,
 	earnRate: [100, 0, 0, 1, 0.1]
-	// seedRate: 100,
-	// carrotRate: 0.1,
-	// grassRate: 1
 };
 var otter = {
 	name: 'otter',
@@ -202,8 +191,6 @@ var otter = {
 	baseCost: 100,
 	rate: 0,
 	earnRate: [1000, 0, 1, 0, 0]
-	// seedRate: 1000,
-	// acornRate: 10
 };
 var animals = [sparrow, magpie, squirrel, rabbit, otter];
 
@@ -226,14 +213,6 @@ function buyAnimal(animal, num) {
 			updateLog("You don't have enough " + res.plural + " to befriend " + article(animal) + ".");
 		};
 	};
-};
-
-function article(animal){
-	if ("aeiou".indexOf(animal.name[0]) >= 0){
-		return "an " + animal.name;
-	} else {
-		return "a " + animal.name;
-    };
 };
 
 var buyAmount = 1;
@@ -259,6 +238,8 @@ function setBuy(num) {
 
 
 
+
+// U P D A T I N G  R E S O U R C E S
 
 function collectCurrencies() {
 	for (r = 0; r < currencies.length; r++) {
@@ -307,31 +288,6 @@ function updateAll(){
 
 
 
-function fixValue(resource) {
-	// Forces floats to always display to 2 decimal places if < 1. Makes sure zero says 0 and not 0.00.
-	if (resource != 0) {
-		if (resource >= 1) {
-			resource = resource.toFixed(0);
-		} else {
-			resource = resource.toFixed(2);
-		};
-	};
-	// Truncates large values and tacks on a suffix.
-	var suffixes = ["K","M","B","T","Qa","Qt","Sx","Sp","Oc","Dc"];
-	for (var i = suffixes.length - 1; i >= 0; i--) {
-		if (resource >= Math.pow(1000, i + 1)) {
-			return (resource / Math.pow(1000, i + 1)).toFixed(2) + suffixes[i];
-		};
-	};
-	return resource;
-};
-
-function capitalize(s) {
-    return s && s[0].toUpperCase() + s.slice(1);
-}
-
-
-
 
 window.setInterval(function() {
 	collectCurrencies();
@@ -342,6 +298,8 @@ window.setInterval(function() {
 
 
 
+// L O G
+
 function updateLog(string){
 	var oldlog = document.getElementById("log").innerHTML;
 	document.getElementById("log").innerHTML = string + "<br>" + oldlog;
@@ -350,6 +308,8 @@ function updateLog(string){
 function clearLog() {
 	document.getElementById("log").innerHTML = "Log is cleared.";
 }
+
+
 
 
 
@@ -628,6 +588,37 @@ function unlock(i){
 
 
 // H E L P E R  F U N C T I O N S
+
+function article(animal){
+	if ("aeiou".indexOf(animal.name[0]) >= 0){
+		return "an " + animal.name;
+	} else {
+		return "a " + animal.name;
+    }
+}
+
+function fixValue(resource) {
+	// Forces floats to always display to 2 decimal places if < 1. Makes sure zero says 0 and not 0.00.
+	if (resource != 0) {
+		if (resource >= 1) {
+			resource = resource.toFixed(0);
+		} else {
+			resource = resource.toFixed(2);
+		}
+	}
+	// Truncates large values and tacks on a suffix.
+	var suffixes = ["K","M","B","T","Qa","Qt","Sx","Sp","Oc","Dc"];
+	for (var i = suffixes.length - 1; i >= 0; i--) {
+		if (resource >= Math.pow(1000, i + 1)) {
+			return (resource / Math.pow(1000, i + 1)).toFixed(2) + suffixes[i];
+		}
+	}
+	return resource;
+}
+
+function capitalize(s) {
+    return s && s[0].toUpperCase() + s.slice(1);
+}
 
 function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min +1)) + min;

@@ -1,5 +1,58 @@
 
 
+
+// To do on page load.
+window.onload = function() {
+	// Generates garden plots. Check if garden unlocked???
+	gardenTable();
+	initalizeGarden();
+	// Auto loads if save file present.
+	var savegame = JSON.parse(localStorage.getItem("save"));
+	if (typeof savegame !== "undefined") {
+		GameLoad();
+	};
+};
+
+
+
+// S A V E
+
+function composeSave() {
+	// Makes currency amounts into array.
+	var currenciesSave = [];
+	for (c = 0; c < currencies.length; c++) {
+		currenciesSave.push(currencies[c].amount);
+	}
+	// Makes animal amounts into array.
+	var animalsSave = [];
+	for (a = 0; a < animals.length; a++) {
+		animalsSave.push(animals[a].amount);
+	}
+	// Makes garden plot info into array.			DOES NOT TAKE INTO ACCOUNT GROWING TIMES FOR PLANTS YET
+	var gardenSave = [];
+	for (p = 0; p < numPlots; p++) {
+		gardenSave.push([garden[p].state, garden[p].crop]);
+	}
+	return [currenciesSave, animalsSave, gardenSave];
+}
+
+function parseSave(save) {
+	var currenciesSave = save[0];
+	for (c = 0; c < currencies.length; c++) {
+		currencies[c].amount = currenciesSave[c];
+	}
+	var animalsSave = save[1];
+	for (a = 0; a < animals.length; a++) {
+		animals[a].amount = animalsSave[a];
+	}
+	var gardenSave = save[2];
+	for (p = 0; p < numPlots; p++) {
+		garden[p].state = gardenSave[p][0];
+		garden[p].crop = gardenSave[p][1];
+		reimagePlot(p);
+	}
+}
+
 function GameSave() {
 	var save = {
 		seed: seed,
@@ -7,6 +60,7 @@ function GameSave() {
 		sparrow: sparrow,
 		magpie: magpie
 	};
+	var save = composeSave();
 	localStorage.setItem("save", JSON.stringify(save));
 	updateLog("Game Saved!");
 };
@@ -14,10 +68,11 @@ function GameSave() {
 function GameLoad() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
 	if (savegame !== null) {
-		if (typeof savegame.seed !== "undefined") seed = savegame.seed;
-		if (typeof savegame.gold !== "undefined") gold = savegame.gold;
-		if (typeof savegame.sparrow !== "undefined") sparrow = savegame.sparrow;
-		if (typeof savegame.magpie !== "undefined") magpie = savegame.magpie;
+		// if (typeof savegame.seed !== "undefined") seed = savegame.seed;
+		// if (typeof savegame.gold !== "undefined") gold = savegame.gold;
+		// if (typeof savegame.sparrow !== "undefined") sparrow = savegame.sparrow;
+		// if (typeof savegame.magpie !== "undefined") magpie = savegame.magpie;
+		parseSave(savegame);
 		updateLog("Game Loaded!");
 		updateAll();
 	} else {
@@ -31,13 +86,6 @@ function GameDelete() {
 };
 
 
-// Auto loads if save file present.
-window.onload = function() {
-	var savegame = JSON.parse(localStorage.getItem("save"));
-	if (typeof savegame !== "undefined") {
-		GameLoad();
-	};
-};
 
 
 
@@ -48,45 +96,10 @@ function show(id){
 	for (i = 1; i<4; i++){
   	  	document.getElementById("center" + i).style.display = "none";
 	}   
-	 	document.getElementById("center" + id).style.display = "block";
-
-   if (id == 2) {
-		if (!tableCreated) {
-			gardenTable();
-			tableCreated = !tableCreated;
-		} if (!gardenInitialized) {
-			initalizeGarden();
-			gardenInitialized = !gardenInitialized;
-		}
-   };
-
+	 document.getElementById("center" + id).style.display = "block";
  };
 
-/*function show1() {
-   document.getElementById('center1').style.display = "block";
-   document.getElementById('center2').style.display = "none";
-   document.getElementById('center3').style.display = "none";
-};
 
-function show2() {
-	document.getElementById('center2').style.display = "block";
-	document.getElementById('center1').style.display = "none";
-	document.getElementById('center3').style.display = "none";
-	if (!tableCreated) {
-		gardenTable();
-		tableCreated = !tableCreated;
-	} if (!gardenInitialized) {
-		initalizeGarden();
-		gardenInitialized = !gardenInitialized;
-	}
-};
-
-function show3() {
-   document.getElementById('center3').style.display = "block";
-   document.getElementById('center1').style.display = "none";
-   document.getElementById('center2').style.display = "none";
-};
-*/
 
 
 
@@ -353,7 +366,6 @@ function plot(state, id) {
 var garden = [];
 var numPlots = 16, colPlots = 4;
 var tableCreated = false;
-var gardenInitialized = false;
 
 function initalizeGarden() {
 	for (var i = 0; i < numPlots; i++) {
@@ -407,16 +419,6 @@ function unlockPlot(plot) {
 	}
 }
 
-// function plantPlot(plot) {
-// 	if (garden[plot].state == 1) {
-// 		var p = getRandomInt(0, plants.length - 1);		// chooses random from list
-// 		garden[plot].crop = p;
-// 		garden[plot].state = 2;
-// 		cropTimer(plants[p].growthTime, plot);
-// 		updateLog("Planted a " + plants[p].name + ".");
-// 	}
-// }
-
 var planting = 0;
 function selectCrop(crop) {
 	planting = crop;
@@ -452,19 +454,21 @@ function harvestPlot(plot) {
 function harvestAll() {
 	var harvested = zeroArray(plants.length);
 	for (var p = 0; p < numPlots; p++) {
-		var cropId = garden[p].crop;
-		harvested[cropId] += harvestPlot(p);
-		reimagePlot(p);
-	}
-	if (harvested.length == 0) {
-		console.log("There are no crops ready for harvest.");
-	} else {
-		var harvestArray = [];
-		for (var c = 0; c < harvested.length; c++) {
-			if (harvested[c] != 0) {
-				harvestArray.push(harvested[c] + " " + plants[c].plural);
-			}
+		if (garden[p].state == 3) {
+			var cropId = garden[p].crop;
+			harvested[cropId] += harvestPlot(p);
+			reimagePlot(p);
 		}
+	}
+	var harvestArray = [];
+	for (var c = 0; c < harvested.length; c++) {
+		if (harvested[c] != 0) {
+			harvestArray.push(harvested[c] + " " + plants[c].plural);
+		}
+	}
+	if (harvestArray.length == 0) {
+		updateLog("There are no crops ready for harvest.");
+	} else {
 		var harvestString = "";
 		if (harvestArray.length == 1) {
 			harvestString = harvestArray[0];

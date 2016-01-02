@@ -31,7 +31,7 @@ function composeSave() {
 	// Makes garden plot info into array.			DOES NOT TAKE INTO ACCOUNT GROWING TIMES FOR PLANTS YET
 	var gardenSave = [];
 	for (p = 0; p < numPlots; p++) {
-		gardenSave.push([garden[p].state, garden[p].crop]);
+		gardenSave.push([garden[p].state, garden[p].crop, garden[p].timeLeft]);
 	}
 	return [currenciesSave, animalsSave, gardenSave];
 }
@@ -49,6 +49,11 @@ function parseSave(save) {
 	for (p = 0; p < numPlots; p++) {
 		garden[p].state = gardenSave[p][0];
 		garden[p].crop = gardenSave[p][1];
+		garden[p].timeLeft = gardenSave[p][2];
+		// Gets the plot timers running again.
+		if (garden[p].timeLeft != null) {
+			cropTimer(garden[p].timeLeft, p);
+		}
 		reimagePlot(p);
 	}
 }
@@ -321,6 +326,7 @@ function plot(state, id) {
 	this.name = "plot" + id;
 	this.state = state;			// locked, empty, growing, ready
 	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
+	this.timeLeft = null;
 }
 
 var garden = [];
@@ -480,7 +486,7 @@ function secondsToTime(seconds) {
 }
 
 function cropTimer(seconds, plot) {
-	timer2(seconds, "plotTimer" + plot, "READY");
+	timer2(seconds, garden[plot], "plotTimer" + plot, "READY");
 	setTimeout(function () {
 		garden[plot].state = 3;
 		reimagePlot(plot);
@@ -489,17 +495,19 @@ function cropTimer(seconds, plot) {
 }	
 	
 
-function timer2(seconds, elemId, completedString) {
+function timer2(seconds, counter, elemId, completedString) {
     document.getElementById(elemId).innerHTML = secondsToTime(seconds);
     var countdownTimer = setTimeout(decrease, 1000);
     function decrease() {
     	seconds--;
     	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    	counter.timeLeft = seconds;
         if (seconds !== 0) {
         	setTimeout(decrease, 1000);
     	} else {
     		clearTimeout(countdownTimer);
     		document.getElementById(elemId).innerHTML = completedString;
+    		counter.timeLeft = null;
     	}
     }
 }

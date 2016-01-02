@@ -50,11 +50,16 @@
 			</div>
 			<div class="text" id="animals">
 				<p>
-					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
-					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s) <br>
-					<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s) <br>
-					<b>Otters:</b> <span id="otter">0</span> (+<span id="otterRate">0</span>/s) <br>
-					<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s)
+					<img src="img/sparrow.gif" class="pixel"> 
+						<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
+					<img src="img/sparrow.gif" class="pixel"> 
+						<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s) <br>
+					<img src="img/sparrow.gif" class="pixel"> 
+						<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s) <br>
+					<img src="img/sparrow.gif" class="pixel"> 
+						<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s) <br>
+					<img src="img/otter.gif" class="pixel"> 
+						<b>Otters:</b> <span id="otter">0</span> (+<span id="otterRate">0</span>/s)
 				</p>
 			</div>
 
@@ -100,22 +105,22 @@
 				</div>
 
 				<div class="animalbutton">
-					<button id="buyMagpie" type="button" onClick="buyAnimal(magpie, 1)">Befriend Magpie</button><br>
+					<button id="buyMagpie" type="button" onClick="buyAnimal(magpie, 1)" disabled>Befriend Magpie</button><br>
 					<b>Cost</b>: <span id="magpieCost">100</span> seeds
 				</div>
 
 				<div class="animalbutton">
-					<button id="buySquirrel" type="button" onClick="buyAnimal(squirrel, 1)">Befriend Squirrel</button><br>
+					<button id="buySquirrel" type="button" onClick="buyAnimal(squirrel, 1)" disabled>Befriend Squirrel</button><br>
 					<b>Cost</b>: <span id="squirrelCost">10K</span> seeds
 				</div>
 
 				<div class="animalbutton">
-					<button id="buyRabbit" type="button" onClick="buyAnimal(rabbit, 1)">Befriend Rabbit</button><br>
+					<button id="buyRabbit" type="button" onClick="buyAnimal(rabbit, 1)" disabled>Befriend Rabbit</button><br>
 					<b>Cost</b>: <span id="rabbitCost">10</span> grass
 				</div>
 
 				<div class="animalbutton">
-					<button id="buyOtter" type="button" onClick="buyAnimal(otter, 1)">Befriend Otter</button><br>
+					<button id="buyOtter" type="button" onClick="buyAnimal(otter, 1)" disabled>Befriend Otter</button><br>
 					<b>Cost</b>: <span id="otterCost">100</span> grass
 				</div>
 
@@ -141,6 +146,12 @@
 
 			<div class="text" align="center">
 				<p>
+					Plant: 	<span id="plant0" onClick="selectCrop(0)" class="bold" >Grass</span> |
+							<span id="plant1" onClick="selectCrop(1)">Carrots</span> 
+					<br><br>
+
+					<button type="button" onClick="harvestAll()">Harvest All</button><br>
+					
 					<table id="garden">
 					</table>
 				</p>
@@ -148,6 +159,7 @@
 			</div>
 
 		</div>
+
 
 
 		<!-- S E T T I N G S -->
@@ -189,15 +201,15 @@
 		<div id="bottom">
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show1()">The Glade</button>
+				<button type="button" class="nav" onClick="show(1)">The Glade</button>
 			</div>
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show2()">The Garden</button>
+				<button type="button" class="nav" onClick="show(2)">The Garden</button>
 			</div>
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show3()">Settings</button>
+				<button type="button" class="nav" onClick="show(3)">Settings</button>
 			</div>
 
 

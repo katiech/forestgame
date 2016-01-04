@@ -14,12 +14,6 @@ window.onload = function() {
 };
 
 
-// Auto save
-var saveFrequency = 10;
-window.setInterval(function() {
-	GameSave();
-}, saveFrequency * 1000);
-
 
 
 // S A V E
@@ -94,6 +88,24 @@ function GameDelete() {
 	localStorage.removeItem("save");
 	// also set everything to zero????????? reset function?????
 };
+
+
+// Auto save
+var saveFrequency = 30;
+var autoSave = autoSaveTimer(saveFrequency);
+function autoSaveTimer(freq) {
+	autoSave = setInterval(function() {
+		GameSave();
+	}, freq * 1000);
+	return autoSave;
+}
+function setSaveFreq(freq) {
+	clearInterval(autoSave);
+	if (freq != 0) {
+		autoSave = autoSaveTimer(freq);
+	}
+	saveFrequency = freq;
+}
 
 
 

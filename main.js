@@ -14,6 +14,13 @@ window.onload = function() {
 };
 
 
+// Auto save
+var saveFrequency = 10;
+window.setInterval(function() {
+	GameSave();
+}, saveFrequency * 1000);
+
+
 
 // S A V E
 
@@ -67,12 +74,6 @@ function parseSave(save) {
 }
 
 function GameSave() {
-	var save = {
-		seed: seed,
-		gold: gold,
-		sparrow: sparrow,
-		magpie: magpie
-	};
 	var save = composeSave();
 	localStorage.setItem("save", JSON.stringify(save));
 	updateLog("Game Saved!");

@@ -33,7 +33,9 @@ function composeSave() {
 	for (p = 0; p < numPlots; p++) {
 		gardenSave.push([garden[p].state, garden[p].crop, garden[p].timeLeft]);
 	}
-	return [currenciesSave, animalsSave, gardenSave];
+	// Makes exploration into into array.
+	var exploreSave = [team.state, team.timeLeft];
+	return [currenciesSave, animalsSave, gardenSave, exploreSave];
 }
 
 function parseSave(save) {
@@ -55,6 +57,12 @@ function parseSave(save) {
 			cropTimer(garden[p].timeLeft, p);
 		}
 		reimagePlot(p);
+	}
+	var exploreSave = save[3];
+	team.state = exploreSave[0];
+	team.timeLeft = exploreSave[1];
+	if (team.timeLeft != null) {
+		exploreTimer(team.timeLeft, team.state);
 	}
 }
 
@@ -303,6 +311,8 @@ window.setInterval(function() {
 
 
 
+
+
 // L O G
 
 function updateLog(string){
@@ -486,85 +496,46 @@ function secondsToTime(seconds) {
 }
 
 function cropTimer(seconds, plot) {
-	timer2(seconds, garden[plot], "plotTimer" + plot, "READY");
+	timer(seconds, garden[plot], "plotTimer" + plot, "READY");
 	setTimeout(function () {
 		garden[plot].state = 3;
 		reimagePlot(plot);
 		updateLog("A " + plants[garden[plot].crop].name + " has finished growing!");
 	}, seconds * 1000);
 }	
-	
-
-function timer2(seconds, counter, elemId, completedString) {
-    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
-    var countdownTimer = setTimeout(decrease, 1000);
-    function decrease() {
-    	seconds--;
-    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
-    	counter.timeLeft = seconds;
-        if (seconds !== 0) {
-        	setTimeout(decrease, 1000);
-    	} else {
-    		clearTimeout(countdownTimer);
-    		document.getElementById(elemId).innerHTML = completedString;
-    		counter.timeLeft = null;
-    	}
-    }
-}
 
 
-
-
-function timer(min, Id) {
-	var mins = min;  
-    var secs = mins * 60;
-    var currentSeconds = 0;
-    var currentMinutes = 0;
-   
-    setTimeout(decrease, 1000); 
-
-    function decrease() {
-        currentMinutes = Math.floor(secs / 60);
-        currentSeconds = secs % 60;
-        if (currentSeconds <= 9) 
-        	currentSeconds = "0" + currentSeconds;
-        	secs--;
-        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds;
-                if (currentMinutes < 1)
-        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentSeconds + " s";  
-        if (secs !== -1) {
-        	setTimeout(decrease, 1000);
-    	} else {
-    		document.getElementById(Id).innerHTML = "";
-    	};
-    };
-};
 
 
 
 
 // E X P L O R A T I O N
 
-function exploreM(button) {
+var team = {
+	state: 0,				// not exploring, mountains, river
+	timeLeft: null
+};
 
+function exploreM(button) {
     button.setAttribute('disabled', true);
 	updateLog("Expedition started.");
-	timer(1, "mTime");
-
-    setTimeout(function(){
-        button.removeAttribute('disabled');
-
-        //stuff that happens when you return
-
-        var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
-        var randomAmount = getRandomInt(1, 50);
-        randomCurrency.amount += randomAmount;
-
-        updateLog("Expedition returned");  
-        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
-
-    }, 61000) //expedition length +1000ms bc first timer update is delayed?
+	exploreTimer(60, 1);
 };
+
+function exploreTimer(seconds, area) {
+	timer(seconds, team, "mTime", "");
+	team.state = area;
+	setTimeout(function () {
+        document.getElementById("exploreM").removeAttribute('disabled');
+		var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
+		var randomAmount = getRandomInt(1, 50);
+		updateLog("Expedition returned.");
+        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
+        randomCurrency.amount += randomAmount;
+		team.state = 0;
+	}, seconds * 1000);
+}	
+
 
 
 
@@ -634,6 +605,23 @@ function getRandomInt(min, max) {
 
 function zeroArray(len) {
 	return Array(len+1).join('0').split('').map(parseFloat);
+}
+
+function timer(seconds, counter, elemId, completedString) {
+    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    var countdownTimer = setTimeout(decrease, 1000);
+    function decrease() {
+    	seconds--;
+    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    	counter.timeLeft = seconds;
+        if (seconds !== 0) {
+        	setTimeout(decrease, 1000);
+    	} else {
+    		clearTimeout(countdownTimer);
+    		document.getElementById(elemId).innerHTML = completedString;
+    		counter.timeLeft = null;
+    	}
+    }
 }
 
 

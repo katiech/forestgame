@@ -177,7 +177,20 @@
 					Manual save/load, set auto-save frequency, delete save file, etc.
 				</p>
 
-				<button type="button" onClick="GameDelete()">Delete</button><br>
+				<p>
+					Save Frequency:
+					<input type="radio" id="save30" name="saveFreq" onclick="setSaveFreq(30)" checked="true" />
+					<label for="save30">30s</label>
+					<input type="radio" id="save60" name="saveFreq" onclick="setSaveFreq(60)" />
+					<label for="save30">1m</label>
+					<input type="radio" id="save300" name="saveFreq" onclick="setSaveFreq(300)" />
+					<label for="save30">5m</label>
+				</p>
+
+				<p>
+					Delete Save File: 
+					<button type="button" onClick="GameDelete()">Delete</button><br>
+				</p>
 
 			</div>
 

@@ -152,6 +152,7 @@ var grass = {
 	rate: 0,
 	// garden properties
 	growthTime: 10, 		// takes 10 seconds to finish growing
+	plantCost: [0, 10],		// currencyind, amount
 	harvest: [3, 2, 5] 		// currencyind, min, max
 };
 var carrot = {
@@ -160,6 +161,7 @@ var carrot = {
 	amount: 0,
 	rate: 0,
 	growthTime: 20,
+	plantCost: [0, 200],
 	harvest: [4, 2, 5]
 };
 var currencies = [seed, gold, acorn, grass, carrot];

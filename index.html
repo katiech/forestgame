@@ -37,7 +37,7 @@
 						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s) <br>
 					<img src="img/seed.gif" class="pixel">
 						<b>Acorns:</b> <span id="acorn">0</span> (+<span id="acornRate">0</span>/s) <br>
-					<img src="img/seed.gif" class="pixel">
+					<img src="img/grass.gif" class="pixel">
 						<b>Grass:</b> <span id="grass">0</span> (+<span id="grassRate">0</span>/s) <br>
 					<img src="img/seed.gif" class="pixel">
 						<b>Carrots:</b> <span id="carrot">0</span> (+<span id="carrotRate">0</span>/s)
@@ -148,6 +148,9 @@
 				<p>
 					Plant: 	<span id="plant0" onClick="selectCrop(0)" class="bold" >Grass</span> |
 							<span id="plant1" onClick="selectCrop(1)">Carrots</span> 
+
+					<img id="plant0" class="seeds" onClick="selectCrop(0)" src="img/grass-seeds.png">
+
 					<br><br>
 
 					<button type="button" onClick="harvestAll()">Harvest All</button><br>
@@ -177,7 +180,20 @@
 					Manual save/load, set auto-save frequency, delete save file, etc.
 				</p>
 
-				<button type="button" onClick="GameDelete()">Delete</button><br>
+				<p>
+					Save Frequency:
+					<input type="radio" id="save30" name="saveFreq" onclick="setSaveFreq(30)" checked="true" />
+					<label for="save30">30s</label>
+					<input type="radio" id="save60" name="saveFreq" onclick="setSaveFreq(60)" />
+					<label for="save30">1m</label>
+					<input type="radio" id="save300" name="saveFreq" onclick="setSaveFreq(300)" />
+					<label for="save30">5m</label>
+				</p>
+
+				<p>
+					Delete Save File: 
+					<button type="button" onClick="GameDelete()">Delete</button><br>
+				</p>
 
 			</div>
 

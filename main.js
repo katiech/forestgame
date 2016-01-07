@@ -15,6 +15,7 @@ window.onload = function() {
 
 
 
+
 // S A V E
 
 function composeSave() {
@@ -33,7 +34,9 @@ function composeSave() {
 	for (p = 0; p < numPlots; p++) {
 		gardenSave.push([garden[p].state, garden[p].crop, garden[p].timeLeft]);
 	}
-	return [currenciesSave, animalsSave, gardenSave];
+	// Makes exploration into into array.
+	var exploreSave = [team.state, team.timeLeft];
+	return [currenciesSave, animalsSave, gardenSave, exploreSave];
 }
 
 function parseSave(save) {
@@ -56,15 +59,15 @@ function parseSave(save) {
 		}
 		reimagePlot(p);
 	}
+	var exploreSave = save[3];
+	team.state = exploreSave[0];
+	team.timeLeft = exploreSave[1];
+	if (team.timeLeft != null) {
+		exploreTimer(team.timeLeft, team.state);
+	}
 }
 
 function GameSave() {
-	var save = {
-		seed: seed,
-		gold: gold,
-		sparrow: sparrow,
-		magpie: magpie
-	};
 	var save = composeSave();
 	localStorage.setItem("save", JSON.stringify(save));
 	updateLog("Game Saved!");
@@ -85,6 +88,24 @@ function GameDelete() {
 	localStorage.removeItem("save");
 	// also set everything to zero????????? reset function?????
 };
+
+
+// Auto save
+var saveFrequency = 30;
+var autoSave = autoSaveTimer(saveFrequency);
+function autoSaveTimer(freq) {
+	autoSave = setInterval(function() {
+		GameSave();
+	}, freq * 1000);
+	return autoSave;
+}
+function setSaveFreq(freq) {
+	clearInterval(autoSave);
+	if (freq != 0) {
+		autoSave = autoSaveTimer(freq);
+	}
+	saveFrequency = freq;
+}
 
 
 
@@ -131,6 +152,7 @@ var grass = {
 	rate: 0,
 	// garden properties
 	growthTime: 10, 		// takes 10 seconds to finish growing
+	plantCost: [0, 10],		// currencyind, amount
 	harvest: [3, 2, 5] 		// currencyind, min, max
 };
 var carrot = {
@@ -139,6 +161,7 @@ var carrot = {
 	amount: 0,
 	rate: 0,
 	growthTime: 20,
+	plantCost: [0, 200],
 	harvest: [4, 2, 5]
 };
 var currencies = [seed, gold, acorn, grass, carrot];
@@ -299,6 +322,8 @@ window.setInterval(function() {
 	updateResources();
 	checkUnlock();
 }, 1000);		// fires every 1000ms
+
+
 
 
 
@@ -486,85 +511,46 @@ function secondsToTime(seconds) {
 }
 
 function cropTimer(seconds, plot) {
-	timer2(seconds, garden[plot], "plotTimer" + plot, "READY");
+	timer(seconds, garden[plot], "plotTimer" + plot, "READY");
 	setTimeout(function () {
 		garden[plot].state = 3;
 		reimagePlot(plot);
 		updateLog("A " + plants[garden[plot].crop].name + " has finished growing!");
 	}, seconds * 1000);
 }	
-	
-
-function timer2(seconds, counter, elemId, completedString) {
-    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
-    var countdownTimer = setTimeout(decrease, 1000);
-    function decrease() {
-    	seconds--;
-    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
-    	counter.timeLeft = seconds;
-        if (seconds !== 0) {
-        	setTimeout(decrease, 1000);
-    	} else {
-    		clearTimeout(countdownTimer);
-    		document.getElementById(elemId).innerHTML = completedString;
-    		counter.timeLeft = null;
-    	}
-    }
-}
 
 
-
-
-function timer(min, Id) {
-	var mins = min;  
-    var secs = mins * 60;
-    var currentSeconds = 0;
-    var currentMinutes = 0;
-   
-    setTimeout(decrease, 1000); 
-
-    function decrease() {
-        currentMinutes = Math.floor(secs / 60);
-        currentSeconds = secs % 60;
-        if (currentSeconds <= 9) 
-        	currentSeconds = "0" + currentSeconds;
-        	secs--;
-        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds;
-                if (currentMinutes < 1)
-        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentSeconds + " s";  
-        if (secs !== -1) {
-        	setTimeout(decrease, 1000);
-    	} else {
-    		document.getElementById(Id).innerHTML = "";
-    	};
-    };
-};
 
 
 
 
 // E X P L O R A T I O N
 
-function exploreM(button) {
+var team = {
+	state: 0,				// not exploring, mountains, river
+	timeLeft: null
+};
 
+function exploreM(button) {
     button.setAttribute('disabled', true);
 	updateLog("Expedition started.");
-	timer(1, "mTime");
-
-    setTimeout(function(){
-        button.removeAttribute('disabled');
-
-        //stuff that happens when you return
-
-        var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
-        var randomAmount = getRandomInt(1, 50);
-        randomCurrency.amount += randomAmount;
-
-        updateLog("Expedition returned");  
-        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
-
-    }, 61000) //expedition length +1000ms bc first timer update is delayed?
+	exploreTimer(60, 1);
 };
+
+function exploreTimer(seconds, area) {
+	timer(seconds, team, "mTime", "");
+	team.state = area;
+	setTimeout(function () {
+        document.getElementById("exploreM").removeAttribute('disabled');
+		var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
+		var randomAmount = getRandomInt(1, 50);
+		updateLog("Expedition returned.");
+        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
+        randomCurrency.amount += randomAmount;
+		team.state = 0;
+	}, seconds * 1000);
+}	
+
 
 
 
@@ -634,6 +620,23 @@ function getRandomInt(min, max) {
 
 function zeroArray(len) {
 	return Array(len+1).join('0').split('').map(parseFloat);
+}
+
+function timer(seconds, counter, elemId, completedString) {
+    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    var countdownTimer = setTimeout(decrease, 1000);
+    function decrease() {
+    	seconds--;
+    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    	counter.timeLeft = seconds;
+        if (seconds !== 0) {
+        	setTimeout(decrease, 1000);
+    	} else {
+    		clearTimeout(countdownTimer);
+    		document.getElementById(elemId).innerHTML = completedString;
+    		counter.timeLeft = null;
+    	}
+    }
 }
 
 

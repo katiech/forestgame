@@ -56,11 +56,11 @@ button:disabled:hover{
 }
 
 .animalbutton{
-	display:inline-block;
+	display: inline-block;
 }
 
 .explorebutton{
-	display:inline-block;
+	display: inline-block;
 }
 
 #left {
@@ -223,5 +223,10 @@ img.plant {
 	font-size: 1.25vw;
 	color: white;
 	padding: 5px;
+}
+
+img.seeds {
+	width: 4vw;
+	image-rendering: pixelated;
 }
 

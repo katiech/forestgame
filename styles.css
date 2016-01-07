@@ -193,7 +193,8 @@ button:disabled:hover{
 table#garden {
 /*	width: min(40vw, 72vh);
 	height: min(40vw, 72vh); */
-	width: 35vw;
+/*	width: 35vw;*/
+	width: 45vmin;
 	margin: 1vw;
 	text-align: center;
 	/*border: 2px #855E42 solid;*/
@@ -226,7 +227,18 @@ img.plant {
 }
 
 img.seeds {
-	width: 4vw;
+	width: 100%;
 	image-rendering: pixelated;
 }
 
+img.disable {
+	opacity: 0.5;
+}
+
+.silhouette {
+	width: 4vw;
+	height: 4vw;
+	background-image: url(img/grass-seeds-silhouette.png);
+	background-size: contain;
+	image-rendering: pixelated;
+}

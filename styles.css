@@ -226,7 +226,18 @@ img.plant {
 }
 
 img.seeds {
+<<<<<<< HEAD
 	width: 4vw;
 	image-rendering: pixelated;
+=======
+	width: 100%;
+	image-rendering: pixelated;
+}
+
+.plantSelect {
+	width: 4vw;
+	height: 4vw;
+	display: inline-block;
+>>>>>>> garden
 }
 

@@ -231,14 +231,8 @@ img.seeds {
 	image-rendering: pixelated;
 }
 
-img.disable {
-	opacity: 0.5;
-}
-
-.silhouette {
+.plantSelect {
 	width: 4vw;
 	height: 4vw;
-	background-image: url(img/grass-seeds-silhouette.png);
-	background-size: contain;
-	image-rendering: pixelated;
+	display: inline-block;
 }

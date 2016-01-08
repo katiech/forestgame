@@ -414,10 +414,11 @@ var planting = 0;
 function selectCrop(crop) {
 	planting = crop;
 	for (b = 0; b < plants.length; b++) { 
-		document.getElementById("plant" + b).setAttribute("class", "unbold");
+		// document.getElementById("plant" + b).setAttribute("class", "unbold");
+		document.getElementById("plant" + b).setAttribute("src", "img/" + plants[b].name + "-seeds2" + ".png");
 	}
-	document.getElementById("plant" + crop).setAttribute("class", "bold");
-	console.log(crop + " plant");
+	// document.getElementById("plant" + crop).setAttribute("class", "bold");
+	document.getElementById("plant" + crop).setAttribute("src", "img/" + plants[crop].name + "-seeds" + ".png");
 }
 
 // Plants cropId at plotId.

@@ -193,8 +193,7 @@ button:disabled:hover{
 table#garden {
 /*	width: min(40vw, 72vh);
 	height: min(40vw, 72vh); */
-/*	width: 35vw;*/
-	width: 45vmin;
+	width: 35vw;
 	margin: 1vw;
 	text-align: center;
 	/*border: 2px #855E42 solid;*/
@@ -236,3 +235,4 @@ img.seeds {
 	height: 4vw;
 	display: inline-block;
 }
+

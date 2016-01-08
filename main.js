@@ -1,12 +1,74 @@
 
 
-function GameSave() {
-	var save = {
-		seed: seed,
-		gold: gold,
-		sparrow: sparrow,
-		magpie: magpie
+
+// To do on page load.
+window.onload = function() {
+	// Generates garden plots. Check if garden unlocked???
+	gardenTable();
+	initalizeGarden();
+	// Auto loads if save file present.
+	var savegame = JSON.parse(localStorage.getItem("save"));
+	if (typeof savegame !== "undefined") {
+		GameLoad();
 	};
+};
+
+
+
+
+// S A V E
+
+function composeSave() {
+	// Makes currency amounts into array.
+	var currenciesSave = [];
+	for (c = 0; c < currencies.length; c++) {
+		currenciesSave.push(currencies[c].amount);
+	}
+	// Makes animal amounts into array.
+	var animalsSave = [];
+	for (a = 0; a < animals.length; a++) {
+		animalsSave.push(animals[a].amount);
+	}
+	// Makes garden plot info into array.			DOES NOT TAKE INTO ACCOUNT GROWING TIMES FOR PLANTS YET
+	var gardenSave = [];
+	for (p = 0; p < numPlots; p++) {
+		gardenSave.push([garden[p].state, garden[p].crop, garden[p].timeLeft]);
+	}
+	// Makes exploration into into array.
+	var exploreSave = [team.state, team.timeLeft];
+	return [currenciesSave, animalsSave, gardenSave, exploreSave];
+}
+
+function parseSave(save) {
+	var currenciesSave = save[0];
+	for (c = 0; c < currencies.length; c++) {
+		currencies[c].amount = currenciesSave[c];
+	}
+	var animalsSave = save[1];
+	for (a = 0; a < animals.length; a++) {
+		animals[a].amount = animalsSave[a];
+	}
+	var gardenSave = save[2];
+	for (p = 0; p < numPlots; p++) {
+		garden[p].state = gardenSave[p][0];
+		garden[p].crop = gardenSave[p][1];
+		garden[p].timeLeft = gardenSave[p][2];
+		// Gets the plot timers running again.
+		if (garden[p].timeLeft != null) {
+			cropTimer(garden[p].timeLeft, p);
+		}
+		reimagePlot(p);
+	}
+	var exploreSave = save[3];
+	team.state = exploreSave[0];
+	team.timeLeft = exploreSave[1];
+	if (team.timeLeft != null) {
+		exploreTimer(team.timeLeft, team.state);
+	}
+}
+
+function GameSave() {
+	var save = composeSave();
 	localStorage.setItem("save", JSON.stringify(save));
 	updateLog("Game Saved!");
 };
@@ -14,10 +76,7 @@ function GameSave() {
 function GameLoad() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
 	if (savegame !== null) {
-		if (typeof savegame.seed !== "undefined") seed = savegame.seed;
-		if (typeof savegame.gold !== "undefined") gold = savegame.gold;
-		if (typeof savegame.sparrow !== "undefined") sparrow = savegame.sparrow;
-		if (typeof savegame.magpie !== "undefined") magpie = savegame.magpie;
+		parseSave(savegame);
 		updateLog("Game Loaded!");
 		updateAll();
 	} else {
@@ -31,13 +90,24 @@ function GameDelete() {
 };
 
 
-// Auto loads if save file present.
-window.onload = function() {
-	var savegame = JSON.parse(localStorage.getItem("save"));
-	if (typeof savegame !== "undefined") {
-		GameLoad();
-	};
-};
+// Auto save
+var saveFrequency = 30;
+var autoSave = autoSaveTimer(saveFrequency);
+function autoSaveTimer(freq) {
+	autoSave = setInterval(function() {
+		GameSave();
+	}, freq * 1000);
+	return autoSave;
+}
+function setSaveFreq(freq) {
+	clearInterval(autoSave);
+	if (freq != 0) {
+		autoSave = autoSaveTimer(freq);
+	}
+	saveFrequency = freq;
+}
+
+
 
 
 
@@ -48,45 +118,10 @@ function show(id){
 	for (i = 1; i<4; i++){
   	  	document.getElementById("center" + i).style.display = "none";
 	}   
-	 	document.getElementById("center" + id).style.display = "block";
-
-   if (id==2) {
-		if (!tableCreated) {
-			gardenTable();
-			tableCreated = !tableCreated;
-		} if (!gardenInitialized) {
-			initalizeGarden();
-			gardenInitialized = !gardenInitialized;
-		}
-   };
-
+	 document.getElementById("center" + id).style.display = "block";
  };
 
-/*function show1() {
-   document.getElementById('center1').style.display = "block";
-   document.getElementById('center2').style.display = "none";
-   document.getElementById('center3').style.display = "none";
-};
 
-function show2() {
-	document.getElementById('center2').style.display = "block";
-	document.getElementById('center1').style.display = "none";
-	document.getElementById('center3').style.display = "none";
-	if (!tableCreated) {
-		gardenTable();
-		tableCreated = !tableCreated;
-	} if (!gardenInitialized) {
-		initalizeGarden();
-		gardenInitialized = !gardenInitialized;
-	}
-};
-
-function show3() {
-   document.getElementById('center3').style.display = "block";
-   document.getElementById('center1').style.display = "none";
-   document.getElementById('center2').style.display = "none";
-};
-*/
 
 
 
@@ -117,6 +152,7 @@ var grass = {
 	rate: 0,
 	// garden properties
 	growthTime: 10, 		// takes 10 seconds to finish growing
+	plantCost: [0, 10],		// currencyind, amount
 	harvest: [3, 2, 5] 		// currencyind, min, max
 };
 var carrot = {
@@ -125,6 +161,7 @@ var carrot = {
 	amount: 0,
 	rate: 0,
 	growthTime: 20,
+	plantCost: [0, 200],
 	harvest: [4, 2, 5]
 };
 var currencies = [seed, gold, acorn, grass, carrot];
@@ -135,6 +172,7 @@ function currencyCollect(currency) {
 
 
 
+
 // A N I M A L  F R I E N D S
 
 var sparrow = {
@@ -142,45 +180,45 @@ var sparrow = {
 	plural: 'sparrows',
 	amount: 0,
 	cost: [0, 5],			// seeds 0
+	baseCost: 5,
 	rate: 0, 		// Rate sparrows are being increased.
-	seedRate: 1 	// Rate of seed gained per sparrow.
+	earnRate: [1, 0, 0, 0, 0]		// list of rates for currencies: seed, gold, acorn, grass, carrot, etc.
 };
 var magpie = {
 	name: 'magpie',
 	plural: 'magpies',
 	amount: 0,
 	cost: [0, 100], 		// seeds 0
+	baseCost: 100,
 	rate: 0,
-	seedRate: 10,
-	goldRate: 0.1
+	earnRate: [10, 0.1, 0, 0, 0]
 };
 var squirrel = {
 	name: 'squirrel',
 	plural: 'squirrels',
 	amount: 0,
 	cost: [0, 10000], 		// seeds 0
+	baseCost: 10000,
 	rate: 0,
-	seedRate: 1000,
-	acornRate: 0.1
+	earnRate: [1000, 0, 0.1, 0, 0]
 };
 var rabbit = {
 	name: 'rabbit',
 	plural: 'rabbits',
 	amount: 0,
 	cost: [3, 10], 			// grass 3
+	baseCost: 10,
 	rate: 0,
-	seedRate: 100,
-	carrotRate: 0.1,
-	grassRate: 1
+	earnRate: [100, 0, 0, 1, 0.1]
 };
 var otter = {
 	name: 'otter',
 	plural: 'otters',
 	amount: 0,
 	cost: [3, 100], 		// grass 3
+	baseCost: 100,
 	rate: 0,
-	seedRate: 1000,
-	acornRate: 10
+	earnRate: [1000, 0, 1, 0, 0]
 };
 var animals = [sparrow, magpie, squirrel, rabbit, otter];
 
@@ -190,9 +228,7 @@ function buyAnimal(animal, num) {
 	if (res.amount >= val * num) {
 		animal.amount += num;
 		res.amount -= val * num;
-		updateResources();
-		updateRates();
-		updateCosts();
+		updateAll();
 		if (num > 1) {
 			updateLog("You have befriended " + num + " " + animal.plural + "! Wow!");
 		} else {
@@ -205,14 +241,6 @@ function buyAnimal(animal, num) {
 			updateLog("You don't have enough " + res.plural + " to befriend " + article(animal) + ".");
 		};
 	};
-};
-
-function article(animal){
-	if ("aeiou".indexOf(animal.name[0]) >= 0){
-		return "an " + animal.name;
-	} else {
-		return "a " + animal.name;
-    };
 };
 
 var buyAmount = 1;
@@ -239,6 +267,8 @@ function setBuy(num) {
 
 
 
+// U P D A T I N G  R E S O U R C E S
+
 function collectCurrencies() {
 	for (r = 0; r < currencies.length; r++) {
 		currencyCollect(currencies[r]);
@@ -255,32 +285,24 @@ function updateResources() {
 };
 
 function updateRates() {
-	// for (c = 0; c < currencies.length; c++) {
-	// 	var newRate = 0;
-	// 	for (a = 0; a < animals.length; a++) {
-	// 		if (animals[a].)
-	// 	}
-	// 	currencies[c].rate = newRate;
-	// }
-	seed.rate = 	sparrow.amount * sparrow.seedRate +
-					magpie.amount * magpie.seedRate +
-					squirrel.amount * squirrel.seedRate +
-					rabbit.amount * rabbit.seedRate +	
-					1;
-	gold.rate = 	magpie.amount * magpie.goldRate;
-	acorn.rate = 	squirrel.amount * squirrel.acornRate;
-	// grass.rate = 	
-	carrot.rate =	rabbit.amount * rabbit.carrotRate;
+	for (c = 0; c < currencies.length; c++) {
+		var newRate = 0;
+		if (c == 0) {		// Extra 1 seeds/s
+			newRate++;
+		}
+		for (a = 0; a < animals.length; a++) {
+			newRate += animals[a].amount * animals[a].earnRate[c];
+		}
+		currencies[c].rate = newRate;
+	}
 	for (r = 0; r < currencies.length; r++) {
 		document.getElementById(currencies[r].name + "Rate").innerHTML = fixValue(currencies[r].rate);
 	}
 };
 
 function updateCosts() {
-	sparrow.cost[1] = Math.floor(5 * Math.pow(1.1, sparrow.amount));
-	magpie.cost[1] = Math.floor(100 * Math.pow(1.1, magpie.amount));
-	squirrel.cost[1] = Math.floor(10000 * Math.pow(1.1, squirrel.amount));
 	for (a = 0; a < animals.length; a++) {
+		animals[a].cost[1] = Math.floor(animals[a].baseCost * Math.pow(1.15, animals[a].amount));
 		document.getElementById(animals[a].name + "Cost").innerHTML = fixValue(animals[a].cost[1] * buyAmount);
 	}
 };
@@ -294,39 +316,19 @@ function updateAll(){
 
 
 
-function fixValue(resource) {
-	// Forces floats to always display to 2 decimal places if < 1. Makes sure zero says 0 and not 0.00.
-	if (resource != 0) {
-		if (resource >= 1) {
-			resource = resource.toFixed(0);
-		} else {
-			resource = resource.toFixed(2);
-		};
-	};
-	// Truncates large values and tacks on a suffix.
-	var suffixes = ["K","M","B","T","Qa","Qt","Sx","Sp","Oc","Dc"];
-	for (var i = suffixes.length - 1; i >= 0; i--) {
-		if (resource >= Math.pow(1000, i + 1)) {
-			return (resource / Math.pow(1000, i + 1)).toFixed(2) + suffixes[i];
-		};
-	};
-	return resource;
-};
-
-function capitalize(s) {
-    return s && s[0].toUpperCase() + s.slice(1);
-}
-
-
-
 
 window.setInterval(function() {
 	collectCurrencies();
 	updateResources();
+	checkUnlock();
 }, 1000);		// fires every 1000ms
 
 
 
+
+
+
+// L O G
 
 function updateLog(string){
 	var oldlog = document.getElementById("log").innerHTML;
@@ -340,6 +342,8 @@ function clearLog() {
 
 
 
+
+
 // T H E  G A R D E N
 
 function plot(state, id) {
@@ -347,12 +351,12 @@ function plot(state, id) {
 	this.name = "plot" + id;
 	this.state = state;			// locked, empty, growing, ready
 	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
+	this.timeLeft = null;
 }
 
 var garden = [];
 var numPlots = 16, colPlots = 4;
 var tableCreated = false;
-var gardenInitialized = false;
 
 function initalizeGarden() {
 	for (var i = 0; i < numPlots; i++) {
@@ -400,35 +404,90 @@ function reimagePlot(plot) {
 var plants = [grass, carrot];
 
 function unlockPlot(plot) {
-	garden[plot].state = 1;
-	updateLog("Unlocked a plot.");
+	if (garden[plot].state == 0) {
+		garden[plot].state = 1;
+		updateLog("Unlocked a plot.");
+	}
 }
 
-function plantPlot(plot) {
-	var p = getRandomInt(0, plants.length - 1);		// chooses random from list
-	garden[plot].crop = p;
-	garden[plot].state = 2;
-	cropTimer(plants[p].growthTime, plot);
-	updateLog("Planted a " + plants[p].name + ".");
+var planting = 0;
+function selectCrop(crop) {
+	planting = crop;
+	for (b = 0; b < plants.length; b++) { 
+		// document.getElementById("plant" + b).setAttribute("class", "unbold");
+		document.getElementById("plant" + b).setAttribute("src", "img/" + plants[b].name + "-seeds2" + ".png");
+	}
+	// document.getElementById("plant" + crop).setAttribute("class", "bold");
+	document.getElementById("plant" + crop).setAttribute("src", "img/" + plants[crop].name + "-seeds" + ".png");
+}
+
+// Plants cropId at plotId.
+function plantPlot(plotId, cropId) {
+	if (garden[plotId].state == 1) {
+		garden[plotId].crop = cropId;
+		garden[plotId].state = 2;
+		cropTimer(plants[cropId].growthTime, plotId);
+		updateLog("Planted a " + plants[cropId].name + ".");
+	}
 }
 
 function harvestPlot(plot) {
-	var crop = plants[garden[plot].crop];
-	var num = getRandomInt(crop.harvest[1], crop.harvest[2]);
-	currencies[crop.harvest[0]].amount += num;
-	garden[plot].crop = null;
-	garden[plot].state = 1;
-	document.getElementById("plotTimer" + plot).innerHTML = "";
-	updateLog("You harvested " + num + " " + crop.plural + ".");
+	if (garden[plot].state == 3) {
+		var crop = plants[garden[plot].crop];
+		var num = getRandomInt(crop.harvest[1], crop.harvest[2]);
+		currencies[crop.harvest[0]].amount += num;
+		garden[plot].crop = null;
+		garden[plot].state = 1;
+		document.getElementById("plotTimer" + plot).innerHTML = "";
+		return num;
+	}
+}
+
+function harvestAll() {
+	var harvested = zeroArray(plants.length);
+	for (var p = 0; p < numPlots; p++) {
+		if (garden[p].state == 3) {
+			var cropId = garden[p].crop;
+			harvested[cropId] += harvestPlot(p);
+			reimagePlot(p);
+		}
+	}
+	var harvestArray = [];
+	for (var c = 0; c < harvested.length; c++) {
+		if (harvested[c] != 0) {
+			harvestArray.push(harvested[c] + " " + plants[c].plural);
+		}
+	}
+	if (harvestArray.length == 0) {
+		updateLog("There are no crops ready for harvest.");
+	} else {
+		var harvestString = "";
+		if (harvestArray.length == 1) {
+			harvestString = harvestArray[0];
+		} else if (harvestArray.length == 2) {
+			harvestString = harvestArray[0] + " and " + harvestArray[1];
+		} else {
+			for (var a = 0; a < harvestArray.length; a++) {
+				if (a == harvestArray.length - 1) {
+					harvestString += "and " + harvestArray[a];
+				} else {
+					harvestString += harvestArray[a] + ", ";
+				}
+			}
+		}
+		updateLog("You harvest a total of " + harvestString + ".");
+	}
 }
 
 function plotAction(plot) {
 	if (garden[plot].state == 0) {
 		unlockPlot(plot);
 	} else if (garden[plot].state == 1) {
-		plantPlot(plot);
+		plantPlot(plot, planting);
 	} else if (garden[plot].state == 3) {
-		harvestPlot(plot);
+		var crop = plants[garden[plot].crop];
+		var num = harvestPlot(plot);
+		updateLog("You harvested " + num + " " + crop.plural + ".");
 	}
 	reimagePlot(plot);
 }
@@ -453,62 +512,14 @@ function secondsToTime(seconds) {
 }
 
 function cropTimer(seconds, plot) {
-	timer2(seconds, "plotTimer" + plot, "READY");
+	timer(seconds, garden[plot], "plotTimer" + plot, "READY");
 	setTimeout(function () {
 		garden[plot].state = 3;
 		reimagePlot(plot);
 		updateLog("A " + plants[garden[plot].crop].name + " has finished growing!");
 	}, seconds * 1000);
 }	
-	
 
-function timer2(seconds, elemId, completedString) {
-    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
-    var countdownTimer = setTimeout(decrease, 1000);
-    function decrease() {
-    	seconds--;
-    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
-        if (seconds !== -1) {
-        	setTimeout(decrease, 1000);
-    	} else {
-    		clearTimeout(countdownTimer);
-    		document.getElementById(elemId).innerHTML = completedString;
-    	}
-    }
-}
-
-function getRandomInt(min, max) {
-	return Math.floor(Math.random() * (max - min +1)) + min;
-}
-
-
-
-
-
-function timer(min, Id) {
-	var mins = min;  
-    var secs = mins * 60;
-    var currentSeconds = 0;
-    var currentMinutes = 0;
-   
-    setTimeout(decrease, 1000); 
-
-    function decrease() {
-        currentMinutes = Math.floor(secs / 60);
-        currentSeconds = secs % 60;
-        if (currentSeconds <= 9) 
-        	currentSeconds = "0" + currentSeconds;
-        	secs--;
-        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentMinutes + ":" + currentSeconds;
-                if (currentMinutes < 1)
-        	document.getElementById(Id).innerHTML = "<b>Time Left:</b> " + currentSeconds + " s";  
-        if (secs !== -1) {
-        	setTimeout(decrease, 1000);
-    	} else {
-    		document.getElementById(Id).innerHTML = "";
-    	};
-    };
-};
 
 
 
@@ -516,26 +527,118 @@ function timer(min, Id) {
 
 // E X P L O R A T I O N
 
-function exploreM(button) {
+var team = {
+	state: 0,				// not exploring, mountains, river
+	timeLeft: null
+};
 
+function exploreM(button) {
     button.setAttribute('disabled', true);
 	updateLog("Expedition started.");
-	timer(1, "mTime");
-
-    setTimeout(function(){
-        button.removeAttribute('disabled');
-
-        //stuff that happens when you return
-
-        var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
-        var randomAmount = Math.floor(Math.random() * 100) + 1  
-        randomCurrency.amount += randomAmount;
-
-        updateLog("Expedition returned");  
-        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
-
-    }, 61000) //expedition length +1000ms bc first timer update is delayed?
+	exploreTimer(60, 1);
 };
+
+function exploreTimer(seconds, area) {
+	timer(seconds, team, "mTime", "");
+	team.state = area;
+	setTimeout(function () {
+        document.getElementById("exploreM").removeAttribute('disabled');
+		var randomCurrency = currencies[Math.floor(Math.random() * currencies.length)]; 
+		var randomAmount = getRandomInt(1, 50);
+		updateLog("Expedition returned.");
+        updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
+        randomCurrency.amount += randomAmount;
+		team.state = 0;
+	}, seconds * 1000);
+}	
+
+
+
+
+
+
+// U N L O C K I N G
+
+var unlockedAnimals = [true, false, false, false, false];
+
+function checkUnlock() {
+	for (i = 0; i<animals.length; i++) {
+		if (currencies[animals[i].cost[0]].amount  >= animals[i].cost[1]){
+			if (unlockedAnimals[i] == false) {
+				unlock(i);
+				unlockedAnimals[i] = true;
+			}
+		}
+	}			
+};
+
+function unlock(i){
+	updateLog("Unlocked " + animals[i].plural + "!");
+	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
+	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
+}
+
+
+
+
+
+// H E L P E R  F U N C T I O N S
+
+function article(animal){
+	if ("aeiou".indexOf(animal.name[0]) >= 0){
+		return "an " + animal.name;
+	} else {
+		return "a " + animal.name;
+    }
+}
+
+function fixValue(resource) {
+	// Forces floats to always display to 2 decimal places if < 1. Makes sure zero says 0 and not 0.00.
+	if (resource != 0) {
+		if (resource >= 1) {
+			resource = resource.toFixed(0);
+		} else {
+			resource = resource.toFixed(2);
+		}
+	}
+	// Truncates large values and tacks on a suffix.
+	var suffixes = ["K","M","B","T","Qa","Qt","Sx","Sp","Oc","Dc"];
+	for (var i = suffixes.length - 1; i >= 0; i--) {
+		if (resource >= Math.pow(1000, i + 1)) {
+			return (resource / Math.pow(1000, i + 1)).toFixed(2) + suffixes[i];
+		}
+	}
+	return resource;
+}
+
+function capitalize(s) {
+    return s && s[0].toUpperCase() + s.slice(1);
+}
+
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min +1)) + min;
+}
+
+function zeroArray(len) {
+	return Array(len+1).join('0').split('').map(parseFloat);
+}
+
+function timer(seconds, counter, elemId, completedString) {
+    document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    var countdownTimer = setTimeout(decrease, 1000);
+    function decrease() {
+    	seconds--;
+    	document.getElementById(elemId).innerHTML = secondsToTime(seconds);
+    	counter.timeLeft = seconds;
+        if (seconds !== 0) {
+        	setTimeout(decrease, 1000);
+    	} else {
+    		clearTimeout(countdownTimer);
+    		document.getElementById(elemId).innerHTML = completedString;
+    		counter.timeLeft = null;
+    	}
+    }
+}
 
 
 

@@ -19,7 +19,7 @@ window.onload = function() {
 // S A V E
 
 var stats = {
-	startDate: null;
+	startDate: null
 }
 
 function composeSave() {
@@ -566,7 +566,7 @@ function exploreTimer(seconds, area) {
 var unlockedAnimals = [true, false, false, false, false];
 
 function checkUnlock() {
-	for (i = 0; i<animals.length; i++) {
+	for (i = 0; i <animals.length; i++) {
 		if (currencies[animals[i].cost[0]].amount  >= animals[i].cost[1]){
 			if (unlockedAnimals[i] == false) {
 				unlock(i);

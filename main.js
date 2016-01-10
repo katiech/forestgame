@@ -10,7 +10,10 @@ window.onload = function() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
 	if (typeof savegame !== "undefined") {
 		GameLoad();
-	};
+	}
+	if (stats.startDate == null) {
+		stats.startDate = new Date();
+	}
 };
 
 
@@ -20,6 +23,11 @@ window.onload = function() {
 
 var stats = {
 	startDate: null
+}
+
+function getElapsedTime() {
+	var timeNow = new Date();
+	// console.log(stats.startDate.getTime() - timeNow.getTime());
 }
 
 function composeSave() {
@@ -40,19 +48,20 @@ function composeSave() {
 	}
 	// Makes exploration into into array.
 	var exploreSave = [team.state, team.timeLeft];
-	return [currenciesSave, animalsSave, gardenSave, exploreSave];
+	return [stats, currenciesSave, animalsSave, gardenSave, exploreSave];
 }
 
 function parseSave(save) {
-	var currenciesSave = save[0];
+	stats = save[0];
+	var currenciesSave = save[1];
 	for (c = 0; c < currencies.length; c++) {
 		currencies[c].amount = currenciesSave[c];
 	}
-	var animalsSave = save[1];
+	var animalsSave = save[2];
 	for (a = 0; a < animals.length; a++) {
 		animals[a].amount = animalsSave[a];
 	}
-	var gardenSave = save[2];
+	var gardenSave = save[3];
 	for (p = 0; p < numPlots; p++) {
 		garden[p].state = gardenSave[p][0];
 		garden[p].crop = gardenSave[p][1];
@@ -63,7 +72,7 @@ function parseSave(save) {
 		}
 		reimagePlot(p);
 	}
-	var exploreSave = save[3];
+	var exploreSave = save[4];
 	team.state = exploreSave[0];
 	team.timeLeft = exploreSave[1];
 	if (team.timeLeft != null) {

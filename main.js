@@ -12,7 +12,8 @@ window.onload = function() {
 		GameLoad();
 	}
 	if (stats.startDate == null) {
-		stats.startDate = new Date();
+		stats.startDate = new Date().toString();
+		console.log("new date");
 	}
 };
 
@@ -27,10 +28,13 @@ var stats = {
 
 function getElapsedTime() {
 	var timeNow = new Date();
-	// console.log(stats.startDate.getTime() - timeNow.getTime());
+	var timeThen = new Date(stats.startDate);
+	var elapsed = timeNow.getTime() - timeThen.getTime();
+	return secondsToTime(Math.floor(elapsed / 1000));
 }
 
 function composeSave() {
+	var statsSave = [stats.startDate];
 	// Makes currency amounts into array.
 	var currenciesSave = [];
 	for (c = 0; c < currencies.length; c++) {
@@ -48,11 +52,12 @@ function composeSave() {
 	}
 	// Makes exploration into into array.
 	var exploreSave = [team.state, team.timeLeft];
-	return [stats, currenciesSave, animalsSave, gardenSave, exploreSave];
+	return [statsSave, currenciesSave, animalsSave, gardenSave, exploreSave];
 }
 
 function parseSave(save) {
-	stats = save[0];
+	stats.startDate = new Date(save[0][0]).toString();
+
 	var currenciesSave = save[1];
 	for (c = 0; c < currencies.length; c++) {
 		currencies[c].amount = currenciesSave[c];
@@ -127,11 +132,13 @@ function setSaveFreq(freq) {
 
 // C E N T E R  N A V
 
+var centerId = 1;
 function show(id) {
 	for (i = 1; i <= 4; i++){
   	  	document.getElementById("center" + i).style.display = "none";
 	}   
 	 document.getElementById("center" + id).style.display = "block";
+	 centerId = id;
  };
 
 
@@ -320,7 +327,7 @@ function updateCosts() {
 	}
 };
 
-function updateAll(){
+function updateAll() {
 	updateResources();
 	updateRates();
 	updateCosts();
@@ -334,6 +341,9 @@ window.setInterval(function() {
 	collectCurrencies();
 	updateResources();
 	checkUnlock();
+	if (centerId == 4) {
+		document.getElementById("timeSince").innerHTML = getElapsedTime();
+	}
 }, 1000);		// fires every 1000ms
 
 
@@ -505,25 +515,6 @@ function plotAction(plot) {
 	reimagePlot(plot);
 }
 
-function secondsToTime(seconds) {
-	var hours	= Math.floor(seconds / 3600);
-	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
-	var seconds = seconds - (hours * 3600) - (minutes * 60);
-	var time = "";
-
-	if (hours != 0) {
-		time = hours + ":";
-	} if (minutes != 0 || time !== "") {
-		minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
-		time += minutes + ":";
-	} if (time === "") {
-		time = seconds + "s";
-    } else {
-		time += (seconds < 10) ? "0"+seconds : String(seconds);
-	}
-	return time;
-}
-
 function cropTimer(seconds, plot) {
 	timer(seconds, garden[plot], "plotTimer" + plot, "READY");
 	setTimeout(function () {
@@ -634,6 +625,25 @@ function getRandomInt(min, max) {
 
 function zeroArray(len) {
 	return Array(len+1).join('0').split('').map(parseFloat);
+}
+
+function secondsToTime(seconds) {
+	var hours	= Math.floor(seconds / 3600);
+	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
+	var seconds = seconds - (hours * 3600) - (minutes * 60);
+	var time = "";
+
+	if (hours != 0) {
+		time = hours + ":";
+	} if (minutes != 0 || time !== "") {
+		minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
+		time += minutes + ":";
+	} if (time === "") {
+		time = seconds + "s";
+    } else {
+		time += (seconds < 10) ? "0"+seconds : String(seconds);
+	}
+	return time;
 }
 
 function timer(seconds, counter, elemId, completedString) {

@@ -18,6 +18,10 @@ window.onload = function() {
 
 // S A V E
 
+var stats = {
+	startDate: null;
+}
+
 function composeSave() {
 	// Makes currency amounts into array.
 	var currenciesSave = [];
@@ -114,8 +118,8 @@ function setSaveFreq(freq) {
 
 // C E N T E R  N A V
 
-function show(id){
-	for (i = 1; i<4; i++){
+function show(id) {
+	for (i = 1; i <= 4; i++){
   	  	document.getElementById("center" + i).style.display = "none";
 	}   
 	 document.getElementById("center" + id).style.display = "block";

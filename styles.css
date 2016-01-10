@@ -55,11 +55,11 @@ button:disabled:hover{
 	padding: 0;	
 }
 
-.animalbutton{
+.animalbutton {
 	display: inline-block;
 }
 
-.explorebutton{
+.explorebutton {
 	display: inline-block;
 }
 
@@ -68,28 +68,25 @@ button:disabled:hover{
 	border-right: 1px solid black;
 }
 
-#center1{
+.center {
 	width: calc(45vw - 1px);
 	text-align: center;
 	border-right: 1px solid black;
+}
+#center1 {
 	z-index:3;
 }
-
-#center2{
-	width: calc(45vw - 1px);
+#center2 {
 	height: calc(80vh - 40px);
-	text-align: center;
-	border-right: 1px solid black;
-	display:none;
-	z-index:2;
+	display: none;
+	z-index: 2;
 }
-
-#center3{
-	width: calc(45vw - 1px);
-	text-align: center;
-	border-right: 1px solid black;
-	display:none;
-	z-index:1;
+#center3 {
+	display: none;
+	z-index: 1;
+}
+#center4 {
+	display: none;
 }
 
 #right {

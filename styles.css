@@ -63,10 +63,22 @@ button:disabled:hover{
 	display: inline-block;
 }
 
+
+/* L E F T  P A N E L */
+
 #left {
 	width: calc(17.5vw - 1px);
 	border-right: 1px solid black;
 }
+
+.infoHidden {
+	display: none;
+}
+
+
+
+
+/* C E N T E R  P A N E L */
 
 .center {
 	width: calc(45vw - 1px);
@@ -88,6 +100,8 @@ button:disabled:hover{
 #center4 {
 	display: none;
 }
+
+
 
 #right {
 	width: 17.5vw;
@@ -204,6 +218,9 @@ button:disabled:hover{
 	display: block;
 }
 
+
+
+/* G A R D E N */
 
 table#garden {
 /*	width: min(40vw, 72vh);

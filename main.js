@@ -243,6 +243,8 @@ var otter = {
 };
 var animals = [sparrow, magpie, squirrel, rabbit, otter];
 
+
+var buyAmount = 1;
 function buyAnimal(animal, num) {
 	var res = currencies[animal.cost[0]]
 	var val = animal.cost[1]
@@ -263,9 +265,6 @@ function buyAnimal(animal, num) {
 		};
 	};
 };
-
-var buyAmount = 1;
-
 function setBuy(num) {
 	// Bold selected and unbold everything else.
 	var buyNums = [1, 10, 25, 100];
@@ -283,6 +282,25 @@ function setBuy(num) {
 	}
 
 };
+
+var unlockedAnimals = [true, false, false, false, false];
+function checkUnlock() {
+	for (i = 0; i < animals.length; i++) {
+		if (currencies[animals[i].cost[0]].amount >= animals[i].cost[1]){
+			if (unlockedAnimals[i] == false) {
+				unlock(i);
+				unlockedAnimals[i] = true;
+			}
+		}
+	}			
+};
+
+function unlock(i) {
+	updateLog("Unlocked " + animals[i].plural + "!");
+	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
+	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
+}
+
 
 
 
@@ -562,32 +580,6 @@ function exploreTimer(seconds, area) {
         randomCurrency.amount += randomAmount;
 		team.state = 0;
 	}, seconds * 1000);
-}	
-
-
-
-
-
-
-// U N L O C K I N G
-
-var unlockedAnimals = [true, false, false, false, false];
-
-function checkUnlock() {
-	for (i = 0; i <animals.length; i++) {
-		if (currencies[animals[i].cost[0]].amount  >= animals[i].cost[1]){
-			if (unlockedAnimals[i] == false) {
-				unlock(i);
-				unlockedAnimals[i] = true;
-			}
-		}
-	}			
-};
-
-function unlock(i){
-	updateLog("Unlocked " + animals[i].plural + "!");
-	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
-	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
 }
 
 

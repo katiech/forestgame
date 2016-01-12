@@ -448,10 +448,17 @@ function selectCrop(crop) {
 // Plants cropId at plotId.
 function plantPlot(plotId, cropId) {
 	if (garden[plotId].state == 1) {
-		garden[plotId].crop = cropId;
-		garden[plotId].state = 2;
-		cropTimer(plants[cropId].growthTime, plotId);
-		updateLog("Planted a " + plants[cropId].name + ".");
+		// Checks to see if you have enough seeds.
+		var cropCost = plants[cropId].plantCost 		// plantCost: [plantId, amount]
+		if (currencies[cropCost[0]].amount >= cropCost[1]) {
+			currencies[cropCost[0]].amount -= cropCost[1];
+			garden[plotId].crop = cropId;
+			garden[plotId].state = 2;
+			cropTimer(plants[cropId].growthTime, plotId);
+			updateLog("Planted a " + plants[cropId].name + ".");
+		} else {
+			updateLog("You don't have enough seeds to plant a " + plants[cropId].name + ".");
+		}
 	}
 }
 

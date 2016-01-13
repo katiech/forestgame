@@ -30,7 +30,6 @@ function getElapsedTime() {
 	var timeNow = new Date();
 	var timeThen = new Date(stats.startDate);
 	var elapsed = timeNow.getTime() - timeThen.getTime();
-	console.log(elapsed);
 	return secondsToTime(Math.floor(elapsed / 1000));
 }
 

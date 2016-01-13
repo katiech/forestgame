@@ -125,17 +125,6 @@ button:disabled:hover{
 	border: 2px solid black;
 }
 
-#leftbottom{
-	border-top: 2px solid #aaa; 
-	border-right: 1px solid black;
-	border-bottom: 2px solid black;
-	margin-left: -8px;
-	padding: 5px;
-	height: 138px;
-	margin-top: 275px;
-	background-color: #eee;
-}
-
 #square{
 	height: 250px;
 	width: 250px;

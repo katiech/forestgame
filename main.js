@@ -283,10 +283,15 @@ function setBuy(num) {
 
 };
 
+
+
+
+// U N L O C K I N G
+
 var unlockedAnimals = [true, false, false, false, false];
 function checkUnlock() {
 	for (i = 0; i < animals.length; i++) {
-		if (currencies[animals[i].cost[0]].amount >= animals[i].cost[1]){
+		if ((currencies[animals[i].cost[0]].amount >= animals[i].cost[1]) || (animals[i].amount > 0)) {
 			if (unlockedAnimals[i] == false) {
 				unlock(i);
 				unlockedAnimals[i] = true;
@@ -298,10 +303,11 @@ function checkUnlock() {
 function unlock(i) {
 	updateLog("Unlocked " + animals[i].plural + "!");
 	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
+	document.getElementById(animals[i].name + "Info").classList.remove("infoHidden");
 	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
 }
 
-
+var unlockedCurrencies = [true, false, false, false, false];
 
 
 

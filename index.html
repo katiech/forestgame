@@ -31,10 +31,14 @@
 			</div>
 			<div class="text" id="inv">
 				<p>
-					<img src="img/seed.gif" class="pixel"> 
-						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s) <br>
-					<img src="img/gold.gif" class="pixel">		<!-- Change this to gold pixel image -->
-						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s) <br>
+					<div id="seedInfo">
+						<img src="img/seed.gif" class="pixel"> 
+						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s)
+					</div>
+					<div id="goldInfo">
+						<img src="img/gold.gif" class="pixel">
+						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s)
+					</div>
 					<img src="img/seed.gif" class="pixel">
 						<b>Acorns:</b> <span id="acorn">0</span> (+<span id="acornRate">0</span>/s) <br>
 					<img src="img/grass.gif" class="pixel">
@@ -54,23 +58,24 @@
 						<img src="img/sparrow.gif" class="pixel"> 
 						<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s)
 					</div>
-					<div id="magpieInfo">
+					<div id="magpieInfo" class="infoHidden">
 						<img src="img/magpie.gif" class="pixel"> 
 						<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s)
 					</div>
-					<img src="img/sparrow.gif" class="pixel"> 
-						<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s) <br>
-					<img src="img/rabbit.gif" class="pixel"> 
-						<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s) <br>
-					<img src="img/otter.gif" class="pixel"> 
+					<div id="squirrelInfo" class="infoHidden">
+						<img src="img/sparrow.gif" class="pixel"> 
+						<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s)
+					</div>
+					<div id="rabbitInfo" class="infoHidden">
+						<img src="img/rabbit.gif" class="pixel"> 
+						<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s)
+					</div>
+					<div id="otterInfo" class="infoHidden">
+						<img src="img/otter.gif" class="pixel"> 
 						<b>Otters:</b> <span id="otter">0</span> (+<span id="otterRate">0</span>/s)
+					</div>
 				</p>
 			</div>
-
-
-<!-- 			<div id="leftbottom" style="overflow-y:scroll">
-				left bottom test
-			</div> -->
 
 		</div>
 

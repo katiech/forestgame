@@ -5,7 +5,7 @@ body, html {
 	color:black;
 }
 
-a{
+a {
 	color: white;
 	text-decoration: none;
 }
@@ -55,42 +55,53 @@ button:disabled:hover{
 	padding: 0;	
 }
 
-.animalbutton{
+.animalbutton {
 	display: inline-block;
 }
 
-.explorebutton{
+.explorebutton {
 	display: inline-block;
 }
+
+
+/* L E F T  P A N E L */
 
 #left {
 	width: calc(17.5vw - 1px);
 	border-right: 1px solid black;
 }
 
-#center1{
+.infoHidden {
+	display: none;
+}
+
+
+
+
+/* C E N T E R  P A N E L */
+
+.center {
 	width: calc(45vw - 1px);
 	text-align: center;
 	border-right: 1px solid black;
+}
+#center1 {
 	z-index:3;
 }
-
-#center2{
-	width: calc(45vw - 1px);
+#center2 {
 	height: calc(80vh - 40px);
-	text-align: center;
-	border-right: 1px solid black;
-	display:none;
-	z-index:2;
+	display: none;
+	z-index: 2;
+}
+#center3 {
+	display: none;
+	z-index: 1;
+}
+#center4 {
+	display: none;
 }
 
-#center3{
-	width: calc(45vw - 1px);
-	text-align: center;
-	border-right: 1px solid black;
-	display:none;
-	z-index:1;
-}
+
 
 #right {
 	width: 17.5vw;
@@ -112,17 +123,6 @@ button:disabled:hover{
 	background-color: #aaa;
 	color: white;
 	border: 2px solid black;
-}
-
-#leftbottom{
-	border-top: 2px solid #aaa; 
-	border-right: 1px solid black;
-	border-bottom: 2px solid black;
-	margin-left: -8px;
-	padding: 5px;
-	height: 138px;
-	margin-top: 275px;
-	background-color: #eee;
 }
 
 #square{
@@ -188,7 +188,28 @@ button:disabled:hover{
 }
 
 
+.popupText {
+	position: relative;
+	display: inline-block;
+}
+.popupText .popupContent {
+	display: none;
+	position: absolute;
+	width: 100px;
+	font-size: 13px;
+	top: 1.5em;
+	left: 20%;
+	background-color: #000000;
+	color: #FFFFFF;
+	padding: .1em;
+}
+.popupText:hover .popupContent {
+	display: block;
+}
 
+
+
+/* G A R D E N */
 
 table#garden {
 /*	width: min(40vw, 72vh);

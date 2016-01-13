@@ -10,7 +10,11 @@ window.onload = function() {
 	var savegame = JSON.parse(localStorage.getItem("save"));
 	if (typeof savegame !== "undefined") {
 		GameLoad();
-	};
+	}
+	if (stats.startDate == null) {
+		stats.startDate = new Date().toString();
+		console.log("new date");
+	}
 };
 
 
@@ -18,7 +22,19 @@ window.onload = function() {
 
 // S A V E
 
+var stats = {
+	startDate: null
+}
+
+function getElapsedTime() {
+	var timeNow = new Date();
+	var timeThen = new Date(stats.startDate);
+	var elapsed = timeNow.getTime() - timeThen.getTime();
+	return secondsToTime(Math.floor(elapsed / 1000));
+}
+
 function composeSave() {
+	var statsSave = [stats.startDate];
 	// Makes currency amounts into array.
 	var currenciesSave = [];
 	for (c = 0; c < currencies.length; c++) {
@@ -36,19 +52,21 @@ function composeSave() {
 	}
 	// Makes exploration into into array.
 	var exploreSave = [team.state, team.timeLeft];
-	return [currenciesSave, animalsSave, gardenSave, exploreSave];
+	return [statsSave, currenciesSave, animalsSave, gardenSave, exploreSave];
 }
 
 function parseSave(save) {
-	var currenciesSave = save[0];
+	stats.startDate = new Date(save[0][0]).toString();
+
+	var currenciesSave = save[1];
 	for (c = 0; c < currencies.length; c++) {
 		currencies[c].amount = currenciesSave[c];
 	}
-	var animalsSave = save[1];
+	var animalsSave = save[2];
 	for (a = 0; a < animals.length; a++) {
 		animals[a].amount = animalsSave[a];
 	}
-	var gardenSave = save[2];
+	var gardenSave = save[3];
 	for (p = 0; p < numPlots; p++) {
 		garden[p].state = gardenSave[p][0];
 		garden[p].crop = gardenSave[p][1];
@@ -59,7 +77,7 @@ function parseSave(save) {
 		}
 		reimagePlot(p);
 	}
-	var exploreSave = save[3];
+	var exploreSave = save[4];
 	team.state = exploreSave[0];
 	team.timeLeft = exploreSave[1];
 	if (team.timeLeft != null) {
@@ -114,11 +132,13 @@ function setSaveFreq(freq) {
 
 // C E N T E R  N A V
 
-function show(id){
-	for (i = 1; i<4; i++){
+var centerId = 1;
+function show(id) {
+	for (i = 1; i <= 4; i++){
   	  	document.getElementById("center" + i).style.display = "none";
 	}   
 	 document.getElementById("center" + id).style.display = "block";
+	 centerId = id;
  };
 
 
@@ -222,6 +242,8 @@ var otter = {
 };
 var animals = [sparrow, magpie, squirrel, rabbit, otter];
 
+
+var buyAmount = 1;
 function buyAnimal(animal, num) {
 	var res = currencies[animal.cost[0]]
 	var val = animal.cost[1]
@@ -242,9 +264,6 @@ function buyAnimal(animal, num) {
 		};
 	};
 };
-
-var buyAmount = 1;
-
 function setBuy(num) {
 	// Bold selected and unbold everything else.
 	var buyNums = [1, 10, 25, 100];
@@ -263,6 +282,31 @@ function setBuy(num) {
 
 };
 
+
+
+
+// U N L O C K I N G
+
+var unlockedAnimals = [true, false, false, false, false];
+function checkUnlock() {
+	for (i = 0; i < animals.length; i++) {
+		if ((currencies[animals[i].cost[0]].amount >= animals[i].cost[1]) || (animals[i].amount > 0)) {
+			if (unlockedAnimals[i] == false) {
+				unlock(i);
+				unlockedAnimals[i] = true;
+			}
+		}
+	}			
+};
+
+function unlock(i) {
+	updateLog("Unlocked " + animals[i].plural + "!");
+	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
+	document.getElementById(animals[i].name + "Info").classList.remove("infoHidden");
+	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
+}
+
+var unlockedCurrencies = [true, false, false, false, false];
 
 
 
@@ -307,7 +351,7 @@ function updateCosts() {
 	}
 };
 
-function updateAll(){
+function updateAll() {
 	updateResources();
 	updateRates();
 	updateCosts();
@@ -321,6 +365,9 @@ window.setInterval(function() {
 	collectCurrencies();
 	updateResources();
 	checkUnlock();
+	if (centerId == 4) {
+		document.getElementById("timeSince").innerHTML = getElapsedTime();
+	}
 }, 1000);		// fires every 1000ms
 
 
@@ -424,10 +471,17 @@ function selectCrop(crop) {
 // Plants cropId at plotId.
 function plantPlot(plotId, cropId) {
 	if (garden[plotId].state == 1) {
-		garden[plotId].crop = cropId;
-		garden[plotId].state = 2;
-		cropTimer(plants[cropId].growthTime, plotId);
-		updateLog("Planted a " + plants[cropId].name + ".");
+		// Checks to see if you have enough seeds.
+		var cropCost = plants[cropId].plantCost 		// plantCost: [plantId, amount]
+		if (currencies[cropCost[0]].amount >= cropCost[1]) {
+			currencies[cropCost[0]].amount -= cropCost[1];
+			garden[plotId].crop = cropId;
+			garden[plotId].state = 2;
+			cropTimer(plants[cropId].growthTime, plotId);
+			updateLog("Planted a " + plants[cropId].name + ".");
+		} else {
+			updateLog("You don't have enough seeds to plant a " + plants[cropId].name + ".");
+		}
 	}
 }
 
@@ -492,25 +546,6 @@ function plotAction(plot) {
 	reimagePlot(plot);
 }
 
-function secondsToTime(seconds) {
-	var hours	= Math.floor(seconds / 3600);
-	var minutes = Math.floor((seconds - (hours * 3600)) / 60);
-	var seconds = seconds - (hours * 3600) - (minutes * 60);
-	var time = "";
-
-	if (hours != 0) {
-		time = hours + ":";
-	} if (minutes != 0 || time !== "") {
-		minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
-		time += minutes + ":";
-	} if (time === "") {
-		time = seconds + "s";
-    } else {
-		time += (seconds < 10) ? "0"+seconds : String(seconds);
-	}
-	return time;
-}
-
 function cropTimer(seconds, plot) {
 	timer(seconds, garden[plot], "plotTimer" + plot, "READY");
 	setTimeout(function () {
@@ -550,32 +585,6 @@ function exploreTimer(seconds, area) {
         randomCurrency.amount += randomAmount;
 		team.state = 0;
 	}, seconds * 1000);
-}	
-
-
-
-
-
-
-// U N L O C K I N G
-
-var unlockedAnimals = [true, false, false, false, false];
-
-function checkUnlock() {
-	for (i = 0; i<animals.length; i++) {
-		if (currencies[animals[i].cost[0]].amount  >= animals[i].cost[1]){
-			if (unlockedAnimals[i] == false) {
-				unlock(i);
-				unlockedAnimals[i] = true;
-			}
-		}
-	}			
-};
-
-function unlock(i){
-	updateLog("Unlocked " + animals[i].plural + "!");
-	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
-	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";
 }
 
 
@@ -621,6 +630,27 @@ function getRandomInt(min, max) {
 
 function zeroArray(len) {
 	return Array(len+1).join('0').split('').map(parseFloat);
+}
+
+function secondsToTime(seconds) {
+	var days 	= Math.floor(seconds / 86400);
+	var hours	= Math.floor((seconds - (days * 86400)) / 3600);
+	var minutes = Math.floor((seconds - (days * 86400) - (hours * 3600)) / 60);
+	var seconds = seconds - (days * 86400) - (hours * 3600) - (minutes * 60);
+	var time = "";
+	if (days != 0) {
+		time = days + ":";
+	} if (hours != 0) {
+		time += hours + ":";
+	} if (minutes != 0 || time !== "") {
+		minutes = (minutes < 10 && time !== "") ? "0" + minutes : String(minutes);
+		time += minutes + ":";
+	} if (time === "") {
+		time = seconds + "s";
+    } else {
+		time += (seconds < 10) ? "0" + seconds : String(seconds);
+	}
+	return time;
 }
 
 function timer(seconds, counter, elemId, completedString) {

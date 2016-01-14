@@ -153,30 +153,24 @@ function show(id) {
 var centerpanels = ["The Glade", "The Garden", "Settings", "Panel 4", "Panel 5", "Panel 6"];
 var currentposition = 0;
 
-function scrollright(){
-	if (currentposition < ((centerpanels.length) - 3)){
-		currentposition += 1;
-		scroll();	
-		updatelinks();
-	}
-}
-
-function scrollleft(){
-	if (currentposition > 0){
+function scroll(direction) {
+	if ((currentposition > 0) && (direction == left)) {
 		currentposition -= 1;
-		scroll();
-		updatelinks();
-	}
+	} else if (currentposition < ((centerpanels.length) - 3)) {
+		currentposition += 1;
+	}	
+		updateText();
+		updateLinks();	
 }
 
-function scroll(){
-	for (i = 0; i < 3; i++){
+function updateText() {
+	for (i = 0; i < 3; i++) {
 		document.getElementById("nav" + (i + 1)).innerHTML = centerpanels[currentposition + i];		
 	}
 }
 
-function updatelinks(){
-	for (i = 1; i <= 3; i++){
+function updateLinks() {
+	for (i = 1; i <= 3; i++) {
 		document.getElementById("nav" + i).setAttribute("onClick", "show(" + (currentposition + i) + ")");
 	}
 }

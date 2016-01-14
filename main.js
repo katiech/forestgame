@@ -154,9 +154,9 @@ var centerpanels = ["The Glade", "The Garden", "Settings", "Panel 4", "Panel 5",
 var currentposition = 0;
 
 function scroll(direction) {
-	if ((currentposition > 0) && (direction == left)) {
+	if ((currentposition > 0) && (direction == 0)) {
 		currentposition -= 1;
-	} else if (currentposition < ((centerpanels.length) - 3)) {
+	} else if ((currentposition < ((centerpanels.length) - 3)) && (direction == 1)) {
 		currentposition += 1;
 	}	
 		updateText();

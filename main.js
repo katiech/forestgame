@@ -23,7 +23,8 @@ window.onload = function() {
 // S A V E
 
 var stats = {
-	startDate: null
+	startDate: null,
+	lifetimeFriends: 0
 }
 
 function getElapsedTime() {
@@ -34,7 +35,8 @@ function getElapsedTime() {
 }
 
 function composeSave() {
-	var statsSave = [stats.startDate];
+	// Makes stats into array.
+	var statsSave = [stats.startDate, stats.lifetimeFriends];
 	// Makes currency amounts into array.
 	var currenciesSave = [];
 	for (c = 0; c < currencies.length; c++) {
@@ -57,6 +59,7 @@ function composeSave() {
 
 function parseSave(save) {
 	stats.startDate = new Date(save[0][0]).toString();
+	stats.lifetimeFriends = save[0][1];
 
 	var currenciesSave = save[1];
 	for (c = 0; c < currencies.length; c++) {
@@ -140,6 +143,41 @@ function show(id) {
 	 document.getElementById("center" + id).style.display = "block";
 	 centerId = id;
  };
+
+
+// B O T T O M  N A V I G A T I O N  S C R O L L I N G
+
+var centerpanels = ["The Glade", "The Garden", "Settings", "Panel 4", "Panel 5", "Panel 6"];
+var currentposition = 0;
+
+function scrollright(){
+	if (currentposition < ((centerpanels.length) - 3)){
+		currentposition += 1;
+		scroll();	
+		updatelinks();
+	}
+}
+
+function scrollleft(){
+	if (currentposition > 0){
+		currentposition -= 1;
+		scroll();
+		updatelinks();
+	}
+}
+
+function scroll(){
+	for (i = 0; i < 3; i++){
+		document.getElementById("nav" + (i + 1)).innerHTML = centerpanels[currentposition + i];		
+	}
+}
+
+function updatelinks(){
+	for (i = 1; i <= 3; i++){
+		document.getElementById("nav" + i).setAttribute("onClick", "show(" + (currentposition + i) + ")");
+	}
+}
+
 
 
 
@@ -251,6 +289,7 @@ function buyAnimal(animal, num) {
 		animal.amount += num;
 		res.amount -= val * num;
 		updateAll();
+		stats.lifetimeFriends += num;
 		if (num > 1) {
 			updateLog("You have befriended " + num + " " + animal.plural + "! Wow!");
 		} else {
@@ -591,6 +630,15 @@ function exploreTimer(seconds, area) {
 
 
 
+// A C H I E V E M E N T S
+
+var seed = {
+	name: 'seed'
+};
+
+
+
+
 // H E L P E R  F U N C T I O N S
 
 function article(animal){
@@ -668,40 +716,5 @@ function timer(seconds, counter, elemId, completedString) {
     		counter.timeLeft = null;
     	}
     }
-}
-
-
-
-// BOTTOM NAVIGATION SCROLLING
-
-var centerpanels = ["The Glade", "The Garden", "Settings", "Panel 4", "Panel 5", "Panel 6"];
-var currentposition = 0;
-
-function scrollright(){
-	if (currentposition < ((centerpanels.length) - 3)){
-		currentposition += 1;
-		scroll();	
-		updatelinks();
-	}
-}
-
-function scrollleft(){
-	if (currentposition > 0){
-		currentposition -= 1;
-		scroll();
-		updatelinks();
-	}
-}
-
-function scroll(){
-	for (i = 0; i < 3; i++){
-		document.getElementById("nav" + (i + 1)).innerHTML = centerpanels[currentposition + i];		
-	}
-}
-
-function updatelinks(){
-	for (i = 1; i <= 3; i++){
-		document.getElementById("nav" + i).setAttribute("onClick", "show(" + (currentposition + i) + ")");
-	}
 }
 

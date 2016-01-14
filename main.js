@@ -5,7 +5,7 @@
 window.onload = function() {
 	// Generates garden plots. Check if garden unlocked???
 	gardenTable();
-	initalizeGarden();
+	initializeGarden();
 	// Auto loads if save file present.
 	var savegame = JSON.parse(localStorage.getItem("save"));
 	if (typeof savegame !== "undefined") {
@@ -446,13 +446,13 @@ function plot(state, id) {
 	this.state = state;			// locked, empty, growing, ready
 	this.crop = null; 			// holds index of type of plant; 0 if grass, 1 if carrot
 	this.timeLeft = null;
-}
+};
 
 var garden = [];
 var numPlots = 16, colPlots = 4;
 var tableCreated = false;
 
-function initalizeGarden() {
+function initializeGarden() {
 	for (var i = 0; i < numPlots; i++) {
 		if (i == 0) {
 			garden.push(new plot(1, i));
@@ -640,9 +640,22 @@ function exploreTimer(seconds, area) {
 
 // A C H I E V E M E N T S
 
-var seed = {
-	name: 'seed'
+function achievement(title, description, icon) {
+	this.title = title;
+	this.description = description;
+	this.icon = icon;
+}
+
+var achievements = {
+	array: [],
+	count: 0,
+	unlockedCount: 0
 };
+
+function initializeAchieve() {
+	// achievements.array.push(new achievement());
+}
+
 
 
 

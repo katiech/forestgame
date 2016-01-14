@@ -134,7 +134,7 @@ function setSaveFreq(freq) {
 
 var centerId = 1;
 function show(id) {
-	for (i = 1; i <= 4; i++){
+	for (i = 1; i <= centerpanels.length; i++){
   	  	document.getElementById("center" + i).style.display = "none";
 	}   
 	 document.getElementById("center" + id).style.display = "block";
@@ -672,4 +672,36 @@ function timer(seconds, counter, elemId, completedString) {
 
 
 
+// BOTTOM NAVIGATION SCROLLING
+
+var centerpanels = ["The Glade", "The Garden", "Settings", "Panel 4", "Panel 5", "Panel 6"];
+var currentposition = 0;
+
+function scrollright(){
+	if (currentposition < ((centerpanels.length) - 3)){
+		currentposition += 1;
+		scroll();	
+		updatelinks();
+	}
+}
+
+function scrollleft(){
+	if (currentposition > 0){
+		currentposition -= 1;
+		scroll();
+		updatelinks();
+	}
+}
+
+function scroll(){
+	for (i = 0; i < 3; i++){
+		document.getElementById("nav" + (i + 1)).innerHTML = centerpanels[currentposition + i];		
+	}
+}
+
+function updatelinks(){
+	for (i = 1; i <= 3; i++){
+		document.getElementById("nav" + i).setAttribute("onClick", "show(" + (currentposition + i) + ")");
+	}
+}
 

@@ -100,7 +100,13 @@ button:disabled:hover{
 #center4 {
 	display: none;
 }
+#center5 {
+	display: none;
+}
 
+#center6 {
+	display: none;
+}
 
 
 #right {
@@ -207,7 +213,11 @@ button:disabled:hover{
 	display: block;
 }
 
-
+.navarrow:hover{
+	color:gray;
+	cursor:pointer;
+	top:5px;
+}
 
 /* G A R D E N */
 

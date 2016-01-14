@@ -219,6 +219,9 @@ button:disabled:hover{
 	top:5px;
 }
 
+
+
+
 /* G A R D E N */
 
 table#garden {
@@ -266,4 +269,30 @@ img.seeds {
 	height: 4vw;
 	display: inline-block;
 }
+
+
+
+
+
+/* S T A T S */
+#stats {
+	margin: auto;
+	width: 35vw;
+	text-align: left;
+}
+
+
+
+
+/* A C H I E V E M E N T S */
+
+
+
+
+
+
+
+
+
+
 

@@ -57,9 +57,12 @@ function composeSave() {
 	return [statsSave, currenciesSave, animalsSave, gardenSave, exploreSave];
 }
 
+
 function parseSave(save) {
 	stats.startDate = new Date(save[0][0]).toString();
-	stats.lifetimeFriends = save[0][1];
+	if (save[0][1]) {
+		stats.lifetimeFriends = save[0][1];
+	}
 
 	var currenciesSave = save[1];
 	for (c = 0; c < currencies.length; c++) {
@@ -400,12 +403,17 @@ function updateAll() {
 
 
 
+
+
+
+
 window.setInterval(function() {
 	collectCurrencies();
 	updateResources();
 	checkUnlock();
 	if (centerId == 4) {
 		document.getElementById("timeSince").innerHTML = getElapsedTime();
+		document.getElementById("lifetimeFriends").innerHTML = stats.lifetimeFriends;
 	}
 }, 1000);		// fires every 1000ms
 
@@ -641,7 +649,7 @@ var seed = {
 
 // H E L P E R  F U N C T I O N S
 
-function article(animal){
+function article(animal) {
 	if ("aeiou".indexOf(animal.name[0]) >= 0){
 		return "an " + animal.name;
 	} else {

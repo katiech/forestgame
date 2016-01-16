@@ -294,7 +294,7 @@ table#achieve {
 	text-align: left;
 }
 img.achieveIcon {
-	width: 10vw;
+	width: 10vmin;
 }
 .achieveTitle {
 	font-weight: bold;

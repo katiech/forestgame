@@ -658,7 +658,9 @@ function addAchievement(title, description, hidden) {
 }
 
 function initializeAchieve() {
-	addAchievement("Fledgling", "Make friends with a sparrow.", false);
+	addAchievement("Hatchling", "Make friends with a sparrow.", false);
+	addAchievement("Fledgling", "Make friends with 10 sparrows.", false);
+	addAchievement("Adventurous", "Go on an expedition.", false);
 }
 
 function achievementTable() {

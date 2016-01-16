@@ -6,6 +6,9 @@ window.onload = function() {
 	// Generates garden plots. Check if garden unlocked???
 	gardenTable();
 	initializeGarden();
+	// Initializes achievements.
+	initializeAchieve();
+	achievementTable();
 	// Auto loads if save file present.
 	var savegame = JSON.parse(localStorage.getItem("save"));
 	if (typeof savegame !== "undefined") {
@@ -634,10 +637,13 @@ function exploreTimer(seconds, area) {
 
 // A C H I E V E M E N T S
 
-function achievement(title, description, icon) {
+function achievement(title, description, hidden) {
+	this.id = achievements.count;
 	this.title = title;
 	this.description = description;
-	this.icon = icon;
+	this.icon = "img/achieve/" + title + ".gif";
+	this.unlocked = false;
+	this.hidden = hidden;
 }
 
 var achievements = {
@@ -646,10 +652,35 @@ var achievements = {
 	unlockedCount: 0
 };
 
-function initializeAchieve() {
-	// achievements.array.push(new achievement());
+function addAchievement(title, description, hidden) {
+	achievements.array.push(new achievement(title, description, hidden));
+	achievements.count += 1;
 }
 
+function initializeAchieve() {
+	addAchievement("Fledgling", "Make friends with a sparrow.", false);
+}
+
+function achievementTable() {
+	var tbl = document.getElementById('achieve');
+	for (var i = 0; i < achievements.count; i++) {
+		var tr = tbl.insertRow();
+		var icon = tr.insertCell();
+		// Create achievement icon.
+		var img = icon.appendChild(document.createElement("IMG"));
+		img.setAttribute('id', 'icon' + i);
+		img.setAttribute('class', 'achieveIcon');
+		img.setAttribute('src', achievements.array[i].icon);
+		// Create description.
+		var text = tr.insertCell();
+		var title = text.appendChild(document.createElement("DIV"));
+		title.setAttribute('class', 'achieveTitle');
+		title.innerHTML = achievements.array[i].title;
+		var descr = text.appendChild(document.createElement("DIV"));
+		descr.setAttribute('class', 'achieveDescr');
+		descr.innerHTML = achievements.array[i].description;
+	}
+}
 
 
 

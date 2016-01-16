@@ -287,8 +287,18 @@ img.seeds {
 /* A C H I E V E M E N T S */
 
 
-
-
+table#achieve {
+	width: 38vw;
+	margin: auto;
+	margin-top: 1vw;
+	text-align: left;
+}
+img.achieveIcon {
+	width: 10vw;
+}
+.achieveTitle {
+	font-weight: bold;
+}
 
 
 

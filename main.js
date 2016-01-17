@@ -668,6 +668,7 @@ function achievementTable() {
 	for (var i = 0; i < achievements.count; i++) {
 		var tr = tbl.insertRow();
 		var icon = tr.insertCell();
+		icon.setAttribute('class', 'achieveIcon');
 		// Create achievement icon.
 		var img = icon.appendChild(document.createElement("IMG"));
 		img.setAttribute('id', 'icon' + i);
@@ -675,6 +676,7 @@ function achievementTable() {
 		img.setAttribute('src', achievements.array[i].icon);
 		// Create description.
 		var text = tr.insertCell();
+		text.setAttribute('class', 'achieveText');
 		var title = text.appendChild(document.createElement("DIV"));
 		title.setAttribute('class', 'achieveTitle');
 		title.innerHTML = achievements.array[i].title;

@@ -293,8 +293,15 @@ table#achieve {
 	margin-top: 1vw;
 	text-align: left;
 }
-img.achieveIcon {
+table td.achieveIcon {
 	width: 10vmin;
+}
+table td.achieveText {
+	padding-left: 2.5vw;
+	padding-right: 2.5vw;
+}
+img.achieveIcon {
+	width: 100%;
 }
 .achieveTitle {
 	font-weight: bold;

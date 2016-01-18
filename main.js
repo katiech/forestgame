@@ -673,7 +673,7 @@ function achievementTable() {
 		var img = icon.appendChild(document.createElement("IMG"));
 		img.setAttribute('id', 'icon' + i);
 		img.setAttribute('class', 'achieveIcon');
-		img.setAttribute('src', achievements.array[i].icon);
+		reimageAchieve(i);
 		// Create description.
 		var text = tr.insertCell();
 		text.setAttribute('class', 'achieveText');
@@ -683,6 +683,14 @@ function achievementTable() {
 		var descr = text.appendChild(document.createElement("DIV"));
 		descr.setAttribute('class', 'achieveDescr');
 		descr.innerHTML = achievements.array[i].description;
+	}
+}
+
+function reimageAchieve(id) {
+	if (!achievements.array[id].unlocked) {
+		document.getElementById("icon" + id).setAttribute("src", "img/achieve/locked.gif");
+	} else {
+		document.getElementById("icon" + id).setAttribute("src", achievements.array[id].icon);
 	}
 }
 

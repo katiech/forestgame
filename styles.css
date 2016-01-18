@@ -301,6 +301,7 @@ table td.achieveText {
 	padding-right: 2.5vw;
 }
 img.achieveIcon {
+	image-rendering: pixelated;
 	width: 100%;
 }
 .achieveTitle {

@@ -27,7 +27,8 @@ window.onload = function() {
 
 var stats = {
 	startDate: null,
-	lifetimeFriends: 0
+	lifetimeFriends: 0,
+	lifetimeExpeditions: 0
 }
 
 function getElapsedTime() {
@@ -39,7 +40,7 @@ function getElapsedTime() {
 
 function composeSave() {
 	// Makes stats into array.
-	var statsSave = [stats.startDate, stats.lifetimeFriends];
+	var statsSave = [stats.startDate, stats.lifetimeFriends, stats.lifetimeExpeditions];
 	// Makes currency amounts into array.
 	var currenciesSave = [];
 	for (c = 0; c < currencies.length; c++) {
@@ -66,6 +67,7 @@ function parseSave(save) {
 	if (save[0][1]) {
 		stats.lifetimeFriends = save[0][1];
 	}
+	if (save[0][2]) {stats.lifetimeExpeditions = save[0][2];}
 
 	var currenciesSave = save[1];
 	for (c = 0; c < currencies.length; c++) {
@@ -411,6 +413,7 @@ window.setInterval(function() {
 	if (centerId == 4) {
 		document.getElementById("timeSince").innerHTML = getElapsedTime();
 		document.getElementById("lifetimeFriends").innerHTML = stats.lifetimeFriends;
+		document.getElementById("lifetimeExpeditions").innerHTML = stats.lifetimeExpeditions;
 	}
 }, 1000);		// fires every 1000ms
 
@@ -627,6 +630,7 @@ function exploreTimer(seconds, area) {
 		updateLog("Expedition returned.");
         updateLog("Found " + randomAmount + " " + randomCurrency.plural + "."); 
         randomCurrency.amount += randomAmount;
+		stats.lifetimeExpeditions += 1;
 		team.state = 0;
 	}, seconds * 1000);
 }

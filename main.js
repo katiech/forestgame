@@ -155,7 +155,7 @@ function show(id) {
 
 // B O T T O M  N A V I G A T I O N  S C R O L L I N G
 
-var centerpanels = ["The Glade", "The Garden", "Settings", "Panel 4", "Panel 5", "Panel 6"];
+var centerpanels = ["The Glade", "The Garden", "Settings", "Statistics", "Achievements", "Panel 6"];
 var currentposition = 0;
 
 function scroll(direction) {

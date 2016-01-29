@@ -58,7 +58,10 @@ function composeSave() {
 	}
 	// Makes exploration into into array.
 	var exploreSave = [team.state, team.timeLeft];
-	return [statsSave, currenciesSave, animalsSave, gardenSave, exploreSave];
+
+	var unlockedSave = unlockedAnimals;
+
+	return [statsSave, currenciesSave, animalsSave, gardenSave, exploreSave, unlockedSave];
 }
 
 
@@ -94,6 +97,16 @@ function parseSave(save) {
 	if (team.timeLeft != null) {
 		exploreTimer(team.timeLeft, team.state);
 	}
+
+	var unlockedSave = save[5];
+	unlockedAnimals = unlockedSave;
+	for (i = 0; i < unlockedAnimals.length; i++) {
+		if (unlockedAnimals[i] == true) {
+			unlock(i);
+		}
+	}
+	
+
 }
 
 function GameSave() {
@@ -335,13 +348,13 @@ function checkUnlock() {
 			if (unlockedAnimals[i] == false) {
 				unlock(i);
 				unlockedAnimals[i] = true;
+				updateLog("Unlocked " + animals[i].plural + "!");
 			}
 		}
 	}			
 };
 
 function unlock(i) {
-	updateLog("Unlocked " + animals[i].plural + "!");
 	document.getElementById("buy" + capitalize(animals[i].name)).removeAttribute('disabled');
 	document.getElementById(animals[i].name + "Info").classList.remove("infoHidden");
 	// document.getElementById("buy" + capitalize(animals[i].name)).innerHTML="unlockedimage";

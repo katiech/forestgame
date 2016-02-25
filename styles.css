@@ -17,25 +17,34 @@ h1 {
 }
 
 button {
-	color: #grey;
 	border: 1px solid grey;
 	font-size: 16px;
 	text-transform:uppercase;
 }
 
+button:focus {
+	outline: 0;
+}
+
 button:hover {	
-	background-color: grey;
+	background-color: #b4b4b4;
 }
 
 button:disabled{
 	background-color:#eee;
 	text-decoration: line-through;
+	-webkit-filter: grayscale(100%);
 }
 
 button:disabled:hover{
-	background-color:#eee;
-	text-decoration: line-through;
+	-webkit-filter: grayscale(100%) brightness(95%);
 }
+
+.animalbutton{
+	width: 150px;
+	height: 150px;
+}
+
 
 #container {
 	width: 80vw;

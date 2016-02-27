@@ -29,12 +29,22 @@
 			<div class="boxtitle">
 				Inventory
 			</div>
-			<div class="text">
+			<div class="text" id="inv">
 				<p>
-					<img src="img/seed.gif" class="pixel"> 
-						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s) <br>
-					<img src="img/seed.gif" class="pixel">		<!-- Change this to gold pixel image -->
+					<div id="seedInfo">
+						<img src="img/seed.gif" class="pixel"> 
+						<b>Seeds:</b> <span id="seed">0</span> (+<span id="seedRate">1</span>/s)
+					</div>
+					<div id="goldInfo">
+						<img src="img/gold.gif" class="pixel">
 						<b>Gold:</b> <span id="gold">0</span> (+<span id="goldRate">0</span>/s)
+					</div>
+					<img src="img/acorn.gif" class="pixel">
+						<b>Acorns:</b> <span id="acorn">0</span> (+<span id="acornRate">0</span>/s) <br>
+					<img src="img/grass.gif" class="pixel">
+						<b>Grass:</b> <span id="grass">0</span> (+<span id="grassRate">0</span>/s) <br>
+					<img src="img/seed.gif" class="pixel">
+						<b>Carrots:</b> <span id="carrot">0</span> (+<span id="carrotRate">0</span>/s)
 				</p>
 			</div>
 
@@ -42,17 +52,30 @@
 			<div class="boxtitle">
 				Friends
 			</div>
-			<div class="text">
+			<div class="text" id="animals">
 				<p>
-					<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s) <br>
-					<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s)
+					<div id="sparrowInfo">
+						<img src="img/sparrow.gif" class="pixel"> 
+						<b>Sparrows:</b> <span id="sparrow">0</span> (+<span id="sparrowRate">0</span>/s)
+					</div>
+					<div id="magpieInfo" class="infoHidden">
+						<img src="img/magpie.gif" class="pixel"> 
+						<b>Magpies:</b> <span id="magpie">0</span> (+<span id="magpieRate">0</span>/s)
+					</div>
+					<div id="squirrelInfo" class="infoHidden">
+						<img src="img/sparrow.gif" class="pixel"> 
+						<b>Squirrels:</b> <span id="squirrel">0</span> (+<span id="squirrelRate">0</span>/s)
+					</div>
+					<div id="rabbitInfo" class="infoHidden">
+						<img src="img/rabbit.gif" class="pixel"> 
+						<b>Rabbits:</b> <span id="rabbit">0</span> (+<span id="rabbitRate">0</span>/s)
+					</div>
+					<div id="otterInfo" class="infoHidden">
+						<img src="img/otter.gif" class="pixel"> 
+						<b>Otters:</b> <span id="otter">0</span> (+<span id="otterRate">0</span>/s)
+					</div>
 				</p>
 			</div>
-
-
-<!-- 			<div id="leftbottom" style="overflow-y:scroll">
-				left bottom test
-			</div> -->
 
 		</div>
 
@@ -63,29 +86,67 @@
 		<!-- Home Panel
 				T H E  G L A D E -->
 
-		<div id="center1" class="box">
+		<div id="center1" class="box center">
 			<div class="boxtitle">
 				The Glade
 			</div>
 
-			<br><br>
+			<div class="text">
+				<p>
+					Buy Amount: <span id="buy1" class="bold" onclick="setBuy(1)">1x</span> |
+								<span id="buy10" onclick="setBuy(10)">10x</span> |
+								<span id="buy25" onclick="setBuy(25)">25x</span> |
+								<span id="buy100" onclick="setBuy(100)">100x</span>
+				</p>
 
-			<div id="square"></div>
+				<div id="square"></div>
 
-			<br><br>
-			<button type="button" onClick="Add()">Add</button><br><br>
+				<!-- <p>
+					<div class="popupText">
+						Testing.
+						<span class="popupContent">Hi this is a test.</span>
+					</div>
+				</p> -->
 
-			<div class="animalbutton">
-				<button type="button" onClick="buySparrow(1)">Befriend Sparrow</button><br>
-				<b>Cost</b>:<span id="sparrowCost">5</span>
+				<br>
+
+				<div class="explorebutton">
+					<button id="exploreM" type="button" onClick="exploreM(this)">Explore Mountains</button><br>
+					<span id="mTime"></span>
+				</div><p>
+					
+				<div class="animalbutton">
+					<button id="buySparrow" type="button" onClick="buyAnimal(sparrow, 1)"><img src="img/sparrowbutton.gif">Befriend Sparrow</button><br>
+					<b>Cost</b>: <span id="sparrowCost">5</span> seeds
+				</div>
+
+				<div class="animalbutton">
+					<button id="buyMagpie" type="button" onClick="buyAnimal(magpie, 1)" disabled><img src="img/magpiebutton.gif">Befriend Magpie</button><br>
+					<b>Cost</b>: <span id="magpieCost">100</span> seeds
+				</div>
+
+				<div class="animalbutton">
+					<button id="buySquirrel" type="button" onClick="buyAnimal(squirrel, 1)" disabled><img src="img/rabbitbutton.gif">Befriend Squirrel</button><br>
+					<b>Cost</b>: <span id="squirrelCost">10K</span> seeds
+				</div>
+
+				<div class="animalbutton">
+					<button id="buyRabbit" type="button" onClick="buyAnimal(rabbit, 1)" disabled><img src="img/rabbitbutton.gif">Befriend Rabbit</button><br>
+					<b>Cost</b>: <span id="rabbitCost">10</span> grass
+				</div>
+
+				<div class="animalbutton">
+					<button id="buyOtter" type="button" onClick="buyAnimal(otter, 1)" disabled><img src="img/weaselbutton.gif">Befriend Weasel</button><br>
+					<b>Cost</b>: <span id="otterCost">100</span> grass
+				</div>
+
+				<br><br>
+
+				<button type="button" onClick="clearLog()">Clear Log</button>
+				<br><br>
+				<button type="button" onClick="GameSave()">Save</button><br>
+				<button type="button" onClick="GameLoad()">Load</button><br>
 			</div>
-
-			<div class="animalbutton">
-				<button type="button" onClick="buyMagpie(1)">Befriend Magpie</button><br>
-				<b>Cost</b>:<span id="magpieCost">100</span>
-			</div><br><br><br>
-
-			<button type="button" onClick="clearLog()">Clear Log</button><br>
 
 		</div>
 
@@ -94,36 +155,158 @@
 		<!-- Second Panel
 				T H E  G A R D E N -->
 
-		<div id="center2" class="box">
+		<div id="center2" class="box center">
 			<div class="boxtitle">
-				Center 2
+				The Garden
 			</div>
 
-			<br><br>
+			<div class="text" align="center">
+				<p>
+					<!-- Plant: 	<span id="plant0" onClick="selectCrop(0)" class="bold" >Grass</span> |
+							<span id="plant1" onClick="selectCrop(1)">Carrots</span>  -->
+					<div class="plantSelect">
+						<img id="plant0" class="seeds" onClick="selectCrop(0)" src="img/grass-seeds.png"> <br>
+						Grass
+					</div>
+					<div class="plantSelect">
+						<img id="plant1" class="seeds" onClick="selectCrop(1)" src="img/carrot-seeds2.png"> <br>
+						Carrot
+					</div>
 
-			Center 2 Stuff
+					<br><br>
+
+					<button type="button" onClick="harvestAll()">Harvest All</button><br>
+					
+					<table id="garden">
+					</table>
+				</p>
+
+			</div>
 
 		</div>
+
 
 
 		<!-- S E T T I N G S -->
 
-		<div id="center3" class="box">
+		<div id="center3" class="box center">
 			<div class="boxtitle">
 				Settings
 			</div>
 
-			<br><br>
+			<div class="text">
 
-			Center 3 Stuff
+				<p>
+					Center 3 Stuff
+					<br><br>
+					Manual save/load, set auto-save frequency, delete save file, etc.
+				</p>
 
-			<br><br>
 
-			Manual save, set auto-save frequency, delete save file, etc.
+				<button type="button" onClick="show(4)">Statistics</button>
+
+				<p>
+					Save Frequency:
+					<input type="radio" id="save30" name="saveFreq" onclick="setSaveFreq(30)" checked="true" />
+					<label for="save30">30s</label>
+					<input type="radio" id="save60" name="saveFreq" onclick="setSaveFreq(60)" />
+					<label for="save30">1m</label>
+					<input type="radio" id="save300" name="saveFreq" onclick="setSaveFreq(300)" />
+					<label for="save30">5m</label>
+				</p>
+
+				<p>
+					Delete Save File: 
+					<button type="button" onClick="GameDelete()">Delete</button><br>
+				</p>
+
+			</div>
 
 		</div>
 
 
+
+		<!-- S T A T S -->
+
+		<div id="center4" class="box center">
+			<div class="boxtitle">
+				Statistics
+			</div>
+
+			<div class="text">
+
+				<p>
+
+					<table id="stats">
+						<tr>
+							<td>
+								Time since you began:
+							</td>
+							<td>
+								<span class="popupText">
+									<span id="timeSince"></span>
+									<span class="popupContent">DD:HH:MM:SS</span>
+								</span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Lifetime Friends:
+							</td>
+							<td>
+								<span id="lifetimeFriends"></span>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								Lifetime Expeditions:
+							</td>
+							<td>
+								<span id="lifetimeExpeditions"></span>
+							</td>
+						</tr>
+					</table>
+
+					<br><br>
+
+					
+				</p>
+
+			</div>
+
+		</div>
+
+		<!-- C E N T E R 5 -->
+
+		<div id="center5" class="box center">
+			<div class="boxtitle">
+				Achievements
+			</div>
+
+			<div class="text">
+
+				<table id="achieve">
+				</table>
+
+			</div>
+
+		</div>
+
+		<!-- C E N T E R 6 -->
+
+		<div id="center6" class="box center">
+			<div class="boxtitle">
+				Center 6
+			</div>
+
+			<div class="text">
+
+				~Test~
+
+			</div>
+
+		</div>		
+		
 
 		<div id="right" class="box">
 			<div class="boxtitle">
@@ -140,17 +323,22 @@
 
 		<div id="bottom">
 
+			<span id="leftarrow" class="navarrow" onClick="scroll(0)">&#9668;</span>	
+
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show1()">The Glade</button>
+				<button type="button" class="nav" id="nav1" onClick="show(1)">The Glade</button>
 			</div>
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show2()">Show 2</button>
+				<button type="button" class="nav" id="nav2" onClick="show(2)">The Garden</button>
 			</div>
 
 			<div class="bottombox">
-				<button type="button" class="nav" onClick="show3()">Settings</button>
+				<button type="button" class="nav" id="nav3" onClick="show(3)">Settings</button>
 			</div>
+
+			<span id="rightarrow" class="navarrow" onClick="scroll(1)">&#9658;</span>	
+			
 
 		</div>
 
